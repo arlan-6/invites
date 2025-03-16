@@ -15,12 +15,16 @@ export default function RootLayout({
 }>) {
 	return (
 		<html lang="en" suppressHydrationWarning>
-			<body>
-				<Analytics />
+			<head>
 				<script
 					crossOrigin="anonymous"
 					src="//unpkg.com/react-scan/dist/auto.global.js"
+					async
 				/>
+			</head>
+			<body>
+				<Analytics />
+
 				<ThemeProvider attribute="class" defaultTheme="light">
 					{children}
 				</ThemeProvider>
