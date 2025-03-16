@@ -33,13 +33,13 @@ export default function HeroSection() {
 	};
 
   return (
-    <div className="w-full py-8 md:py-8 lg:py-12 xl:py-16 relative overflow-hidden flex flex-col justify-center">
-      <div className="container px-4 md:px-6 md:ml-6 relative z-10">
-        <div className="grid gap-6 lg:grid-cols-[1fr_400px] lg:gap-12 xl:grid-cols-[1fr_600px]">
+    <div className="w-full py-8 md:py-8 lg:py-12 xl:py-16 relative overflow-hidden ">
+      <div className="container px-6 md:px-6 relative z-10">
+        <div className="grid gap-4 lg:grid-cols-[1fr_400px] lg:gap-10 xl:grid-cols-[1fr_600px]">
           <div className="flex flex-col justify-center space-y-4">
             <div className="space-y-2">
               <motion.h1
-                className="text-3xl font-bold tracking-tighter sm:text-5xl xl:text-6xl/none text-black dark:text-white"
+                className=" font-bold tracking-tighter sm:text-5xl xl:text-6xl/none text-black dark:text-white"
                 initial={{ opacity: 0, y: 20 }}
                 animate={{ opacity: 1, y: 0 }}
                 transition={{ duration: 0.5 }}

@@ -5,11 +5,15 @@ import { useTheme } from "next-themes";
 import { useEffect, useState } from "react";
 import { SunMoon } from "lucide-react";
 import { Button } from "./ui/button";
+import { Badge } from "./ui/badge";
+
+import { TextScramble } from "./motion-primitives/text-scramble";
 
 export default function Navigation() {
 	const { theme, setTheme } = useTheme();
 	const [mounted, setMounted] = useState(false);
 
+	const [isTrigger, setIsTrigger] = useState(false);
 	// Ensure the component is mounted before rendering (to avoid hydration mismatch)
 	useEffect(() => {
 		setMounted(true);
@@ -21,12 +25,47 @@ export default function Navigation() {
 		<nav className="bg-white dark:bg-background shadow-md dark:shadow-none">
 			<div className="container mx-auto px-4 py-4 flex justify-between items-center">
 				{/* Logo */}
-				<div className="text-xl font-bold text-blue-500 dark:text-blue-300">
-					<Link href="/">InviteApp</Link>
+				<div className="text-2xl font-bold text-blue-500 dark:text-blue-300">
+					<Link href="/">InviteApp </Link>
+					{/* <TooltipProvider>
+						<Tooltip>
+							<TooltipTrigger>
+								<Badge variant={"destructive"} className="bg-gray-300">
+									{" "}
+									<span className="text-sm text-gray-500 dark:text-gray-400 mx-1">
+										β
+									</span>
+								</Badge>
+							</TooltipTrigger>
+							<TooltipContent className="rounded-sm bg-gray-400 italic text-white">
+								<> beta test</>
+							</TooltipContent>
+						</Tooltip>
+					</TooltipProvider> */}
+
+					<Badge
+						variant={"destructive"}
+						className="absolute cursor-default bg-gray-300 w-auto transition delay-300"
+						// onMouseEnter={() => setBeta("βeta test")}
+						// onMouseLeave={() => setBeta("β")}
+					>
+						<span className="text-sm text-gray-500 dark:text-gray-400 mx-1">
+							<TextScramble
+								as="span"
+								speed={0.01}
+								trigger={isTrigger}
+								onHoverStart={() => setIsTrigger(true)}
+								onScrambleComplete={() => setIsTrigger(false)}
+								initial="β"
+							>
+								βeta test
+							</TextScramble>
+						</span>
+					</Badge>
 				</div>
 
 				{/* Navigation Links */}
-				<ul className="flex space-x-6 text-sm" >
+				<ul className="flex space-x-6">
 					<li>
 						<Link
 							href="/"
@@ -67,7 +106,6 @@ export default function Navigation() {
 					<Button
 						onClick={() => setTheme(theme === "light" ? "dark" : "light")}
 						aria-label="Toggle Theme"
-                        
 					>
 						{theme === "dark" ? <SunMoon size={16} /> : <SunMoon size={16} />}
 					</Button>
