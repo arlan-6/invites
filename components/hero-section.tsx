@@ -34,7 +34,7 @@ export default function HeroSection() {
 
   return (
     <div className="w-full py-8 md:py-8 lg:py-12 xl:py-16 relative overflow-hidden ">
-      <div className="container px-6 md:px-6 relative z-10">
+      <div className="container px-6 md:px-6 relative z-1">
         <div className="grid gap-4 lg:grid-cols-[1fr_400px] lg:gap-10 xl:grid-cols-[1fr_600px]">
           <div className="flex flex-col justify-center space-y-4">
             <div className="space-y-2">
@@ -90,7 +90,7 @@ export default function HeroSection() {
               <div className="absolute inset-0 bg-gradient-to-r from-blue-200 to-purple-200 dark:from-blue-900 dark:to-purple-900">
                 {/* <div className="absolute inset-0 bg-[url('/placeholder.svg?height=450&width=400')] bg-center bg-no-repeat opacity-30"></div> */}
               </div>
-              <div className="relative z-10 h-full w-full overflow-hidden rounded-lg  bg-foreground shadow-2xl">
+              <div className="relative z-1 h-full w-full overflow-hidden rounded-lg  bg-foreground shadow-2xl">
                 <div className="flex h-12 items-center  px-4">
                   <div className="flex items-center gap-2">
                     <div className="h-3 w-3 rounded-full bg-red-500"></div>
