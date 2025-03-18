@@ -2,6 +2,7 @@ import type { Metadata } from "next";
 import "./globals.css";
 import { ThemeProvider } from "next-themes";
 import { Analytics } from "@vercel/analytics/react";
+import { Toaster } from "@/components/ui/sonner";
 
 export const metadata: Metadata = {
 	title: "Invites",
@@ -27,6 +28,8 @@ export default function RootLayout({
 
 				<ThemeProvider attribute="class" defaultTheme="light">
 					{children}
+					<Toaster className="z-[99999999] "/>
+					
 				</ThemeProvider>
 			</body>
 		</html>

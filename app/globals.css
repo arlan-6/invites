@@ -5,59 +5,95 @@
 @custom-variant dark (&:is(.dark *));
 
 :root {
-  --background: 0 0% 100%;
-  --foreground: 222.2 84% 4.9%;
-  --card: 0 0% 100%;
-  --card-foreground: 222.2 84% 4.9%;
-  --popover: 0 0% 100%;
-  --popover-foreground: 222.2 84% 4.9%;
-  --primary: 221.2 83.2% 53.3%;
+  /* Light mode */
+  /* A very light blue-tinted background – almost white */
+  --background: 214.1 20% 98%;
+  /* Dark blue text derived from the primary hue */
+  --foreground: 214.1 20% 10%;
+  
+  /* Cards & popovers use the same background/foreground as the overall background */
+  --card: 214.1 20% 98%;
+  --card-foreground: 214.1 20% 10%;
+  --popover: 214.1 20% 98%;
+  --popover-foreground: 214.1 20% 10%;
+  
+  /* Primary is now based on #006eff */
+  --primary: 214.1 100% 50%; /* #006eff */
+  /* A light, contrasting foreground for text/icons on primary backgrounds */
   --primary-foreground: 210 40% 98%;
-  --secondary: 210 40% 96.1%;
-  --secondary-foreground: 222.2 47.4% 11.2%;
-  --muted: 210 40% 96.1%;
-  --muted-foreground: 215.4 16.3% 46.9%;
-  --accent: 210 40% 96.1%;
-  --accent-foreground: 222.2 47.4% 11.2%;
-  --destructive: 0 84.2% 60.2%;
+  
+  /* Secondary and accent are defined as softer variants of the primary hue */
+  --secondary: 214.1 70% 60%;
+  --secondary-foreground: 214.1 20% 10%;
+  --accent: 214.1 70% 60%;
+  --accent-foreground: 214.1 20% 10%;
+  
+  /* Muted uses a very light, desaturated version of the blue */
+  --muted: 214.1 30% 90%;
+  --muted-foreground: 214.1 20% 20%;
+  
+  /* Destructive is set to a complementary tone – here an orange.
+     (Complement of blue #006eff is roughly #FF9100, approximated as HSL(30, 90%, 50%)) */
+  --destructive: 30 90% 50%;
   --destructive-foreground: 210 40% 98%;
-  --border: 214.3 31.8% 91.4%;
-  --input: 214.3 31.8% 91.4%;
-  --ring: 221.2 83.2% 53.3%;
+  
+  /* Borders and inputs are subtle, using a low saturation version of the primary hue */
+  --border: 214.1 15% 85%;
+  --input: 214.1 15% 85%;
+  
+  /* The ring (focus outline) uses a bright variant of primary */
+  --ring: 214.1 90% 55%;
+  
+  /* Example chart colors: variations along the same hue */
+  --chart-1: 214.1 100% 50%;
+  --chart-2: 214.1 80% 55%;
+  --chart-3: 214.1 60% 50%;
+  --chart-4: 214.1 80% 60%;
+  --chart-5: 214.1 50% 50%;
+  
+  /* Corner rounding remains as defined */
   --radius: 1rem;
-  --chart-1: 12 76% 61%;
-  --chart-2: 173 58% 39%;
-  --chart-3: 197 37% 24%;
-  --chart-4: 43 74% 66%;
-  --chart-5: 27 87% 67%;
 }
 
 .dark {
-  --background: 222.2 84% 4.9%;
-  --foreground: 210 40% 98%;
-  --card: 222.2 84% 4.9%;
-  --card-foreground: 210 40% 98%;
-  --popover: 222.2 84% 4.9%;
-  --popover-foreground: 210 40% 98%;
-  --primary: 217.2 91.2% 59.8%;
-  --primary-foreground: 222.2 47.4% 11.2%;
-  --secondary: 217.2 32.6% 17.5%;
-  --secondary-foreground: 210 40% 98%;
-  --muted: 217.2 32.6% 17.5%;
-  --muted-foreground: 215 20.2% 65.1%;
-  --accent: 217.2 32.6% 17.5%;
-  --accent-foreground: 210 40% 98%;
-  --destructive: 0 62.8% 30.6%;
-  --destructive-foreground: 210 40% 98%;
-  --border: 217.2 32.6% 17.5%;
-  --input: 217.2 32.6% 17.5%;
-  --ring: 224.3 76.3% 48%;
-  --chart-1: 220 70% 50%;
-  --chart-2: 160 60% 45%;
-  --chart-3: 30 80% 55%;
-  --chart-4: 280 65% 60%;
-  --chart-5: 340 75% 55%;
+  /* Dark mode: reverse the light/dark contrast while keeping the blue base */
+  --background: 214.1 20% 10%;
+  --foreground: 214.1 20% 90%;
+  
+  --card: 214.1 20% 10%;
+  --card-foreground: 214.1 20% 90%;
+  --popover: 214.1 20% 10%;
+  --popover-foreground: 214.1 20% 90%;
+  
+  --primary: oklch(0.205 0 0);
+  --primary-foreground: oklch(0.985 0 0);
+  
+  
+  --secondary: 214.1 70% 60%;
+  --secondary-foreground: 214.1 20% 90%;
+  --accent: 214.1 70% 60%;
+  --accent-foreground: 214.1 20% 90%;
+  
+  /* Darkened muted colors */
+  --muted: 214.1 30% 20%;
+  --muted-foreground: 214.1 20% 90%;
+  
+  --destructive: 30 90% 50%;
+  --destructive-foreground: 214.1 20% 90%;
+  
+  /* Dark mode borders become deeper */
+  --border: 214.1 15% 30%;
+  --input: 214.1 15% 30%;
+  
+  --ring: 214.1 90% 55%;
+  
+  --chart-1: 214.1 100% 50%;
+  --chart-2: 214.1 80% 55%;
+  --chart-3: 214.1 60% 50%;
+  --chart-4: 214.1 80% 60%;
+  --chart-5: 214.1 50% 50%;
 }
+
 
 @theme inline {
   --radius-sm: calc(var(--radius) - 4px);
