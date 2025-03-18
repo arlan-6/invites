@@ -6,12 +6,10 @@ import { useEffect, useState } from "react";
 import { SunMoon, Menu, X } from "lucide-react";
 import { Button } from "./ui/button";
 import { Badge } from "./ui/badge";
-import { TextScramble } from "./motion-primitives/text-scramble";
 
 export default function Navigation() {
 	const { theme, setTheme } = useTheme();
 	const [mounted, setMounted] = useState(false);
-	const [isTrigger, setIsTrigger] = useState(false);
 	const [isMenuOpen, setMenuOpen] = useState(false);
 
 	// Ensure the component is mounted before rendering (to avoid hydration mismatch)
@@ -41,16 +39,10 @@ export default function Navigation() {
 						className="absolute cursor-default bg-gray-300 transition "
 					>
 						<span className="text-sm text-gray-500 dark:text-gray-400 mx-1">
-							<TextScramble
-								as="span"
-								speed={0.01}
-								trigger={isTrigger}
-								onHoverStart={() => setIsTrigger(true)}
-								onScrambleComplete={() => setIsTrigger(false)}
-								initial="β"
+							<span
 							>
 								βeta test
-							</TextScramble>
+							</span>
 						</span>
 					</Badge>
 				</div>

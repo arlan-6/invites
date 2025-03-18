@@ -28,7 +28,7 @@ export const TemplatesList: FC<TemplatesListProps> = ({ className }) => {
 					<div className="mt-4">
 						<h4 className="  text-gray-100">Occasions</h4>
 						<ul className="mt-2 flex gap-2 bg-gray-200 dark:bg-gray-800 p-2 rounded-sm">
-							{template.occasions.map((occasion, i) => (
+							{template.occasions.map((occasion ) => (
 								<div key={occasion} className={cn("flex gap-1 items-center ")}>
 									<span className="">•</span>
 									<li key={occasion} className=" text-sm ">

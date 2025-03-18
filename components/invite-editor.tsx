@@ -11,18 +11,26 @@ interface InviteEditorProps {
 	className?: string;
 }
 
-type InviteData ={
-    title?: string;
-    date?: string;
-    time?: string;
-    location?: string;
-    message?: string;
-}
+type InviteData = {
+	title?: string;
+	date?: string;
+	time?: string;
+	location?: string;
+	message?: string;
+};
 
 export const InviteEditor: FC<InviteEditorProps> = ({ className }) => {
 	const params = useParams<{ id: string }>();
 
-	const template = getTemplateById(params.id);
+	
+	const [formData, setFormData] = useState<InviteData>({
+		title: "",
+		date: "",
+		time: "",
+		location: "",
+		message: "",
+	});
+const template = getTemplateById(params.id);
 	if (!template) {
 		return (
 			<div className={cn("", className)}>
@@ -30,14 +38,6 @@ export const InviteEditor: FC<InviteEditorProps> = ({ className }) => {
 			</div>
 		);
 	}
-
-	const [formData, setFormData] = useState<InviteData>({
-        title: "",
-        date: "",
-        time: "",
-        location: "",
-        message: "",}
-    );
 
 	const handleChange = (e: React.ChangeEvent<HTMLInputElement>) => {
 		const { name, value } = e.target;
@@ -47,17 +47,16 @@ export const InviteEditor: FC<InviteEditorProps> = ({ className }) => {
 		}));
 	};
 
-const handleDelete = () => {
-    // Delete the template
-    setFormData({
-        title: "",
-        date: "",
-        time: "",
-        location: "",
-        message: "",
-    }
-    )
-}
+	const handleDelete = () => {
+		// Delete the template
+		setFormData({
+			title: "",
+			date: "",
+			time: "",
+			location: "",
+			message: "",
+		});
+	};
 
 	return (
 		<div className={cn("", className)}>
@@ -65,13 +64,20 @@ const handleDelete = () => {
 
 			<div className="">
 				<div className="flex justify-around items-center mb-8">
-                    <div className="">
-					<h1 className="text-2xl">{template.name}</h1>
-					<p className="">{template.description}</p></div>
-                    <div className="flex gap-2">
-                        <Button variant="outline" onClick={handleDelete} className="hover:border-red-500 hover:text-red-800 hover:bg-red-100 transition-colors duration-150 cursor-pointer" >Delete</Button>
-                        <ShareDialogButton templateId={params.id} inviteData={formData}/>
-                    </div>
+					<div className="">
+						<h1 className="text-2xl">{template.name}</h1>
+						<p className="">{template.description}</p>
+					</div>
+					<div className="flex gap-2">
+						<Button
+							variant="outline"
+							onClick={handleDelete}
+							className="hover:border-red-500 hover:text-red-800 hover:bg-red-100 transition-colors duration-150 cursor-pointer"
+						>
+							Delete
+						</Button>
+						<ShareDialogButton templateId={params.id} inviteData={formData} />
+					</div>
 				</div>
 
 				<div className="w-full flex items-center justify-center gap-16">
@@ -134,8 +140,6 @@ const handleDelete = () => {
 						<div className="text-center">{formData.message || "Message"}</div>
 					</div>
 				</div>
-
-
 			</div>
 		</div>
 	);
