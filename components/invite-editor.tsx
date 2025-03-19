@@ -80,7 +80,7 @@ const template = getTemplateById(params.id);
 					</div>
 				</div>
 
-				<div className="w-full flex items-center justify-center gap-16">
+				<div className="w-full flex items-center justify-center gap-16 flex-wrap">
 					<div
 						className={cn(
 							"bg-gradient-to-bl p-6 rounded-lg w-96 text-white",
