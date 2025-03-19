@@ -26,7 +26,7 @@ export default function RootLayout({
 			<body>
 				<Analytics />
 
-				<ThemeProvider attribute="class" defaultTheme="light">
+				<ThemeProvider attribute="class" defaultTheme="system">
 					{children}
 					<Toaster className="z-[99999999] "/>
 					
