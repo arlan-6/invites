@@ -8,11 +8,14 @@ import { Button } from "./ui/button";
 import { Badge } from "./ui/badge";
 import { cn } from "@/lib/utils";
 import { motion } from "framer-motion";
+import { LanguageToggle } from "./language-toggle";
+import { useLanguage } from "./language-provider";
 
 export default function Navigation() {
 	const { theme, setTheme } = useTheme();
 	const [mounted, setMounted] = useState(false);
 	const [isMenuOpen, setMenuOpen] = useState(true);
+	const { t } = useLanguage();
 
 	// Ensure the component is mounted before rendering (to avoid hydration mismatch)
 	useEffect(() => {
@@ -63,16 +66,16 @@ export default function Navigation() {
 					{/* Desktop Navigation Links */}
 					<ul className="hidden md:flex space-x-6">
 						<li>
-							<NavLink href="/">Home</NavLink>
+							<NavLink href="/">{t("navigation.home")}</NavLink>
 						</li>
 						<li>
-							<NavLink href="/about">About</NavLink>
+							<NavLink href="/about">{t("navigation.about")}</NavLink>
 						</li>
 						<li>
-							<NavLink href="/templates">Templates</NavLink>
+							<NavLink href="/templates">{t("navigation.templates")}</NavLink>
 						</li>
 						<li>
-							<NavLink href="/contact">Contact</NavLink>
+							<NavLink href="/contact">{t("navigation.contact")}</NavLink>
 						</li>
 					</ul>
 
@@ -92,9 +95,10 @@ export default function Navigation() {
 								<SunMoon size={16} />
 							)}
 						</Button>
+						<LanguageToggle theme={theme === "light" ? "outline" : "secondary"}/>
 						<Link href="/signup">
 							<Button variant="outline" className="text-primary ">
-								Sign Up
+								{t("navigation.signup")}
 							</Button>
 						</Link>
 					</div>
@@ -115,13 +119,14 @@ export default function Navigation() {
 								<SunMoon size={16} />
 							)}
 						</Button>
-						<button
+						<LanguageToggle theme={theme === "light" ? "outline" : "secondary"}/>
+
+						<Button
 							onClick={toggleMenu}
 							aria-expanded={isMenuOpen}
-							className="text-gray-700 dark:text-gray-300 focus:outline-none p-2"
-						>
+							>
 							{isMenuOpen ? <X size={24} /> : <Menu size={24} />}
-						</button>
+						</Button>
 					</div>
 				</div>
 
@@ -138,16 +143,16 @@ export default function Navigation() {
 			>
 				<ul className="px-4 pt-2 pb-4 space-y-2">
 					<li>
-						<NavLink href="/">Home</NavLink>
+						<NavLink href="/">{t("navigation.home")}</NavLink>
 					</li>
 					<li>
-						<NavLink href="/about">About</NavLink>
+						<NavLink href="/about">{t("navigation.about")}</NavLink>
 					</li>
 					<li>
-						<NavLink href="/templates">Templates</NavLink>
+						<NavLink href="/templates">{t("navigation.templates")}</NavLink>
 					</li>
 					<li>
-						<NavLink href="/contact">Contact</NavLink>
+						<NavLink href="/contact">{t("navigation.contact")}</NavLink>
 					</li>
 					<li>
 						<Link
@@ -155,7 +160,7 @@ export default function Navigation() {
 							onClick={handleLinkClick}
 							className="block bg-primary text-primary-foreground px-4 py-2 rounded-md text-center hover:bg-primary/90 transition"
 						>
-							Sign Up
+							{t("navigation.signup")}
 						</Link>
 					</li>
 				</ul>

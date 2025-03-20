@@ -4,32 +4,11 @@ import Link from "next/link";
 import { Button } from "@/components/ui/button";
 import { ArrowRight } from "lucide-react";
 import { motion } from "framer-motion";
+import { useLanguage } from "./language-provider";
 
 export default function HeroSection() {
-  const currentLanguage = "en";
-  const content = {
-    en: {
-      heading: "Create Beautiful Digital Invitations",
-      subheading:
-        "Design, share, and manage digital invitations for all your special occasions with our easy-to-use platform.",
-      cta: "Get Started",
-      secondary: "View Templates",
-    },
-    kk: {
-      heading: "Әдемі Цифрлық Шақыруларды Жасаңыз",
-      subheading:
-        "Біздің қолдануға оңай платформамызбен барлық ерекше оқиғаларыңыз үшін цифрлық шақыруларды жасаңыз, бөлісіңіз және басқарыңыз.",
-      cta: "Бастау",
-      secondary: "Үлгілерді Қарау",
-    },
-    ru: {
-      heading: "Создавайте Красивые Цифровые Приглашения",
-      subheading:
-        "Создавайте, делитесь и управляйте цифровыми приглашениями для всех ваших особых случаев с помощью нашей простой в использовании платформы.",
-      cta: "Начать",
-      secondary: "Просмотр Шаблонов",
-    },
-  };
+  const {t}=useLanguage();
+;
 
   return (
     <section className="w-full py-12 md:py-16 lg:py-20 xl:py-24 relative overflow-hidden bg-background dark:bg-background">
@@ -44,7 +23,7 @@ export default function HeroSection() {
                 animate={{ opacity: 1, y: 0 }}
                 transition={{ duration: 0.5 }}
               >
-                {content[currentLanguage].heading}
+                {t("hero.heading")}
               </motion.h1>
               <motion.p
                 className="max-w-2xl text-lg text-muted-foreground dark:text-muted-foreground md:text-xl"
@@ -52,7 +31,7 @@ export default function HeroSection() {
                 animate={{ opacity: 1, y: 0 }}
                 transition={{ duration: 0.5, delay: 0.1 }}
               >
-                {content[currentLanguage].subheading}
+                {t("hero.subheading")}
               </motion.p>
             </div>
             <motion.div
@@ -66,7 +45,7 @@ export default function HeroSection() {
                   variant="default"
                   className="bg-primary hover:bg-primary/90 text-primary-foreground text-lg px-6 py-3 flex items-center"
                 >
-                  {content[currentLanguage].cta}
+                  {t("hero.cta")}
                   <ArrowRight className="ml-2 h-5 w-5" />
                 </Button>
               </Link>
@@ -75,7 +54,7 @@ export default function HeroSection() {
                   variant="outline"
                   className="border border-primary text-primary hover:bg-primary/10 dark:hover:bg-primary/20 text-lg px-6 py-3"
                 >
-                  {content[currentLanguage].secondary}
+                  {t("hero.secondary")}
                 </Button>
               </Link>
             </motion.div>
@@ -120,3 +99,4 @@ export default function HeroSection() {
     </section>
   );
 }
+

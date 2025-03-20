@@ -4,12 +4,14 @@ import { cn } from "@/lib/utils";
 import { templates } from "@/data/templates";
 import Link from "next/link";
 import { motion } from "framer-motion";
+import { useLanguage } from "./language-provider";
 
 interface TemplatesListProps {
 	className?: string;
 }
 
 export const TemplatesList: FC<TemplatesListProps> = ({ className }) => {
+	const { language, t } = useLanguage() as { language: 'kz' | 'ru' | 'en'; t: any };
 	return (
 		<div className="w-full ">
 		<div className={cn("flex gap-2 flex-wrap p-6 ", className)}>
@@ -30,14 +32,14 @@ export const TemplatesList: FC<TemplatesListProps> = ({ className }) => {
 						className="cursor-pointer group"
 					>
 						<h3 className="text-xl tracking-wide font-bold text-gray-100 group-hover:underline">
-							{template.name}
+							{template.translations[language].name}
 						</h3>
 						<p className="group-hover:underline  text-gray-300">
-							{template.description}
+							{template.translations[language].description}
 						</p>
 					</Link>
 					<div className="mt-4">
-						<h4 className="  text-gray-100">Occasions</h4>
+						<h4 className="  text-gray-100">{t('templates.occasions')}</h4>
 						<ul className="mt-2 flex flex-wrap gap-2 bg-background text-foreground  p-2 rounded-sm">
 							{template.occasions.map((occasion) => (
 								<div key={occasion} className={cn("flex gap-1 items-center ")}>

@@ -5,6 +5,7 @@ import { cn } from '@/lib/utils';
 import { useId } from 'react';
 import { createPortal } from 'react-dom';
 import { X } from 'lucide-react';
+import { Button } from '../ui/button';
 // import { usePreventScroll } from './usePreventScroll';
 
 const DialogContext = createContext<{
@@ -150,8 +151,9 @@ function DialogTrigger({ children, className }: DialogTriggerProps) {
   if (!context) throw new Error('DialogTrigger must be used within Dialog');
 
   return (
-    <button
+    <Button
       onClick={context.handleTrigger}
+      type='button'
       className={cn(
         'inline-flex items-center justify-center rounded-md text-sm font-medium',
         'transition-colors focus-visible:ring-2 focus-visible:outline-hidden',
@@ -160,7 +162,7 @@ function DialogTrigger({ children, className }: DialogTriggerProps) {
       )}
     >
       {children}
-    </button>
+    </Button>
   );
 }
 

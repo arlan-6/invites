@@ -10,8 +10,11 @@ import {
 	DialogTrigger,
 } from "./motion-primitives/dialog";
 import LZString from "lz-string";
-import { Copy } from "lucide-react";
+import { Copy, Phone, Share2 } from "lucide-react";
 import { toast } from "sonner";
+import { Button } from "./ui/button";
+import { Input } from "./ui/input";
+import Link from "next/link";
 
 interface shareDialogButtonProps {
 	className?: string;
@@ -23,11 +26,13 @@ interface shareDialogButtonProps {
 		location?: string;
 		message?: string;
 	};
+	shareText?: string;
 }
 
 export const ShareDialogButton: FC<shareDialogButtonProps> = ({
 	templateId,
 	inviteData,
+	shareText,
 }) => {
 	const [ShareLink, setShareLink] = useState<string | null>(null);
 
@@ -40,7 +45,6 @@ export const ShareDialogButton: FC<shareDialogButtonProps> = ({
 			inviteData.time === "" ||
 			(inviteData.location === "" && inviteData.message === "")
 		) {
-			toast.error("No data to share!");
 			setShareLink(null);
 			return;
 		}
@@ -56,9 +60,14 @@ export const ShareDialogButton: FC<shareDialogButtonProps> = ({
 	};
 
 	return (
-		<Dialog>
-			<DialogTrigger className="bg-zinc-950 px-4 py-2 text-sm text-white hover:bg-zinc-900 dark:bg-white dark:text-zinc-900 dark:hover:bg-zinc-100">
-				Share
+		<Dialog
+			// onOpenChange={() => toast.error("No data to share!", { duration: 500 })}
+		>
+			<DialogTrigger className="">
+				<>
+					{shareText}
+					<Share2 size={16} strokeWidth={1.5} />
+				</>
 			</DialogTrigger>
 			<DialogContent className="w-full max-w-md bg-white p-6 dark:bg-zinc-900">
 				<DialogHeader>
@@ -69,14 +78,33 @@ export const ShareDialogButton: FC<shareDialogButtonProps> = ({
 						Link to the invitation
 					</DialogDescription>
 				</DialogHeader>
-				<div className="flex items-center gap-2">
-					<div className="w-5/6 overflow-hidden truncate border p-2 px-4 rounded border-gray-300 dark:border-gray-700">
+				{ShareLink ? (
+					<div className="flex items-center gap-2">
+						{/* <div className="w-5/6 overflow-hidden truncate border p-2 px-4 rounded border-gray-300 dark:border-gray-700">
 						{ShareLink && <>{ShareLink}</>}
+
+					</div> */}
+						<Input value={ShareLink} readOnly />
+						<Button
+							variant={"outline"}
+							className="cursor-pointer m-0"
+							onClick={copyHandler}
+						>
+							<Copy className="" strokeWidth={1} />
+						</Button>
+						<Link
+							href={`https://api.whatsapp.com/send?text=${ShareLink}`}
+							target="_blank"
+							rel="noopener noreferrer"
+						>
+							<Button variant={"outline"} className="cursor-pointer m-0">
+								<Phone className="" strokeWidth={1} />
+							</Button>
+						</Link>
 					</div>
-					<div className="cursor-pointer hover:bg-gray-100 border rounded p-2 border-gray-300 dark:border-gray-700">
-						<Copy className="" onClick={copyHandler} strokeWidth={1} />
-					</div>
-				</div>
+				) : (
+					<div className="text-center text-red-500">No data to share!</div>
+				)}
 				<DialogClose />
 			</DialogContent>
 		</Dialog>
