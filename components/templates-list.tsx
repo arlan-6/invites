@@ -11,7 +11,7 @@ interface TemplatesListProps {
 }
 
 export const TemplatesList: FC<TemplatesListProps> = ({ className }) => {
-	const { language, t } = useLanguage() as { language: 'kz' | 'ru' | 'en'; t: any };
+	const { language, t } = useLanguage() as { language: 'kk' | 'ru' | 'en'; t: any };
 	return (
 		<div className="w-full ">
 		<div className={cn("flex gap-2 flex-wrap p-6 ", className)}>
