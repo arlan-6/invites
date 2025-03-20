@@ -14,12 +14,6 @@ type LanguageContextType = {
 
 const defaultLanguage: Language = "en"
 
-const translationss = {
-en:{},
-kk:{},
-ru:{},
-}
-
 const LanguageContext = createContext<LanguageContextType>({
   language: defaultLanguage,
   setLanguage: () => {},
