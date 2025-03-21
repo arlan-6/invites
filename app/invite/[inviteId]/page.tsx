@@ -7,6 +7,9 @@ import { cn } from "@/lib/utils";
 import { getTemplateById } from "@/data/templates";
 import { InviteTemplate } from "@/components/invite-template";
 import BottomNavigation from "@/components/bottom-navigation";
+
+
+
 const Page: React.FC = () => {
 	const params = useParams<{ inviteId: string }>();
 
@@ -16,6 +19,9 @@ const Page: React.FC = () => {
 
 	const { templateId, inviteData } = JSON.parse(decompressedData);
 	const template = getTemplateById(templateId);
+
+
+	
 	if (!template) {
 		return (
 			<div className={cn("")}>
