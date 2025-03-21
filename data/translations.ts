@@ -23,6 +23,7 @@ export const translations = {
         'inviteEditor.event-location': "Event location",
         'inviteEditor.event-location-placeholder': "Almaty, Abai 123",
         'inviteEditor.event-message': "Event message",
+        'inviteEditor.event-message-max': "max 50 characters",
         'inviteEditor.event-message-placeholder': "Join us for a night of fun and celebration!",
     },
     kk: {
@@ -49,6 +50,8 @@ export const translations = {
         'inviteEditor.event-location': "Іс-шара орны",
         'inviteEditor.event-location-placeholder': "Алматы, Абай 123",
         'inviteEditor.event-message': "Іс-шара хабарламасы",
+        'inviteEditor.event-message-max': "максималды 50 таңба",
+        
         'inviteEditor.event-message-placeholder': "Көңілді кешке қосылыңыз!",
     },
     ru: {
@@ -75,6 +78,7 @@ export const translations = {
         'inviteEditor.event-location': "Место события",
         'inviteEditor.event-location-placeholder': "Алматы, Абая 123",
         'inviteEditor.event-message': "Сообщение события",
+        'inviteEditor.event-message-max': "максимум 50 символов",
         'inviteEditor.event-message-placeholder': "Присоединяйтесь к нам на вечер веселья и празднования!",
     },
 };

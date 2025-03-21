@@ -63,7 +63,7 @@ export const ShareDialogButton: FC<shareDialogButtonProps> = ({
 		<Dialog
 			// onOpenChange={() => toast.error("No data to share!", { duration: 500 })}
 		>
-			<DialogTrigger className="">
+			<DialogTrigger className="shadow">
 				<>
 					{shareText}
 					<Share2 size={16} strokeWidth={1.5} />
