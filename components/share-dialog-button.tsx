@@ -93,7 +93,7 @@ export const ShareDialogButton: FC<shareDialogButtonProps> = ({
 							<Copy className="" strokeWidth={1} />
 						</Button>
 						<Link
-							href={`https://api.whatsapp.com/send?text=${ShareLink}`}
+							href={`https://api.whatsapp.com/send?text=${ShareLink.replace('+','%2B')}`}
 							target="_blank"
 							rel="noopener noreferrer"
 						>
