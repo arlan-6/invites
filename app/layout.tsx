@@ -18,11 +18,13 @@ export default function RootLayout({
 	return (
 		<html lang="en" suppressHydrationWarning>
 			<head>
-				<script
-					crossOrigin="anonymous"
-					src="//unpkg.com/react-scan/dist/auto.global.js"
-					async
-				/>
+				{process.env.NODE_ENV && process.env.NODE_ENV == "development" && (
+					<script
+						crossOrigin="anonymous"
+						src="//unpkg.com/react-scan/dist/auto.global.js"
+						async
+					/>
+				)}
 			</head>
 			<body>
 				<Analytics />
