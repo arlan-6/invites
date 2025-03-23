@@ -5,6 +5,7 @@ import { templates } from "@/data/templates";
 import Link from "next/link";
 import { motion } from "framer-motion";
 import { useLanguage } from "./language-provider";
+import { Badge } from "./ui/badge";
 
 interface TemplatesListProps {
 	className?: string;
@@ -61,6 +62,11 @@ export const TemplatesList: FC<TemplatesListProps> = ({ className }) => {
 									</div>
 								))}
 							</ul>
+						</div>
+						<div className="flex gap-2 mt-2">
+							{template.tags?.map((tag,i)=>(
+								<Badge key={i}>{tag}</Badge>
+							))}
 						</div>
 					</motion.div>
 				))}

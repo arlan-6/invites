@@ -22,6 +22,7 @@ export const translations = {
         'inviteEditor.event-time-placeholder': "12:00 PM | 18:00",
         'inviteEditor.event-location': "Event location",
         'inviteEditor.event-location-placeholder': "Almaty, Abai 123",
+        'inviteEditor.event-timer': "Add timer",
         'inviteEditor.event-message': "Event message",
         'inviteEditor.event-message-max': "max 50 characters",
         'inviteEditor.event-message-placeholder': "Join us for a night of fun and celebration!",

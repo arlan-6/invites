@@ -4,18 +4,22 @@ export type TemplateType = {
   imageCorner?: string;
   image?: string;
   occasions: string[];
+  tags?:('timer'|'middleText'|'cornerIMage')[];
   translations: {
     kk: {
       name: string;
       description: string;
+      middleText?:string;
     };
     ru: {
       name: string;
       description: string;
+      middleText?:string;
     };
     en: {
       name: string;
       description: string;
+      middleText?:string;
     };
   };
 };
@@ -29,16 +33,20 @@ export const templates: TemplateType[] = [
       kk: {
         name: "Қарапайым",
         description: "Қарапайым ашықхат",
+        middleText: "Құттықтаймыз!",
       },
       ru: {
         name: "Простой",
         description: "Простая открытка",
+        middleText: "Поздравляем!",
       },
       en: {
         name: "Simple",
         description: "A simple card",
+        middleText: "Congratulations!",
       },
     },
+    tags: ["middleText",'timer'],
   },
   {
     id: "2",
@@ -77,6 +85,7 @@ export const templates: TemplateType[] = [
         description: "A modern card",
       },
     },
+    tags: ["timer"],
   },
   {
     id: "4",
@@ -107,22 +116,25 @@ export const templates: TemplateType[] = [
       kk: {
         name: "Көктем",
         description: "Көктемгі ашықхат",
+        middleText: "Көктем келді!",
       },
       ru: {
         name: "Весна",
         description: "Весенняя открытка",
+        middleText: "Весна пришла!",
       },
       en: {
         name: "Spring",
         description: "A spring-themed card",
+        middleText: "Spring is here!",
       },
     },
+    tags: ["middleText"],
   },
   {
     id: "6",
     color: "from-red-400 to-orange-500",
     occasions: ["wedding", "engagement"],
-    imageCorner: "/template/heartCorner.png",
     translations: {
       kk: {
         name: "Махаббат",
@@ -137,12 +149,12 @@ export const templates: TemplateType[] = [
         description: "A card for love and romance",
       },
     },
+    tags: ["timer"],
   },
   {
     id: "7",
     color: "from-blue-300 to-cyan-500",
     occasions: ["baby-shower", "newborn"],
-    imageCorner: "/template/babyCorner.png",
     translations: {
       kk: {
         name: "Сәбидің қуанышы",
@@ -162,7 +174,6 @@ export const templates: TemplateType[] = [
     id: "8",
     color: "from-purple-500 to-indigo-600",
     occasions: ["graduation", "achievement"],
-    imageCorner: "/template/graduationCorner.png",
     translations: {
       kk: {
         name: "Білім",
@@ -182,7 +193,6 @@ export const templates: TemplateType[] = [
     id: "9",
     color: "from-orange-300 to-yellow-500",
     occasions: ["thanksgiving", "gratitude"],
-    imageCorner: "/template/thanksgivingCorner.png",
     translations: {
       kk: {
         name: "Рақмет",
@@ -197,12 +207,12 @@ export const templates: TemplateType[] = [
         description: "A card for expressing gratitude",
       },
     },
+    tags: ["timer"],
   },
   {
     id: "10",
     color: "from-gray-400 to-gray-600",
     occasions: ["condolence", "sympathy"],
-    imageCorner: "/template/sympathyCorner.png",
     translations: {
       kk: {
         name: "Қайғы",
