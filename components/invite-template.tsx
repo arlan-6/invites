@@ -3,7 +3,7 @@ import { cn } from "@/lib/utils";
 import { TemplateType } from "@/data/templates";
 import { useLanguage } from "./language-provider";
 import { Calendar1, Clock, MapPin } from "lucide-react";
-import {  Roboto } from "next/font/google";
+import { Roboto } from "next/font/google";
 import { motion } from "framer-motion";
 import BreathingText from "@/fancy/components/text/breathing-text";
 import InviteTimer from "./invite-timer";
@@ -42,7 +42,7 @@ export const InviteTemplate: FC<InviteTemplateProps> = ({
 	};
 
 	// Function to render corner images
-	const renderCornerImages = () => {
+	const renderCornerImages = (rotation: boolean = true) => {
 		if (!template.imageCorner) return null;
 
 		return (
@@ -50,22 +50,31 @@ export const InviteTemplate: FC<InviteTemplateProps> = ({
 				<img
 					src={template.imageCorner}
 					alt="Corner decoration"
-					className="absolute top-3 left-3 w-12 h-12 -rotate-90"
+					className={cn(
+						"absolute top-3 left-3 w-12 h-12 ",
+						rotation && "-rotate-90",
+					)}
 				/>
 				<img
 					src={template.imageCorner}
 					alt="Corner decoration"
-					className="absolute top-3 right-3 w-12 h-12"
+					className={cn("absolute top-3 right-3 w-12 h-12")}
 				/>
 				<img
 					src={template.imageCorner}
 					alt="Corner decoration"
-					className="absolute bottom-3 right-3 w-12 h-12 rotate-90"
+					className={cn(
+						"absolute bottom-3 right-3 w-12 h-12",
+						rotation && "rotate-90",
+					)}
 				/>
 				<img
 					src={template.imageCorner}
 					alt="Corner decoration"
-					className="absolute bottom-3 left-3 w-12 h-12 rotate-180"
+					className={cn(
+						"absolute bottom-3 left-3 w-12 h-12",
+						rotation && "rotate-180",
+					)}
 				/>
 			</>
 		);
@@ -77,12 +86,12 @@ export const InviteTemplate: FC<InviteTemplateProps> = ({
 			animate={{ opacity: 1, scale: 1 }}
 			transition={{ duration: 0.5, delay: 0.5 }}
 			className={cn(
-				"relative bg-gradient-to-bl p-8 pb-12 rounded-lg w-96 text-white min-h-96 ",
+				"relative bg-gradient-to-bl p-8 pt-12 pb-16 rounded-lg w-96 text-white min-h-96 ",
 				template.color,
 			)}
 		>
 			{/* Corner Images */}
-			{renderCornerImages()}
+			{renderCornerImages(template.cornerRitarion)}
 
 			{/* Card Content */}
 			<div className="relative z-10">
@@ -132,16 +141,14 @@ export const InviteTemplate: FC<InviteTemplateProps> = ({
 				</div>
 
 				<div className="w-full flex justify-center text-2xl">
-					{template.tags?.includes("timer") && (
-						formData.date &&
-						formData.time ? (
+					{template.tags?.includes("timer") &&
+						(formData.date && formData.time ? (
 							<InviteTimer time={formData.time} targetDate={formData.date} />
-						): (
-						<div className="text-red-500 text-lg">
-							Select Date and Time to see timer!
-						</div>
-					)
-					) }
+						) : (
+							<div className="text-red-500 text-lg">
+								Select Date and Time to see timer!
+							</div>
+						))}
 				</div>
 				{/* Location */}
 				<div className="flex gap-2 items-center text-sm mt-2">

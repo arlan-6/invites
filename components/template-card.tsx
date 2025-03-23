@@ -39,8 +39,8 @@ export const TemplateCard: FC<templateCardProps> = ({
 						</p>
 					</div>
 					{template.imageCorner && (
-						<div className="">
-							<img className="w-9" src={template.imageCorner} />
+						<div className="w-9 h-9">
+							<img className="" src={template.imageCorner} />
 						</div>
 					)}
 				</div>

@@ -2,6 +2,7 @@ export type TemplateType = {
   id: string;
   color: string;
   imageCorner?: string;
+  cornerRitarion?:boolean;
   image?: string;
   occasions: string[];
   tags?:('timer'|'middleText'|'cornerIMage')[];
@@ -46,7 +47,7 @@ export const templates: TemplateType[] = [
         middleText: "Congratulations!",
       },
     },
-    tags: ["middleText",'timer'],
+    tags: ["middleText", "timer"],
   },
   {
     id: "2",
@@ -133,100 +134,29 @@ export const templates: TemplateType[] = [
   },
   {
     id: "6",
-    color: "from-red-400 to-orange-500",
-    occasions: ["wedding", "engagement"],
+    color: "from-black to-red-600",
+    occasions: ["Pank", "🤘"],
+    imageCorner:'/template/zord.png',
+    cornerRitarion:false,
+
     translations: {
       kk: {
-        name: "Махаббат",
-        description: "Махаббатқа арналған ашықхат",
+        name: "Zord",
+        description: "",
+        middleText:'Щлещ',
       },
       ru: {
-        name: "Любовь",
-        description: "Открытка для любви",
+        name: "Zord",
+        description: "",
+        middleText:'Шлеш',
       },
       en: {
-        name: "Love",
-        description: "A card for love and romance",
+        name: "Zord",
+        description: "",
+        middleText:'Slash',
       },
     },
-    tags: ["timer"],
-  },
-  {
-    id: "7",
-    color: "from-blue-300 to-cyan-500",
-    occasions: ["baby-shower", "newborn"],
-    translations: {
-      kk: {
-        name: "Сәбидің қуанышы",
-        description: "Сәбидің дүниеге келуіне арналған ашықхат",
-      },
-      ru: {
-        name: "Рождение ребенка",
-        description: "Открытка для рождения ребенка",
-      },
-      en: {
-        name: "Baby Joy",
-        description: "A card for celebrating a newborn",
-      },
-    },
-  },
-  {
-    id: "8",
-    color: "from-purple-500 to-indigo-600",
-    occasions: ["graduation", "achievement"],
-    translations: {
-      kk: {
-        name: "Білім",
-        description: "Білім мен жетістіктерге арналған ашықхат",
-      },
-      ru: {
-        name: "Образование",
-        description: "Открытка для образования и достижений",
-      },
-      en: {
-        name: "Education",
-        description: "A card for education and achievements",
-      },
-    },
-  },
-  {
-    id: "9",
-    color: "from-orange-300 to-yellow-500",
-    occasions: ["thanksgiving", "gratitude"],
-    translations: {
-      kk: {
-        name: "Рақмет",
-        description: "Рақмет айтуға арналған ашықхат",
-      },
-      ru: {
-        name: "Благодарность",
-        description: "Открытка для благодарности",
-      },
-      en: {
-        name: "Thank You",
-        description: "A card for expressing gratitude",
-      },
-    },
-    tags: ["timer"],
-  },
-  {
-    id: "10",
-    color: "from-gray-400 to-gray-600",
-    occasions: ["condolence", "sympathy"],
-    translations: {
-      kk: {
-        name: "Қайғы",
-        description: "Қайғы мен көңіл айтуға арналған ашықхат",
-      },
-      ru: {
-        name: "Соболезнование",
-        description: "Открытка для соболезнования",
-      },
-      en: {
-        name: "Sympathy",
-        description: "A card for condolences and sympathy",
-      },
-    },
+    tags: ["timer",'middleText'],
   },
 ];
 
