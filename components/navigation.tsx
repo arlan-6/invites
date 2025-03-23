@@ -5,11 +5,11 @@ import { useTheme } from "next-themes";
 import { useEffect, useState } from "react";
 import { SunMoon, Menu, X, Sun, Moon } from "lucide-react";
 import { Button } from "./ui/button";
-import { Badge } from "./ui/badge";
 import { cn } from "@/lib/utils";
 import { motion } from "framer-motion";
 import { LanguageToggle } from "./language-toggle";
 import { useLanguage } from "./language-provider";
+import { Logo } from "./logo";
 
 export default function Navigation() {
 	const { theme, setTheme } = useTheme();
@@ -54,13 +54,8 @@ export default function Navigation() {
 				<div className="container mx-auto px-4 py-4 flex justify-between items-center ">
 					{/* Logo and Beta Badge */}
 					<div className="relative text-2xl font-bold text-primary ">
-						<Link href="/">InviteApp</Link>
-						<Badge
-							variant="destructive"
-							className="absolute top-0 right-0 translate-x-1/2 -translate-y-1/2 bg-muted text-destructive px-2 py-0.5 rounded-full text-[10px] font-medium shadow-sm"
-						>
-							βeta
-						</Badge>
+						<Link href="/"><Logo/></Link>
+						
 					</div>
 
 					{/* Desktop Navigation Links */}
