@@ -190,7 +190,7 @@ export const InviteEditor: FC<InviteEditorProps> = ({ className }) => {
 										id="location"
 										name="location"
 										placeholder={t("inviteEditor.event-location-placeholder")}
-										maxLength={20}
+										maxLength={40}
 										value={formData.location}
 										onChange={handleChange}
 										required

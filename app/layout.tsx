@@ -6,7 +6,7 @@ import { Toaster } from "@/components/ui/sonner";
 import { LanguageProvider } from "@/components/language-provider";
 
 export const metadata: Metadata = {
-	title: "Invites",
+	title: "Shaqr | beta",
 	description: "Invites",
 };
 

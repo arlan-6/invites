@@ -96,7 +96,7 @@ export const InviteTemplate: FC<InviteTemplateProps> = ({
 			{/* Card Content */}
 			<div className="relative z-10">
 				{/* Title */}
-				<div className="text-5xl font-semibold tracking-tight text-center mb-3">
+				<div className="text-3xl font-semibold  text-center mb-3">
 					<BreathingText
 						className={cn("", roboto.className)}
 						label={formData.title || t("inviteEditor.event-title-placeholder")}
@@ -122,7 +122,7 @@ export const InviteTemplate: FC<InviteTemplateProps> = ({
 					</div>
 				</div>
 
-				<div className="w-full min-h-52 my-3 rounded-2xl flex justify-center items-center text-4xl font-semibold">
+				<div className="w-full max-h-52 h-1/3 my-3 rounded-2xl flex justify-center items-center text-4xl font-semibold">
 					{template.tags?.includes("middleText") && (
 						<>
 							{/* {template.translations[language].middleText} */}
