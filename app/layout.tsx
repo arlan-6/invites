@@ -16,7 +16,7 @@ export default function RootLayout({
 	children: React.ReactNode;
 }>) {
 	return (
-		<html lang="en" suppressHydrationWarning>
+		<html lang="kk" suppressHydrationWarning>
 			<head>
 				{process.env.NODE_ENV && process.env.NODE_ENV == "development" && (
 					<script

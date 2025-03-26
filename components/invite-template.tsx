@@ -122,7 +122,7 @@ export const InviteTemplate: FC<InviteTemplateProps> = ({
 					</div>
 				</div>
 
-				<div className="w-full max-h-52 h-1/3 my-3 rounded-2xl flex justify-center items-center text-4xl font-semibold">
+				<div className="w-full max-h-52 h-1/2 my-22 rounded-2xl flex justify-center items-center text-4xl font-semibold">
 					{template.tags?.includes("middleText") && (
 						<>
 							{/* {template.translations[language].middleText} */}

@@ -93,8 +93,8 @@ export default function Navigation() {
               )}
             </Button>
             <LanguageToggle theme={theme === "light" ? "outline" : "secondary"} />
-            <Link href="/signup">
-              <Button variant="outline" className="text-primary">
+            <Link href="/signup" >
+              <Button variant="outline" disabled className="text-primary">
                 {t("navigation.signup")}
               </Button>
             </Link>
@@ -147,7 +147,7 @@ export default function Navigation() {
           </li>
           <li>
             <Link
-              href="/signup"
+              href="/signup" 
               onClick={handleLinkClick}
               className="block bg-primary text-primary-foreground px-4 py-2 rounded-md text-center hover:bg-primary/90 transition"
             >

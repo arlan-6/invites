@@ -7,7 +7,7 @@ import { Input } from "./ui/input";
 import { Button } from "./ui/button";
 import { ShareDialogButton } from "./share-dialog-button";
 import { useLanguage } from "./language-provider";
-import { Paintbrush } from "lucide-react";
+import { ArrowUp, Paintbrush } from "lucide-react";
 import { InviteTemplate } from "./invite-template";
 import { motion } from "framer-motion";
 
@@ -101,7 +101,7 @@ export const InviteEditor: FC<InviteEditorProps> = ({ className }) => {
 					</div>
 				</div>
 
-				<div className="w-full flex items-center justify-center gap-16 flex-wrap">
+				<div className="flex-col-reverse md:flex-row  w-full flex items-center justify-center gap-4 md:gap-16 flex-wrap">
 					<motion.div
 						initial={{ opacity: 0, y: 20 }}
 						animate={{ opacity: 1, y: 0 }}
@@ -301,7 +301,13 @@ export const InviteEditor: FC<InviteEditorProps> = ({ className }) => {
 							</div>
 						</>
 					</motion.div>
-
+					<motion.div
+						className="md:hidden"
+						animate={{ y: [10, -10,-3,-10, 10] }}
+						transition={{ repeat: Infinity, duration: 1.5 }}
+					>
+						<ArrowUp />
+					</motion.div>
 					<InviteTemplate template={template} formData={formData} />
 				</div>
 			</div>
