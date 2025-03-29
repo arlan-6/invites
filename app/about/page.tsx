@@ -1,13 +1,12 @@
-import Navigation from '@/components/navigation';
+
 import React from 'react';
 
-const TemplatesPage: React.FC = () => {
+const Page: React.FC = () => {
     return (
         <div>
-            <Navigation />
-            
+            About
         </div>
     );
 };
 
-export default TemplatesPage;
+export default Page;
