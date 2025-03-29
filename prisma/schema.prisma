@@ -12,6 +12,7 @@ datasource db {
   provider = "mongodb"
   url      = env("DATABASE_URL")
 }
+// mongodb+srv://shaqrapp:PCOQfoU7vlrAKdNm@cluster0.sofo3oi.mongodb.net/shaqrapp?retryWrites=true&w=majority&appName=Cluster0
 
 model User {
   id            String    @id @default(cuid()) @map("_id")
@@ -69,4 +70,18 @@ model Verification {
   expiresAt  DateTime
   createdAt  DateTime @default(now())
   updatedAt  DateTime @updatedAt
+}
+
+
+model Template {
+  id             String   @id @default(cuid()) @map("_id") // Unique identifier
+  color          String   // Gradient color or theme
+  imageCorner    String?  // Optional image for the corner
+  cornerRitarion Boolean? // Optional boolean for corner rotation
+  image          String?  // Optional main image
+  occasions      String[] // Array of occasions
+  tags           String[] // Array of tags (e.g., 'timer', 'middleText', etc.)
+  translations   Json     // JSON object for translations (kk, ru, en)
+  createdAt      DateTime @default(now()) // Timestamp for creation
+  updatedAt      DateTime @updatedAt      // Timestamp for last update
 }

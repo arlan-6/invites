@@ -5,10 +5,11 @@ import { Badge } from "./ui/badge";
 import Link from "next/link";
 import { TemplateType } from "@/data/templates";
 import { useLanguage } from "./language-provider";
+import { Template } from "@prisma/client";
 
 interface templateCardProps {
 	className?: string;
-	template: TemplateType;
+	template: TemplateType | Template;
 	i: number;
 }
 
@@ -32,7 +33,7 @@ export const TemplateCard: FC<templateCardProps> = ({
 				<div className="flex justify-between">
 					<div className="">
 						<h3 className="text-xl tracking-wide font-bold text-gray-100 group-hover:underline">
-							{template.translations[language].name}
+							{template.translations[language].name }
 						</h3>
 						<p className="group-hover:underline  text-gray-300">
 							{template.translations[language].description}
