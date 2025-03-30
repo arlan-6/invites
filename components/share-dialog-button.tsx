@@ -10,11 +10,18 @@ import {
 	DialogTrigger,
 } from "./motion-primitives/dialog";
 import LZString from "lz-string";
-import { Copy, Phone, Share2 } from "lucide-react";
+import { ArrowLeft, ArrowRight, Copy, Phone, Share2 } from "lucide-react";
 import { toast } from "sonner";
 import { Button } from "./ui/button";
 import { Input } from "./ui/input";
 import Link from "next/link";
+import { authClient } from "@/auth-client";
+import {
+	HoverCard,
+	HoverCardContent,
+	HoverCardTrigger,
+} from "@/components/ui/hover-card";
+import { useLanguage } from "./language-provider";
 
 interface shareDialogButtonProps {
 	className?: string;
@@ -35,7 +42,8 @@ export const ShareDialogButton: FC<shareDialogButtonProps> = ({
 	shareText,
 }) => {
 	const [ShareLink, setShareLink] = useState<string | null>(null);
-
+	const { data, isPending, error } = authClient.useSession();
+	const { t } = useLanguage();
 	// Update compressedData and ShareLink whenever inviteData changes
 	useEffect(() => {
 		if (
@@ -61,14 +69,32 @@ export const ShareDialogButton: FC<shareDialogButtonProps> = ({
 
 	return (
 		<Dialog
-			// onOpenChange={() => toast.error("No data to share!", { duration: 500 })}
+
+		// onOpenChange={() => toast.error("No data to share!", { duration: 500 })}
 		>
-			<DialogTrigger className="shadow">
-				<>
-					{shareText}
-					<Share2 size={16} strokeWidth={1.5} />
-				</>
-			</DialogTrigger>
+			<HoverCard >
+				<HoverCardTrigger>
+					<DialogTrigger disabled={!data || isPending} className="shadow">
+						<>
+							{shareText}
+							<Share2 size={16} strokeWidth={1.5} />
+						</>
+					</DialogTrigger>
+				</HoverCardTrigger>
+				<HoverCardContent hidden={!(!data || isPending)}>
+					<div className="mb-2">
+						🚫{t("inviteEditor.needSignUp")}✨
+					</div>
+					<div className="flex  items-center justify-center">
+						<ArrowRight className="text-primary motion-preset-wobble motion-duration-1000 motion-delay-500 mr-1" /> 
+						<Link href="/sign-up">
+							<Button variant="default">{t("navigation.signup")}</Button>
+						</Link>
+						<ArrowLeft className="text-primary motion-preset-wobble motion-duration-1000 " />
+					</div>
+				</HoverCardContent>
+			</HoverCard>
+
 			<DialogContent className="w-full max-w-md bg-white p-6 dark:bg-zinc-900">
 				<DialogHeader>
 					<DialogTitle className="text-zinc-900 dark:text-white">
@@ -93,7 +119,10 @@ export const ShareDialogButton: FC<shareDialogButtonProps> = ({
 							<Copy className="" strokeWidth={1} />
 						</Button>
 						<Link
-							href={`https://api.whatsapp.com/send?text=${ShareLink.replace('+','%2B')}`}
+							href={`https://api.whatsapp.com/send?text=${ShareLink.replace(
+								"+",
+								"%2B",
+							)}`}
 							target="_blank"
 							rel="noopener noreferrer"
 						>

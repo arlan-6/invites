@@ -15,6 +15,7 @@ export const translations = {
         "templates.occasions": "Occasions",
         "inviteEditor.clear": "Clear",
         "inviteEditor.share": "Share",
+        "inviteEditor.needSignUp": "You need to sign up or log in first to share!",
         "inviteEditor.title": "Title",
         "inviteEditor.event-title": "Event title",
         "inviteEditor.event-title-placeholder": "Birthday party",

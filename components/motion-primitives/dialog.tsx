@@ -144,15 +144,19 @@ function Dialog({
 export type DialogTriggerProps = {
   children: React.ReactNode;
   className?: string;
+  disabled?:boolean
 };
 
-function DialogTrigger({ children, className }: DialogTriggerProps) {
+function DialogTrigger({ children, className,disabled=false }: DialogTriggerProps) {
   const context = useContext(DialogContext);
   if (!context) throw new Error('DialogTrigger must be used within Dialog');
-
+  const handleTrigger = () =>{
+    context.handleTrigger
+  }
   return (
     <Button
-      onClick={context.handleTrigger}
+    disabled={disabled}
+      onClick={handleTrigger}
       type='button'
       className={cn(
         'inline-flex items-center justify-center rounded-md text-sm font-medium',

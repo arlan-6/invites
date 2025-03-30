@@ -152,9 +152,10 @@ export default function Navigation() {
 				initial={{ opacity: 0, scaleY: 0.8, y: -20 }}
 				animate={{
 					opacity: isMenuOpen ? 1 : 0,
-					scaleY: isMenuOpen ? 1 : 0.8,
+					scaleY: [!isMenuOpen ? 1 : 0.8,isMenuOpen ? 1 : 0.8,isMenuOpen ? 1 : 0.8,,isMenuOpen ? 1 : 0],
 					y: isMenuOpen ? 0 : -20,
 				}}
+				
 				exit={{ opacity: 0, scaleY: 0.8, y: -20 }}
 				transition={{
 					duration: 0.5,
