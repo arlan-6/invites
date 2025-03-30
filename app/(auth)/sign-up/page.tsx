@@ -78,7 +78,7 @@ export default function SignUp() {
 					setPendingGoogle(true);
 				},
 				onSuccess: async () => {
-					// router.push("/");
+					router.push("/dashboard");
 					// router.refresh();
 				},
 				onError: (ctx: ErrorContext) => {
