@@ -78,8 +78,8 @@ export default function SignUp() {
 					setPendingGoogle(true);
 				},
 				onSuccess: async () => {
-					router.push("/");
-					router.refresh();
+					// router.push("/");
+					// router.refresh();
 				},
 				onError: (ctx: ErrorContext) => {
 					toast("Something went wrong", {

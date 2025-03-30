@@ -11,7 +11,6 @@ import { LanguageToggle } from "./language-toggle";
 import { useLanguage } from "./language-provider";
 import { Logo } from "./logo";
 import { authClient } from "@/auth-client";
-import { auth } from "@/auth";
 import { redirect } from "next/navigation";
 
 export default function Navigation() {
