@@ -105,8 +105,8 @@ export default function Navigation() {
 						/>
 						{!!data?.session ? (
 							<div className="flex gap-2 items-center">
-                <Link href={'/dashboard'}><Button variant={'outline'}><UserRound/> Dasboard</Button></Link>
-                <Button variant={'outline'} onClick={logOutHandler}>LogOut <LogOut/></Button>
+                <Link href={'/dashboard'}><Button variant={'outline'}><UserRound/> {t("navigation.dashboard")}</Button></Link>
+                <Button variant={'outline'} onClick={logOutHandler}>{t("navigation.logout")} <LogOut/></Button>
               </div>
 						) : (
 							<Link href="/sign-up">
