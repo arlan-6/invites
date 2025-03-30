@@ -58,7 +58,7 @@ export default function Navigation() {
 	);
 
 	return (
-		<div className={cn("max-h-16  md:h-auto", isMenuOpen ? "max-h-62" : "")}>
+		<div className={cn("max-h-16  md:h-auto", isMenuOpen ? "max-h-[300px]" : "")}>
 			<nav className=" bg-background dark:bg-background shadow-md dark:shadow-none ">
 				<div className="container mx-auto px-4 py-4 flex justify-between items-center">
 					{/* Logo */}
@@ -149,9 +149,18 @@ export default function Navigation() {
 
 			{/* Mobile Navigation Menu with Framer Motion Animation */}
 			<motion.div
-				initial={{ opacity: 0, scaleY: 0 }}
-				animate={{ opacity: isMenuOpen ? 1 : 0, scaleY: isMenuOpen ? 1 : 0 }}
-				transition={{ duration: 0.3, ease: "easeInOut" }}
+				initial={{ opacity: 0, scaleY: 0.8, y: -20 }}
+				animate={{
+					opacity: isMenuOpen ? 1 : 0,
+					scaleY: isMenuOpen ? 1 : 0.8,
+					y: isMenuOpen ? 0 : -20,
+				}}
+				exit={{ opacity: 0, scaleY: 0.8, y: -20 }}
+				transition={{
+					duration: 0.5,
+					ease: [0.16, 1, 0.3, 1], // Custom cubic-bezier for a smooth bounce effect
+				}}
+				
 				style={{ transformOrigin: "top" }}
 				className="z-50 md:hidden bg-background dark:bg-background border-t border-gray-200 dark:border-gray-700 overflow-hidden"
 			>
@@ -168,15 +177,32 @@ export default function Navigation() {
 					<li>
 						<NavLink href="/contact">{t("navigation.contact")}</NavLink>
 					</li>
-					<li>
-						<Link
-							href="/signup"
-							onClick={handleLinkClick}
-							className="block bg-primary text-primary-foreground px-4 py-2 rounded-md text-center hover:bg-primary/90 transition"
-						>
-							{t("navigation.signup")}
-						</Link>
-					</li>
+					{!!data?.session ? (
+            <div className="flex flex-col space-y-2">
+                <Link href="/dashboard" onClick={handleLinkClick}>
+                    <Button variant="outline" className="w-full">
+                        <UserRound className="mr-2" /> {t("navigation.dashboard")}
+                    </Button>
+                </Link>
+                <Button
+                    variant="outline"
+                    className="w-full"
+                    onClick={logOutHandler}
+                >
+                    <LogOut className="mr-2" /> {t("navigation.logout")}
+                </Button>
+            </div>
+        ) : (
+            <li>
+                <Link
+                    href="/sign-up"
+                    onClick={handleLinkClick}
+                    className="block bg-primary text-primary-foreground px-4 py-2 rounded-md text-center hover:bg-primary/90 transition"
+                >
+                    {t("navigation.signup")}
+                </Link>
+            </li>
+        )}
 				</ul>
 			</motion.div>
 		</div>
