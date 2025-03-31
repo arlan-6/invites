@@ -182,7 +182,7 @@ export const ShareDialogButton: FC<ShareDialogButtonProps> = ({
 								>
 									<Copy strokeWidth={1} />
 								</Button>
-								<WhatsAppButton text={encodeURIComponent(directShareLink)} />
+								<WhatsAppButton text={directShareLink} />
 							</div>
 						)}
 					</>
