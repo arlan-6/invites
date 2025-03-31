@@ -9,20 +9,20 @@ type Props = {
 	params: Promise<{ inviteId: string }>;
 };
 
-export async function generateMetadata({ params }: Props): Promise<Metadata> {
-	// read route params
-	const { inviteId } = await params;
+// export async function generateMetadata({ params }: Props): Promise<Metadata> {
+// 	// read route params
+// 	const { inviteId } = await params;
 
-	const decompressedData = LZString.decompressFromEncodedURIComponent(
-		inviteId.replace(/%2B/g, "+"),
-	);
+// 	const decompressedData = LZString.decompressFromEncodedURIComponent(
+// 		inviteId.replace(/%2B/g, "+"),
+// 	);
 
-	const { inviteData } = JSON.parse(decompressedData);
-	return {
-		title: inviteData.title,
-		description: inviteData.message,
-	};
-}
+// 	const { inviteData } = JSON.parse(decompressedData);
+// 	return {
+// 		title: inviteData.title,
+// 		description: inviteData.message,
+// 	};
+// }
 
 export default function Layout({
 	children,

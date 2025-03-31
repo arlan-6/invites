@@ -4,6 +4,7 @@ import React from "react";
 import NotLoggedIn from "@/components/dashboard/not-loggedin";
 import Banned from "@/components/dashboard/banned";
 import UserInfo from "@/components/dashboard/user-info";
+import UserInvitesList from "@/components/dashboard/user-invites-list";
 
 const DashboardPage: React.FC = async () => {
     const session = await auth.api.getSession({
@@ -31,6 +32,7 @@ const DashboardPage: React.FC = async () => {
 
         <div className="min-h-screen bg-gray-100 p-6">
             <UserInfo user={user} />
+            <UserInvitesList userId={user.id}/>
         </div>
     );
 };
