@@ -4,8 +4,20 @@ import React, { useEffect, useState } from "react";
 import { Invite } from "@prisma/client";
 import { Button } from "@/components/ui/button";
 import Loader from "../ui/loader";
-import { getUserInvites } from "@/lib/inviteUtils";
+import { getUserInvites, deleteInvite } from "@/lib/inviteUtils";
 import Link from "next/link";
+import { MapPin, SquareArrowOutUpRight, Trash2 } from "lucide-react";
+import {
+	Table,
+	TableBody,
+	TableCaption,
+	TableCell,
+	TableHead,
+	TableHeader,
+	TableRow,
+} from "@/components/ui/table";
+import WhatsAppButton from "../whatsapp-button";
+import { toast } from "sonner";
 
 interface UserInvitesListProps {
 	userId: string;
@@ -33,6 +45,20 @@ const UserInvitesList: React.FC<UserInvitesListProps> = ({ userId }) => {
 		fetchInvites();
 	}, [userId]);
 
+	const handleDeleteInvite = async (inviteId: string) => {
+		try {
+			await deleteInvite(inviteId);
+			toast.success("Invite deleted successfully!");
+			// Update the state to remove the deleted invite
+			setInvites(
+				(prevInvites) =>
+					prevInvites?.filter((invite) => invite.id !== inviteId) || null,
+			);
+		} catch (err) {
+			console.error("Error deleting invite:", err);
+			toast.error("Failed to delete invite. Please try again.");
+		}
+	};
 	if (loading) {
 		return (
 			<div className="flex justify-center items-center h-40">
@@ -58,32 +84,54 @@ const UserInvitesList: React.FC<UserInvitesListProps> = ({ userId }) => {
 	}
 
 	return (
-		<div className="bg-white shadow-md rounded-lg p-6">
-			<h2 className="text-xl font-semibold mb-4 text-gray-900">Your Invites</h2>
-			<ul className="space-y-4">
-				{invites.map((invite) => (
-					<li
-						key={invite.id}
-						className="flex justify-between items-center p-4 border border-gray-200 rounded-lg hover:shadow-sm transition-shadow"
-					>
-						<div>
-							<h3 className="text-base font-medium text-gray-800">
-								{invite.title}
-							</h3>
-							<p className="text-sm text-gray-500">
-								{new Date(invite.date).toLocaleDateString()} at{" "}
+		<div className="max-w-4xl mx-auto bg-background shadow-lg rounded-lg p-6">
+			<Table>
+				<TableCaption>List of simple invites</TableCaption>
+				<TableHeader>
+					<TableRow>
+						<TableHead className="w-[100px]">Title</TableHead>
+						<TableHead>Date & Time</TableHead>
+						<TableHead className="flex items-center gap-3">
+							<MapPin size={16} strokeWidth={1} />
+							Location
+						</TableHead>
+						<TableHead className="text-right">Links</TableHead>
+						<TableHead className="text-right">Delete</TableHead>
+					</TableRow>
+				</TableHeader>
+				<TableBody>
+					{invites.map((invite) => (
+						<TableRow key={invite.id}>
+							<TableCell>{invite.title}</TableCell>
+							<TableCell>
+								{new Date(invite.date).toLocaleDateString()}{" "}
 								{new Date(invite.date).toLocaleTimeString()}
-							</p>
-							<p className="text-sm text-gray-600">{invite.location}</p>
-						</div>
-						<Link href={`invite/${invite.id}`} target="_blank">
-							<Button variant="outline" size="sm">
-								View
-							</Button>
-						</Link>
-					</li>
-				))}
-			</ul>
+							</TableCell>
+							<TableCell>{invite.location}</TableCell>
+							<TableCell className="text-right flex items-center gap-3 justify-end">
+								<Link href={`invite/${invite.id}`} target="_blank">
+									<Button variant="outline" size="sm" className="text-blue-600">
+										<SquareArrowOutUpRight />
+									</Button>
+								</Link>
+
+								<WhatsAppButton
+									text={`${window.location.origin}/invite/${invite.id}`}
+								/>
+							</TableCell>
+							<TableCell className="text-right">
+								<Button
+									onClick={() => handleDeleteInvite(invite.id)}
+									variant={"outline"}
+									className=""
+								>
+									<Trash2 />
+								</Button>
+							</TableCell>
+						</TableRow>
+					))}
+				</TableBody>
+			</Table>
 		</div>
 	);
 };

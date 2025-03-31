@@ -87,7 +87,7 @@ export const InviteEditor: FC<InviteEditorProps> = ({ className }) => {
                             {template.translations[language].description}
                         </p>
                     </div>
-                    <div className="flex gap-2">
+                    <div className="ml-3 flex gap-2 flex-wrap">
                         <Button
                             variant="outline"
                             onClick={handleClear}
@@ -109,7 +109,7 @@ export const InviteEditor: FC<InviteEditorProps> = ({ className }) => {
                         animate={{ opacity: 1, y: 0 }}
                         transition={{ duration: 0.5 }}
                         className={cn(
-                            "container shadow-2xl bg-primary-foreground p-6 rounded-lg w-96 text-white"
+                            "container shadow-2xl bg-primary-foreground p-6 rounded-lg min-w-[335px] max-w-96 text-white"
                         )}
                     >
                         <fieldset className="space-y-4">
@@ -221,7 +221,7 @@ export const InviteEditor: FC<InviteEditorProps> = ({ className }) => {
                         </fieldset>
 
                         {/* Buttons */}
-                        <div className="flex justify-between mt-6">
+                        <div className="flex justify-between mt-6 flex-wrap gap-2">
                             <Button
                                 variant="outline"
                                 onClick={handleClear}

@@ -48,13 +48,13 @@ export const InviteTemplate: FC<InviteTemplateProps> = ({ className, template, f
     // Function to render corner images
     const renderCornerImages = useMemo(() => {
         if (!template.imageCorner) return null;
-
+        
         return (
             <>
                 <img
                     src={template.imageCorner}
                     alt="Corner decoration"
-                    className={cn("absolute top-3 left-3 w-12 h-12", template.cornerRitarion && "-rotate-90")}
+                    className={cn("absolute top-3 left-3 w-12 h-12", !template.cornerRitarion && "-rotate-90")}
                 />
                 <img
                     src={template.imageCorner}
@@ -64,12 +64,12 @@ export const InviteTemplate: FC<InviteTemplateProps> = ({ className, template, f
                 <img
                     src={template.imageCorner}
                     alt="Corner decoration"
-                    className={cn("absolute bottom-3 right-3 w-12 h-12", template.cornerRitarion && "rotate-90")}
+                    className={cn("absolute bottom-3 right-3 w-12 h-12", !template.cornerRitarion && "rotate-90")}
                 />
                 <img
                     src={template.imageCorner}
                     alt="Corner decoration"
-                    className={cn("absolute bottom-3 left-3 w-12 h-12", template.cornerRitarion && "rotate-180")}
+                    className={cn("absolute bottom-3 left-3 w-12 h-12", !template.cornerRitarion && "rotate-180")}
                 />
             </>
         );
@@ -89,7 +89,7 @@ export const InviteTemplate: FC<InviteTemplateProps> = ({ className, template, f
             animate={{ opacity: 1, scale: 1 }}
             transition={{ duration: 0.5, delay: 0.5 }}
             className={cn(
-                "relative bg-gradient-to-bl p-8 pt-12 pb-16 rounded-lg w-96 text-white min-h-96",
+                "relative bg-gradient-to-bl p-8 pt-12 pb-16 rounded-lg min-w-[335px] max-w-96 text-white min-h-96",
                 template.color,
                 className
             )}

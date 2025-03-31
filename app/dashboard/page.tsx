@@ -30,8 +30,9 @@ const DashboardPage: React.FC = async () => {
 
     return (
 
-        <div className="min-h-screen bg-gray-100 p-6">
+        <div className="min-h-screen bg-primary-foreground p-6">
             <UserInfo user={user} />
+            <br />
             <UserInvitesList userId={user.id}/>
         </div>
     );
