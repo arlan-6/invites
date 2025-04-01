@@ -23,8 +23,6 @@ interface InviteTemplateProps {
         time?: string;
         location?: string;
         message?: string;
-        timer?: boolean;
-        middleText?: string;
     };
 }
 
@@ -44,7 +42,7 @@ export const InviteTemplate: FC<InviteTemplateProps> = ({ className, template, f
             message: formData?.message || "",
         };
     }, [formData, t]);
-
+    
     // Function to render corner images
     const renderCornerImages = useMemo(() => {
         if (!template.imageCorner) return null;

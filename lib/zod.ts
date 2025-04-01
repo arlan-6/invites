@@ -45,7 +45,9 @@ export const resetPasswordSchema = object({
 export const inviteSchema = object({
 	title: string().min(1, "Event title is required"),
 	eventDate: string().date("Event date is required"),
-	eventTime: string().time("Time is required"),
+	eventTime: string().regex(/^([01]\d|2[0-3]):([0-5]\d)$/, {
+    message: "Invalid time format. Expected HH:mm (24-hour format).",
+  }),
 	eventLocation: string().min(1, "Event location is required"),
 	eventMessage: string()
 		.max(50, "Message cannot exceed 50 characters")

@@ -26,6 +26,7 @@ import { useLanguage } from "./language-provider";
 import { createInvite } from "@/lib/inviteUtils";
 import { redirect } from "next/navigation";
 import WhatsAppButton from "./whatsapp-button";
+import useInviteStore from "@/store/inviteEdit";
 
 interface ShareDialogButtonProps {
 	className?: string;
@@ -48,8 +49,10 @@ export const ShareDialogButton: FC<ShareDialogButtonProps> = ({
 	const [shareLink, setShareLink] = useState<string | null>(null);
 	const [directShareLink, setDirectShareLink] = useState<string | null>(null);
 	const [loading, setLoading] = useState<boolean>(false);
+	const [isFailed,setIsFailed] = useState<boolean>(false)
 	const { data: session, isPending } = authClient.useSession();
 	const { t } = useLanguage();
+	const {  updateInviteData } = useInviteStore();
 
 	const isInviteDataValid = useMemo(() => {
 		return (
@@ -57,7 +60,7 @@ export const ShareDialogButton: FC<ShareDialogButtonProps> = ({
 			inviteData.title &&
 			inviteData.date &&
 			inviteData.time &&
-			(inviteData.location || inviteData.message)
+			inviteData.location
 		);
 	}, [inviteData]);
 
@@ -97,11 +100,19 @@ export const ShareDialogButton: FC<ShareDialogButtonProps> = ({
 			toast.success("Invite created successfully!");
 		} catch (err: any) {
 			console.error("Error generating share links:", err);
+			setIsFailed(true)
 			toast.error(
 				err.message || "Failed to generate share links. Please try again.",
 			);
 		} finally {
 			setLoading(false);
+			updateInviteData({
+				title: "",
+				eventDate: "",
+				eventTime: "",
+				eventLocation: "",
+				eventMessage: "",
+			});
 		}
 	}, [isInviteDataValid, inviteData, session?.user?.id, templateId]);
 
@@ -116,10 +127,12 @@ export const ShareDialogButton: FC<ShareDialogButtonProps> = ({
 			onOpenChange={(isOpen) => {
 				if (isOpen) {
 					handleDialogOpen();
-				} else {
+				} else if (!isFailed) {
 					redirect("/dashboard");
 				}
 			}}
+
+
 		>
 			<HoverCard>
 				<HoverCardTrigger>
