@@ -18,6 +18,9 @@ export async function generateMetadata({ params }: Props): Promise<Metadata> {
 	return {
 		title: invite?.title || 'ShaqrApp',
 		description: invite?.message || 'You was invited to the event',
+		openGraph:{
+			images:[invite?.template?.imageCorner || '',invite?.template?.image || '',]
+		}
 	};
 }
 
