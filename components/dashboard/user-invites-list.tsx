@@ -6,7 +6,7 @@ import { Button } from "@/components/ui/button";
 import Loader from "../ui/loader";
 import { getUserInvites, deleteInvite } from "@/lib/inviteUtils";
 import Link from "next/link";
-import { MapPin, SquareArrowOutUpRight, Trash2 } from "lucide-react";
+import { Copy, MapPin, SquareArrowOutUpRight, Trash2 } from "lucide-react";
 import {
 	Table,
 	TableBody,
@@ -44,6 +44,10 @@ const UserInvitesList: React.FC<UserInvitesListProps> = ({ userId }) => {
 
 		fetchInvites();
 	}, [userId]);
+
+	const copyHandler = (invite_id:string)=>{
+		navigator.clipboard.writeText(`${window.location.origin}/invite/${invite_id}`)
+	}
 
 	const handleDeleteInvite = async (inviteId: string) => {
 		try {
@@ -118,6 +122,7 @@ const UserInvitesList: React.FC<UserInvitesListProps> = ({ userId }) => {
 								<WhatsAppButton
 									text={`${window.location.origin}/invite/${invite.id}`}
 								/>
+								<Button onClick={()=>copyHandler(invite.id)}><Copy/></Button>
 							</TableCell>
 							<TableCell className="text-right">
 								<Button
