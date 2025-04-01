@@ -1,6 +1,5 @@
 // app/invite/[inviteId]/image/route.tsx
-import { InviteTemplate } from '@/components/invite-template';
-import { TemplateType } from '@/data/templates';
+
 import { getInviteById } from '@/lib/inviteUtils';
 import { cn } from '@/lib/utils';
 import { ImageResponse } from 'next/og';
@@ -11,9 +10,9 @@ export const config = {
 
 export async function GET(
   request: Request,
-  { params }: { params: { inviteId: string } }
+  context: { params: Promise<{ inviteId: string }> }
 ) {
-  const { inviteId } = params;
+	const { inviteId } = await context.params;
   
   // Fetch invite data from the database
   const invite = await getInviteById(inviteId);

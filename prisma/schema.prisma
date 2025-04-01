@@ -12,7 +12,7 @@ datasource db {
   provider = "mongodb"
   url      = env("DATABASE_URL")
 }
-// mongodb+srv://shaqrapp:PCOQfoU7vlrAKdNm@cluster0.sofo3oi.mongodb.net/shaqrapp?retryWrites=true&w=majority&appName=Cluster0
+// mongodb+srv://shaqrapp:@cluster0.sofo3oi.mongodb.net/shaqrapp?retryWrites=true&w=majority&appName=Cluster0
 
 model User {
   id            String    @id @default(cuid()) @map("_id")
