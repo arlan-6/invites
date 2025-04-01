@@ -151,8 +151,8 @@ export const ShareDialogButton: FC<ShareDialogButtonProps> = ({
 						{shareText}
 					</DialogTitle>
 					<DialogDescription className="text-zinc-600 dark:text-zinc-400">
-						<span>{t('inviteEditor.dialogCloseText')} </span>
-						<span>{t('inviteEditor.dialogLinkText')}Link to the invitation</span>
+						<span>{t('inviteEditor.dialogCloseText')} </span><br />
+						<span>{t('inviteEditor.dialogLinkText')}</span>
 					</DialogDescription>
 				</DialogHeader>
 
@@ -191,9 +191,11 @@ export const ShareDialogButton: FC<ShareDialogButtonProps> = ({
 				{!shareLink && !loading && (
 					<div className="text-center text-red-500">No data to share!</div>
 				)}
-
+					<br />
+					<Link href={'/dashboard'} ><Button variant={'outline'}>Go to dashboard</Button></Link>
 				<DialogClose />
 			</DialogContent>
+			
 		</Dialog>
 	);
 };

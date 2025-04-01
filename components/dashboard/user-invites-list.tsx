@@ -99,7 +99,7 @@ const UserInvitesList: React.FC<UserInvitesListProps> = ({ userId }) => {
 							<MapPin size={16} strokeWidth={1} />
 							Location
 						</TableHead>
-						<TableHead className="text-right">Links</TableHead>
+						<TableHead className="text-center">Links</TableHead>
 						<TableHead className="text-right">Delete</TableHead>
 					</TableRow>
 				</TableHeader>
@@ -112,17 +112,18 @@ const UserInvitesList: React.FC<UserInvitesListProps> = ({ userId }) => {
 								{new Date(invite.date).toLocaleTimeString()}
 							</TableCell>
 							<TableCell>{invite.location}</TableCell>
-							<TableCell className="text-right flex items-center gap-3 justify-end">
-								<Link href={`invite/${invite.id}`} target="_blank">
+							<TableCell className="text-center flex items-center gap-3 justify-center">
+								<Link href={`invite/${invite.id}`} target="_blank" title="Go to invite">
 									<Button variant="outline" size="sm" className="text-blue-600">
 										<SquareArrowOutUpRight />
 									</Button>
 								</Link>
 
 								<WhatsAppButton
+								
 									text={`${window.location.origin}/invite/${invite.id}`}
 								/>
-								<Button onClick={()=>copyHandler(invite.id)}><Copy/></Button>
+								<Button title="Copy link" onClick={()=>copyHandler(invite.id)}><Copy/></Button>
 							</TableCell>
 							<TableCell className="text-right">
 								<Button

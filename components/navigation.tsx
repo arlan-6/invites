@@ -11,7 +11,7 @@ import { LanguageToggle } from "./language-toggle";
 import { useLanguage } from "./language-provider";
 import { Logo } from "./logo";
 import { authClient } from "@/auth-client";
-import { redirect } from "next/navigation";
+import { useRouter } from 'next/navigation'
 
 export default function Navigation() {
 	const { data, isPending } = authClient.useSession();
@@ -20,7 +20,7 @@ export default function Navigation() {
 	// Start with the mobile menu closed
 	const [isMenuOpen, setMenuOpen] = useState(false);
 	const { t } = useLanguage();
-
+	const router = useRouter()
 	// Avoid hydration issues
 	useEffect(() => {
 		setMounted(true);
@@ -37,7 +37,8 @@ export default function Navigation() {
 	};
 	const logOutHandler = () => {
 		authClient.signOut();
-		redirect("/");
+		router.refresh()
+		router.push("/");
 	};
 
 	const NavLink = ({

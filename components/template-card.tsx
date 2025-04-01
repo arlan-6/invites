@@ -35,8 +35,8 @@ export const TemplateCard: FC<templateCardProps> = ({ template, i }) => {
                 "container p-4 rounded-lg shadow-2xl bg-gradient-to-br min-w-64 flex-1",
                 template.color
             )}
-        >
-            <Link href={`/templates/${template.id}`} className="cursor-pointer group">
+        ><Link href={`/templates/${template.id}`} className="cursor-pointer group h-full w-full ">
+            
                 <div className="flex justify-between">
                     <div>
                         <h3 className="text-xl tracking-wide font-bold text-gray-100 group-hover:underline">
@@ -52,7 +52,7 @@ export const TemplateCard: FC<templateCardProps> = ({ template, i }) => {
                         </div>
                     )}
                 </div>
-            </Link>
+            
             <div className="mt-4">
                 <h4 className="text-gray-100">{t("templates.occasions")}</h4>
                 <ul className="mt-2 flex flex-wrap gap-2 bg-background text-foreground p-2 rounded-sm">
@@ -70,7 +70,7 @@ export const TemplateCard: FC<templateCardProps> = ({ template, i }) => {
                 {template.tags?.map((tag, i) => (
                     <Badge key={i}>{tag}</Badge>
                 ))}
-            </div>
+            </div></Link>
         </motion.div>
     );
 };

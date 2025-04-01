@@ -131,10 +131,15 @@ export default function SignUp() {
 									)}
 								/>
 							))}
-							<LoadingButton pending={pending}>Sign up</LoadingButton>
+							<FormMessage>
+								Not available yet!
+							</FormMessage>
+							<LoadingButton pending={pending || true}>Sign up</LoadingButton>
 						</form>
 					</Form>
-					<div className="mt-4">
+					<div className="w-full flex justify-center"><div className="w-5/6 h-0.5 m-4 bg-accent-foreground"></div></div>
+					<div className="">
+						
 						<LoadingButton
 							pending={pendingGoogle}
 							onClick={handleSignInWithGithub}
