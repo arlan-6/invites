@@ -7,7 +7,7 @@ import { getTemplateById, TemplateType } from "@/data/templates";
 import { InviteTemplate } from "@/components/invite-template";
 import { getInviteById } from "@/lib/inviteUtils";
 import Loader from "@/components/ui/loader";
-import { Invite, User } from "@prisma/client";
+import {  User } from "@prisma/client";
 
 const Page: React.FC = () => {
     const params = useParams<{ inviteId: string }>();
