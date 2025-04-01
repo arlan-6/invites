@@ -106,8 +106,8 @@ const Page: React.FC = () => {
 
     return (
         <div className="bg-gradient-to-t from-background to-primary h-screen w-full">
-			<div className="absolute top-24 left-4 text-white">
-				<p>Created by: {creator?.name || "Unknown"}</p>
+			<div className="relative w-auto top-10 pl-4 text-white z-0">
+				<p className="w-auto">Created by: {creator?.name || "Unknown"}</p>
 			</div>
             <div className="h-screen w-full flex justify-center items-center">
                 <InviteTemplate template={template} formData={inviteData} />
