@@ -18,10 +18,10 @@ export const TemplateCard: FC<templateCardProps> = ({ template, i }) => {
 
     // Ensure translations exist and have the expected structure
     const translations = template.translations as {
-        kk: { name: string; description: string; middleText?: string };
-        ru: { name: string; description: string; middleText?: string };
-        en: { name: string; description: string; middleText?: string };
-    } | null;
+        kk: { name: string; description: string; middleText?: string,occasions?:string[] };
+        ru: { name: string; description: string; middleText?: string,occasions?:string[] };
+        en: { name: string; description: string; middleText?: string,occasions?:string[] };
+    } ;
 
     const translation = translations?.[language];
 
@@ -56,7 +56,7 @@ export const TemplateCard: FC<templateCardProps> = ({ template, i }) => {
             <div className="mt-4">
                 <h4 className="text-gray-100">{t("templates.occasions")}</h4>
                 <ul className="mt-2 flex flex-wrap gap-2 bg-background text-foreground p-2 rounded-sm">
-                    {template.occasions.map((occasion) => (
+                    {translation?.occasions?.map((occasion) => (
                         <div key={occasion} className={cn("flex gap-1 items-center")}>
                             <span>•</span>
                             <li key={occasion} className="text-sm">

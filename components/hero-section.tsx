@@ -40,21 +40,21 @@ export default function HeroSection() {
               animate={{ opacity: 1, y: 0 }}
               transition={{ duration: 0.5, delay: 0.2 }}
             >
-              <Link href="/signup">
+              {/* <Link href="/signup">
                 <Button
                   variant="default"
                   className="bg-primary hover:bg-primary/90 text-primary-foreground text-lg px-6 py-3 flex items-center"
                 >
                   {t("hero.cta")}
-                  <ArrowRight className="ml-2 h-5 w-5" />
                 </Button>
-              </Link>
+              </Link> */}
               <Link href="/templates">
                 <Button
                   variant="outline"
                   className="border border-primary text-primary hover:bg-primary/10 dark:hover:bg-primary/20 text-lg px-6 py-3"
                 >
                   {t("hero.secondary")}
+                  <ArrowRight className="ml-2 h-5 w-5" />
                 </Button>
               </Link>
             </motion.div>
