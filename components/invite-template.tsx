@@ -1,195 +1,267 @@
 import React, { FC, useMemo } from "react";
 import { cn } from "@/lib/utils";
-import { TemplateTranslationsType, TemplateType } from "@/data/templates";
+import { TemplateTranslationsType } from "@/data/templates";
 import { useLanguage } from "./language-provider";
-import { Calendar1, Clock, MapPin } from "lucide-react";
-import { Roboto } from "next/font/google";
-import { motion } from "framer-motion";
+import { CalendarDays, Clock, MapPin } from "lucide-react";
+import {  Roboto } from "next/font/google";
+import { motion, AnimatePresence } from "framer-motion";
 import BreathingText from "@/fancy/components/text/breathing-text";
 import InviteTimer from "./invite-timer";
 
 const roboto = Roboto({
-	subsets: ["cyrillic", "latin"],
-	weight: "variable",
-	style: ["italic", "normal"],
+    subsets: ["cyrillic", "latin"],
+    weight: ["300", "400", "500", "700", "900"], // Ensure all needed weights are included
+    style: ["italic", "normal"],
 });
 
+
+
 interface InviteTemplateProps {
-	className?: string;
-	template: {
-		id: string;
-		color: string;
-		imageCorner: string | null;
-		cornerRitarion: boolean | null;
-		image: string | null;
-		occasions: string[];
-		tags: string[];
-		translations: TemplateTranslationsType;
-		createdAt: Date;
-		updatedAt: Date;
-	};
-	formData?: {
-		title?: string;
-		date?: string;
-		time?: string;
-		location?: string;
-		message?: string;
-	};
+    className?: string;
+    template: {
+        id: string;
+        color: string; // e.g., "from-purple-600 to-indigo-700"
+        imageCorner: string | null;
+        cornerRitarion: boolean | null; // Assuming rotation needed if true
+        image: string | null; // Main image if needed (not used in current design)
+        occasions: string[];
+        tags: string[];
+        translations: TemplateTranslationsType;
+        createdAt: Date;
+        updatedAt: Date;
+    };
+    formData?: {
+        title?: string;
+        date?: string;
+        time?: string;
+        location?: string;
+        message?: string;
+    };
 }
 
+// Constants for styling placeholders
+const PLACEHOLDER_CLASS = "opacity-60 italic";
+
 export const InviteTemplate: FC<InviteTemplateProps> = ({
-	className,
-	template,
-	formData,
+    className,
+    template,
+    formData,
 }) => {
-	const { t, language } = useLanguage() as {
-		language: "kk" | "ru" | "en";
-		t: any;
-	};
+    const { t, language } = useLanguage() as {
+        language: "kk" | "ru" | "en";
+        t: (key: string) => string;
+    };
 
-	// Memoize derived data to avoid unnecessary recomputation
-	const derivedFormData = useMemo(() => {
-		return {
-			title: formData?.title || t("inviteEditor.event-title-placeholder"),
-			date: formData?.date || t("inviteEditor.event-date-placeholder"),
-			time: formData?.time || t("inviteEditor.event-time-placeholder"),
-			location:
-				formData?.location || t("inviteEditor.event-location-placeholder"),
-			message: formData?.message || "",
-		};
-	}, [formData, t]);
+    // Reverted formData Handling (like the first version)
+    const derivedFormData = useMemo(() => {
+        return {
+            title: formData?.title || t("inviteEditor.event-title-placeholder"),
+            date: formData?.date || t("inviteEditor.event-date-placeholder"),
+            time: formData?.time || t("inviteEditor.event-time-placeholder"),
+            location: formData?.location || t("inviteEditor.event-location-placeholder"),
+            message: formData?.message || "", // Defaults to empty string if not provided
+        };
+    }, [formData, t]);
 
-	// Function to render corner images
-	const renderCornerImages = useMemo(() => {
-		if (!template.imageCorner) return null;
+    // Memoized Corner Images Rendering
+    const renderCornerImages = useMemo(() => {
+        if (!template.imageCorner) return null;
+        // Simplified rotation logic example - adjust as needed
+        const rotationClasses = {
+            topLeft: template.cornerRitarion ? "" : "-rotate-90",
+            topRight: "",
+            bottomRight: template.cornerRitarion ? "" : "rotate-90",
+            bottomLeft: template.cornerRitarion ? "" : "rotate-180",
+        };
 
-		return (
-			<>
-				<img
-					src={template.imageCorner}
-					alt="Corner decoration"
-					className={cn(
-						"absolute top-3 left-3 w-12 h-12",
-						!template.cornerRitarion && "-rotate-90",
-					)}
-				/>
-				<img
-					src={template.imageCorner}
-					alt="Corner decoration"
-					className="absolute top-3 right-3 w-12 h-12"
-				/>
-				<img
-					src={template.imageCorner}
-					alt="Corner decoration"
-					className={cn(
-						"absolute bottom-3 right-3 w-12 h-12",
-						!template.cornerRitarion && "rotate-90",
-					)}
-				/>
-				<img
-					src={template.imageCorner}
-					alt="Corner decoration"
-					className={cn(
-						"absolute bottom-3 left-3 w-12 h-12",
-						!template.cornerRitarion && "rotate-180",
-					)}
-				/>
-			</>
-		);
-	}, [template]);
+        return (
+            <div className="absolute inset-0 z-0 overflow-hidden pointer-events-none" aria-hidden="true">
+                <img src={template.imageCorner} alt="" className={cn("absolute top-4 left-4 w-16 h-16 opacity-90", rotationClasses.topLeft)} />
+                <img src={template.imageCorner} alt="" className={cn("absolute top-4 right-4 w-16 h-16 opacity-90", rotationClasses.topRight)} />
+                <img src={template.imageCorner} alt="" className={cn("absolute bottom-4 right-4 w-16 h-16 opacity-90", rotationClasses.bottomRight)} />
+                <img src={template.imageCorner} alt="" className={cn("absolute bottom-4 left-4 w-16 h-16 opacity-90", rotationClasses.bottomLeft)} />
+            </div>
+        );
+    }, [template.imageCorner, template.cornerRitarion]);
 
-	if (!template) {
-		return (
-			<div className="text-center text-red-500">
-				<h1>Template not found!</h1>
-			</div>
-		);
-	}
+    // Error handling if template data is missing
+    if (!template) {
+         return (
+            <div className="flex items-center justify-center h-96 text-center text-red-500 p-8 border border-red-300 rounded-lg bg-red-50">
+                <h1>Template data is missing!</h1>
+            </div>
+        );
+    }
 
-	return (
-		<motion.div
-			initial={{ opacity: 0, scale: 0.9 }}
-			animate={{ opacity: 1, scale: 1 }}
-			transition={{ duration: 0.5, delay: 0.5 }}
-			className={cn(
-				"relative bg-gradient-to-bl p-8 pt-12 pb-16 rounded-lg min-w-[335px] max-w-96 text-white min-h-96",
-				template.color,
-				className,
-			)}
-		>
-			{/* Corner Images */}
-			{renderCornerImages}
+    // Flags and derived content
+    const hasTimer = template.tags?.includes("timer") && formData?.date && formData?.time;
+    const hasMiddleText = template.tags?.includes("middleText");
+    const middleTextContent = template.translations[language]?.middleText || "";
 
-			{/* Card Content */}
-			<div className="relative z-10">
-				{/* Title */}
-				<div className="text-3xl font-semibold text-center mb-3">
-					{derivedFormData.title}
-				</div>
+    // --- Animation Variants (Complete Definitions) ---
+    const containerVariants = {
+        hidden: { opacity: 0, scale: 0.95 },
+        visible: {
+            opacity: 1,
+            scale: 1,
+            transition: {
+                duration: 0.5,
+                ease: "easeOut",
+                // Optional: stagger children animations if needed directly here
+                // staggerChildren: 0.1
+            },
+        },
+    };
 
-				{/* Divider */}
-				<div className="flex justify-center w-full m-1">
-					<div className="w-3/4 h-1 bg-amber-50 rounded-full"></div>
-				</div>
+    const itemVariants = {
+        hidden: { opacity: 0, y: 15 },
+        visible: {
+            opacity: 1,
+            y: 0,
+            transition: { duration: 0.4, ease: "easeOut" },
+        },
+    };
+    // --- End Animation Variants ---
 
-				{/* Date and Time */}
-				<div className="flex justify-center gap-4 text-amber-50 text-sm mt-2">
-					<div className="flex gap-2 items-center">
-						<Calendar1 size={18} />
-						{derivedFormData.date}
-					</div>
-					<div className="flex gap-2 items-center">
-						<Clock size={18} />
-						{derivedFormData.time}
-					</div>
-				</div>
+    return (
+        // Main container with animation
+        <motion.div
+            variants={containerVariants}
+            initial="hidden"
+            animate="visible"
+            className={cn(
+                "relative rounded-xl shadow-2xl", // Styling
+                "min-w-[320px] max-w-sm w-96", // Vertical dimensions
+                "min-h-[550px]", // Minimum height for vertical feel
+                "text-white overflow-hidden", // Ensure clipping
+                "p-8 pt-14", // Padding
+                "bg-gradient-to-bl",
+                template.color, // Background gradient class
+                roboto.className, // Base font
+                className // Allow external classes
+            )}
+            style={{ textShadow: "0 1px 3px rgba(0,0,0,0.2)" }} // Readability enhancement
+        >
+            {/* Corner Images - Behind content */}
+            {renderCornerImages}
 
-				{/* Middle Text */}
-				<div className="w-full max-h-52 h-1/2 my-22 rounded-2xl flex justify-center items-center text-4xl font-semibold">
-					{template.tags?.includes("middleText") && (
-						<BreathingText
-							className={cn("", roboto.className)}
-							label={
-								template.translations[language].middleText ||
-								t("inviteEditor.event-title-placeholder")
-							}
-							fromFontVariationSettings="'wght' 100, 'slnt' 0"
-							toFontVariationSettings="'wght' 900, 'slnt' -10"
-							staggerDuration={0.5}
-						/>
-					)}
-				</div>
+            {/* Content Wrapper - Stacks children vertically */}
+            <div className="relative z-10 flex flex-col h-full">
 
-				{/* Timer */}
-				<div className="w-full flex justify-center text-2xl">
-					{template.tags?.includes("timer") &&
-						(formData?.date && formData?.time ? (
-							<InviteTimer time={formData.time} targetDate={formData.date} />
-						) : (
-							<div className="text-red-500 text-lg">
-								Select Date and Time to see timer!
-							</div>
-						))}
-				</div>
+                {/* Header Section */}
+                <motion.div variants={itemVariants} className="text-center mb-6">
+                    {/* Optional decorative text */}
+                    <p className="text-sm uppercase tracking-wider opacity-70 mb-2 font-light">
+                        {t('invitePreview.youAreInvited') || "You are Invited"}
+                    </p>
+                    {/* Main Title */}
+                    <h1
+                        className={cn(
+                            "text-4xl font-bold leading-tight break-words",
+                            !formData?.title && PLACEHOLDER_CLASS, // Apply placeholder style if title missing
+                        )}
+                    >
+                        {derivedFormData.title}
+                    </h1>
+                </motion.div>
 
-				{/* Location */}
-				<div className="flex gap-2 items-center text-sm mt-2">
-					<MapPin size={18} />
-					{derivedFormData.location}
-				</div>
+                {/* Divider */}
+                <motion.div
+                    variants={itemVariants}
+                    className="w-1/2 h-px bg-white/40 mx-auto my-3"
+                ></motion.div>
 
-				{/* Message */}
-				{derivedFormData.message && (
-					<div
-						className={cn(
-							"font-bold border-l-4 mt-4 text-2xl text-center bg-accent/10 p-3 rounded-r-md",
-							roboto.className,
-						)}
-					>
-						{derivedFormData.message}
-					</div>
-				)}
-			</div>
-		</motion.div>
-	);
+                {/* Optional Middle/Breathing Text */}
+                {hasMiddleText && middleTextContent && (
+                     <motion.div variants={itemVariants} className="my-8 text-center">
+                         <BreathingText
+                            className="text-4xl font-semibold italic"
+                            label={middleTextContent}
+                            fromFontVariationSettings="'wght' 200, 'slnt' -5"
+                            toFontVariationSettings="'wght' 800, 'slnt' 0"
+                            staggerDuration={0.6}
+                         />
+                    </motion.div>
+                 )}
+
+                {/* Event Details Section (Vertical Stack) */}
+                <motion.div
+                    variants={itemVariants}
+                    className={cn(
+                        "flex flex-col items-center text-base mt-4 mb-8 gap-y-4", // Vertical stack with gap
+                        "bg-black/10 backdrop-blur-sm p-4 rounded-lg" // Visual grouping
+                    )}
+                >
+                     {/* Date */}
+                     <div className="flex items-center gap-2.5 w-full justify-center">
+                        <CalendarDays size={20} className="text-white/80 flex-shrink-0" />
+                        <span className={cn(!formData?.date && PLACEHOLDER_CLASS)}>
+                            {derivedFormData.date}
+                        </span>
+                    </div>
+                     {/* Time */}
+                     <div className="flex items-center gap-2.5 w-full justify-center">
+                        <Clock size={20} className="text-white/80 flex-shrink-0" />
+                        <span className={cn(!formData?.time && PLACEHOLDER_CLASS)}>
+                            {derivedFormData.time}
+                        </span>
+                    </div>
+                     {/* Location */}
+                    <div className="flex items-center gap-2.5 w-full justify-center text-center">
+                        <MapPin size={20} className="text-white/80 flex-shrink-0" />
+                        <span className={cn("font-light", !formData?.location && PLACEHOLDER_CLASS)}>
+                            {derivedFormData.location}
+                        </span>
+                    </div>
+                </motion.div>
+
+                {/* Timer Section (Animated presence) */}
+                 <AnimatePresence>
+                     {template.tags?.includes("timer") && (
+                         <motion.div
+                            key="timer"
+                            initial={{ opacity: 0, height: 0 }}
+                            animate={{ opacity: 1, height: 'auto' }}
+                            exit={{ opacity: 0, height: 0 }}
+                            transition={{ duration: 0.3 }}
+                            className="mb-8 w-full flex flex-col items-center text-center overflow-hidden"
+                         >
+                            {/* Conditional rendering based on actual formData */}
+                            {formData?.date && formData?.time ? (
+                                <>
+                                    <p className="text-sm opacity-80 mb-2">{t('invitePreview.timerStarts') || "Event starts in:"}</p>
+                                    <InviteTimer time={formData.time} targetDate={formData.date} />
+                                </>
+                            ) : (
+                                <div className={cn("text-sm text-amber-100/80", PLACEHOLDER_CLASS)}>
+                                    {t("invitePreview.timerPlaceholder") || "Select Date & Time for timer"}
+                                </div>
+                             )}
+                        </motion.div>
+                    )}
+                 </AnimatePresence>
+
+                {/* Message Section (Animated presence, pushed to bottom) */}
+                <AnimatePresence>
+                    {/* Render only if message has content */}
+                    {derivedFormData.message && (
+                        <motion.div
+                            key="message"
+                            initial={{ opacity: 0, y: 10 }}
+                            animate={{ opacity: 1, y: 0 }}
+                            exit={{ opacity: 0, y: 10 }}
+                            transition={{ delay: 0.2, duration: 0.4 }} // Slight delay after other items appear
+                             className={cn(
+                                "mt-auto pt-6 border-t border-white/20", // Push to bottom, add separator
+                                "text-lg font-light text-center italic", // Styling
+                            )}
+                        >
+                             <p>"{derivedFormData.message}"</p>
+                         </motion.div>
+                     )}
+                </AnimatePresence>
+
+             </div> {/* End Content Wrapper */}
+        </motion.div> // End Main Container
+    );
 };
