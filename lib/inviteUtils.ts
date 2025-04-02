@@ -43,7 +43,6 @@ async function createInvite(data: {
             },
         });
 
-        console.log("Invite created successfully:", newInvite);
         return newInvite;
     } catch (error: any) {
         console.error("Error creating invite:", error);
@@ -73,7 +72,6 @@ async function getInviteById(inviteId: string) {
             return null;
         }
 
-        console.log("Invite details retrieved successfully:", invite);
         return invite;
     } catch (error) {
         console.error(`Error retrieving invite with ID ${inviteId}:`, error);
@@ -92,7 +90,6 @@ async function getUserInvites(userId: string) {
             },
         });
 
-        // console.log(`Invites for user ID ${userId} retrieved successfully:`, invites);
         return invites;
     } catch (error) {
         console.error(`Error retrieving invites for user ID ${userId}:`, error);
@@ -118,7 +115,6 @@ async function updateInvite(
             data: updatedData,
         });
 
-        console.log(`Invite with ID ${inviteId} updated successfully:`, updatedInvite);
         return updatedInvite;
     } catch (error) {
         console.error(`Error updating invite with ID ${inviteId}:`, error);
@@ -134,7 +130,6 @@ async function deleteInvite(inviteId: string) {
             },
         });
 
-        console.log(`Invite with ID ${inviteId} deleted successfully.`);
     } catch (error) {
         console.error(`Error deleting invite with ID ${inviteId}:`, error);
         throw new Error("Failed to delete invite.");
