@@ -84,10 +84,10 @@ export const InviteTemplate: FC<InviteTemplateProps> = ({
         // Return the JSX for the corner images container
         return (
             <div className="absolute inset-0 z-0 overflow-hidden pointer-events-none" aria-hidden="true">
-                <img src={template.imageCorner} alt="" className={cn(commonClasses, "top-2 left-2 sm:top-4 sm:left-4", rotationClasses.topLeft)} />
-                <img src={template.imageCorner} alt="" className={cn(commonClasses, "top-2 right-2 sm:top-4 sm:right-4", rotationClasses.topRight)} />
-                <img src={template.imageCorner} alt="" className={cn(commonClasses, "bottom-2 right-2 sm:bottom-4 sm:right-4", rotationClasses.bottomRight)} />
-                <img src={template.imageCorner} alt="" className={cn(commonClasses, "bottom-2 left-2 sm:bottom-4 sm:left-4", rotationClasses.bottomLeft)} />
+                <img src={template.imageCorner} alt="" className={cn(commonClasses, "top-4 left-4 sm:top-4 sm:left-4", rotationClasses.topLeft)} />
+                <img src={template.imageCorner} alt="" className={cn(commonClasses, "top-4 right-4 sm:top-4 sm:right-4", rotationClasses.topRight)} />
+                <img src={template.imageCorner} alt="" className={cn(commonClasses, "bottom-4 right-4 sm:bottom-4 sm:right-4", rotationClasses.bottomRight)} />
+                <img src={template.imageCorner} alt="" className={cn(commonClasses, "bottom-4 left-4 sm:bottom-4 sm:left-4", rotationClasses.bottomLeft)} />
             </div>
         );
     }, [template.imageCorner, template.cornerRitarion]); // Dependencies for memoization
@@ -148,6 +148,8 @@ export const InviteTemplate: FC<InviteTemplateProps> = ({
                 "text-white overflow-hidden", // Text color, prevent content overflow
                 "p-6 pt-10 sm:p-8 sm:pt-14", // Responsive padding (more padding on larger screens)
                 "bg-gradient-to-bl", // Use gradient direction
+                "aspect-[9/12] sm:aspect-auto",
+                "m-4 sm:m-0",
                 template.color, // Apply the specific gradient colors from template data
                 roboto.className, // Apply the Roboto font class globally
                 className // Allow passing additional classes via props
@@ -161,9 +163,9 @@ export const InviteTemplate: FC<InviteTemplateProps> = ({
             <div className="relative z-10 flex flex-col h-full min-h-full">
 
                 {/* Header Section: Animated */}
-                <motion.div variants={itemVariants} className="text-center mb-4 sm:mb-6"> {/* Responsive margin */}
+                <motion.div variants={itemVariants} className="text-center mb-6 sm:mb-6"> {/* Responsive margin */}
                     {/* Optional decorative intro text */}
-                    <p className="text-xs sm:text-sm uppercase tracking-wider opacity-70 mb-1 sm:mb-2 font-light">
+                    <p className="text-xs sm:text-sm uppercase tracking-wider opacity-70 mb-2 sm:mb-2 font-light">
                         {t('invitePreview.youAreInvited') || "You are Invited"} {/* Translatable text */}
                     </p>
                     {/* Main Event Title: Responsive size */}
