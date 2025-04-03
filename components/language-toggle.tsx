@@ -11,13 +11,13 @@ const languages = [
   { code: "ru", label: "Русский" },
 ]
 
-export function LanguageToggle({theme}:{theme:"link" | "default" | "destructive" | "outline" | "secondary" | "ghost"}) {
+export function LanguageToggle() {
   const { language, setLanguage } = useLanguage()
 
   return (
     <DropdownMenu>
       <DropdownMenuTrigger asChild>
-        <Button variant={theme} size="icon">
+        <Button variant={'outline'} size="icon">
           <Globe className="h-[1.2rem] w-[1.2rem]" />
           <span className="sr-only">Change language</span>
         </Button>

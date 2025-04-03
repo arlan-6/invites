@@ -157,7 +157,7 @@ function DialogTrigger({ children, className,disabled=false }: DialogTriggerProp
       onClick={context.handleTrigger}
       type='button'
       className={cn(
-        'inline-flex items-center justify-center rounded-md text-sm font-medium',
+        'inline-flex items-center justify-center rounded-md text-sm font-medium dark:text-white',
         'transition-colors focus-visible:ring-2 focus-visible:outline-hidden',
         'focus-visible:ring-offset-2 disabled:pointer-events-none disabled:opacity-50',
         className

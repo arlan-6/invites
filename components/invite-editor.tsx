@@ -145,7 +145,7 @@ export const InviteEditor: FC<InviteEditorProps> = ({ className,template }) => {
 						animate={{ opacity: 1, y: 0 }}
 						transition={{ duration: 0.5 }}
 						className={cn(
-							"container shadow-2xl bg-primary-foreground p-6 rounded-lg min-w-[335px] max-w-96 text-white",
+							"container shadow-2xl bg-secondary p-6 rounded-lg min-w-[335px] max-w-96 text-white",
 						)}
 					>
 						{Object.keys(inviteData).map((key) => (

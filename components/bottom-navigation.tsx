@@ -48,7 +48,7 @@ export default function BottomNavigation() {
 					</Button>
 
 					{/* Language Toggle */}
-					<LanguageToggle theme={theme === "light" ? "outline" : "secondary"} />
+					<LanguageToggle  />
 				</div>
 			</div>
 		</footer>
