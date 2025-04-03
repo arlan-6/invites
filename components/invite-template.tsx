@@ -149,7 +149,7 @@ export const InviteTemplate: FC<InviteTemplateProps> = ({
                 "p-6 pt-10 sm:p-8 sm:pt-14", // Responsive padding (more padding on larger screens)
                 "bg-gradient-to-bl", // Use gradient direction
                 "aspect-[9/12] sm:aspect-auto",
-                "m-4 sm:m-0",
+                // "m-4 sm:m-0",
                 template.color, // Apply the specific gradient colors from template data
                 roboto.className, // Apply the Roboto font class globally
                 className // Allow passing additional classes via props

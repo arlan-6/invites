@@ -139,7 +139,7 @@ const InviteView: FC<InviteViewProps> = ({ template, inviteData, invite,creator 
 			<div className="relative w-auto top-10 pl-4 text-white z-0">
 				<p className="w-auto">Created by: {creator || "Unknown"}</p>
 			</div>
-			<div className="h-screen w-full flex justify-center items-center">
+			<div className="h-screen w-full flex justify-center items-center  p-4 sm:p-0">
 				<InviteTemplate
 					template={
 						template as {
