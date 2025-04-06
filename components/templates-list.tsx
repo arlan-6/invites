@@ -10,17 +10,17 @@ import { TemplateTranslationsType } from "@/data/templates";
 interface TemplatesListProps {
 	className?: string;
 	templates: {
-        id: string;
-        color: string;
-        imageCorner: string | null;
-        cornerRitarion: boolean | null;
-        image: string | null;
-        occasions: string[];
-        tags: string[];
-        translations: TemplateTranslationsType;
-        createdAt: Date;
-        updatedAt: Date;
-    }[];
+		id: string;
+		color: string;
+		imageCorner: string | null;
+		cornerRitarion: boolean | null;
+		image: string | null;
+		occasions: string[];
+		tags: string[];
+		translations: TemplateTranslationsType;
+		createdAt: Date;
+		updatedAt: Date;
+	}[];
 }
 
 export const TemplatesList: FC<TemplatesListProps> = ({
@@ -34,19 +34,30 @@ export const TemplatesList: FC<TemplatesListProps> = ({
 			</div>
 		);
 	}
-    const {language} = useLanguage()
+	const [showTemplates, setShowTemplates] = React.useState(false);
+	const handleShowTemplates = () => {
+		setShowTemplates(!showTemplates);
+	}
+
+	const { language } = useLanguage();
 	const { search } = usesTemaplteFilterstore();
 	return (
 		<div className={cn("flex gap-2 flex-wrap p-6", className)}>
 			{/* Templates List */}
 			{templates
-				.filter((temp) => (
-                    temp.translations[language].description.toLowerCase().includes(search) ||
-                    temp.translations[language].name.toLowerCase().includes(search)||
-                    temp.translations[language].middleText?.toLowerCase().includes(search)||
-                    temp.translations[language].occasions?.filter(i => i.toLowerCase().includes(search)).length > 0
-					
-				))
+				.filter(
+					(temp) =>
+						temp.translations[language].description
+							.toLowerCase()
+							.includes(search) ||
+						temp.translations[language].name.toLowerCase().includes(search) ||
+						temp.translations[language].middleText
+							?.toLowerCase()
+							.includes(search) ||
+						temp.translations[language].occasions?.filter((i) =>
+							i.toLowerCase().includes(search),
+						).length > 0,
+				)
 				.map((template, i) => (
 					<TemplateCard key={template.id} template={template} i={i} />
 				))}

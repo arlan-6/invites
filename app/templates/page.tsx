@@ -1,3 +1,4 @@
+import { SimpleTemplates } from "@/components/simple-templates";
 import { TemplateSearchBar } from "@/components/template-search-bar";
 import { TemplatesList } from "@/components/templates-list";
 import { TemplateTranslationsType } from "@/data/templates";
@@ -9,9 +10,8 @@ const TemplatesPage: React.FC = async () => {
 	return (
 		<div className="w-full flex justify-center">
 			<div className="xl:w-8/12 lg:w-10/12 md:w-full">
-				<TemplateSearchBar />
-				<h1 className="text-2xl p-4">Simple Templates</h1>
-				<TemplatesList
+			<TemplateSearchBar />
+				<SimpleTemplates
 					templates={
 						templates as {
 							id: string;
