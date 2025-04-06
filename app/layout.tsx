@@ -27,7 +27,7 @@ export default function RootLayout({
 					/>
 				)}
 			</head>
-			<body>
+			<body className="min-h-screen">
 				<Analytics />
 				<LanguageProvider>
 					<ThemeProvider attribute="class" defaultTheme="system">

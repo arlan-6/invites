@@ -54,7 +54,6 @@ const InviteFetcher = async ({ params }: { params: { inviteId: string } }) => {
 					message?: string;
 				}
 			}
-			invite={invite}
 			creator={invite.user.name}
 		/>
 	);
