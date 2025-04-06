@@ -71,7 +71,7 @@ export const InviteTemplate: FC<InviteTemplateProps> = ({
 		};
 
 		const commonClasses =
-			"absolute opacity-70 sm:opacity-90 w-12 h-12 sm:w-16 sm:h-16 transition-all duration-300 ease-out";
+			"absolute opacity-70 sm:opacity-90 w-12 h-12 sm:w-14 sm:h-14 transition-all duration-300 ease-out";
 
 		return (
 			<div
@@ -166,7 +166,7 @@ export const InviteTemplate: FC<InviteTemplateProps> = ({
 				"w-full max-w-sm",
 				"text-white overflow-hidden",
 				"p-6 pt-10 sm:p-8 sm:pt-14",
-                "min-h-[460px]",
+                "min-h-[480px] sm:min-h-[500px]",
 				"bg-gradient-to-bl",
 				"aspect-[9/12] sm:aspect-auto",
 
@@ -288,7 +288,7 @@ export const InviteTemplate: FC<InviteTemplateProps> = ({
 				</AnimatePresence>
 
 				<AnimatePresence>
-					{derivedFormData.message && (
+					{derivedFormData.message && (<>
 						<motion.div
 							key="message"
 							initial={{ opacity: 0, y: 10 }}
@@ -297,11 +297,12 @@ export const InviteTemplate: FC<InviteTemplateProps> = ({
 							transition={{ delay: 0.2, duration: 0.4 }}
 							className={cn(
 								"mt-auto pt-4 sm:pt-6 border-t border-white/20",
-								"text-base sm:text-lg font-light text-center italic",
+								" text-2xl sm:text-4xl font-light text-center italic",
+								"flex justify-center items-start"
 							)}
 						>
-							<p>"{derivedFormData.message}"</p>
-						</motion.div>
+							"<p className="w-1/2 sm:w-3/4 text-base sm:text-lg font-light">{derivedFormData.message}</p>"
+						</motion.div></>
 					)}
 				</AnimatePresence>
 			</div>
