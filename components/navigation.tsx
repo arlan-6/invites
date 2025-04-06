@@ -134,7 +134,7 @@ export default function Navigation() {
 				</div>
 
 				{/* Desktop Navigation */}
-				<ul className="hidden md:flex items-center space-x-6 mx-auto">
+				<ul className="hidden md:flex items-center space-x-6 mx-auto absolute left-1/2 transform -translate-x-1/2">
 					{/* Centered nav links */}
 					{navItems.map((item) => (
 						<li key={item.href}>
