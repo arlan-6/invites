@@ -32,7 +32,7 @@ export const TemplateCard: FC<templateCardProps> = ({ template, i }) => {
             transition={{ duration: 0.5, delay: 0.05 * i }}
             key={template.id}
             className={cn(
-                "container p-4 rounded-lg shadow-2xl bg-gradient-to-br min-w-64 flex-1",
+                "container p-4 rounded-lg shadow-2xl bg-gradient-to-br min-w-64 flex-1 select-none",
                 template.color
             )}
         ><Link href={`/templates/${template.id}`} className="cursor-pointer group h-full w-full ">
