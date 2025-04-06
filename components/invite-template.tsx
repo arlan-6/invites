@@ -144,7 +144,7 @@ export const InviteTemplate: FC<InviteTemplateProps> = ({
             animate="visible" // Animate to the 'visible' state
             className={cn(
                 "relative rounded-xl shadow-2xl", // Base styling: rounded corners, shadow
-                "w-full max-w-sm mx-auto", // Responsive width: full width on small screens, max width 'sm', centered
+                "w-full max-w-sm", // Responsive width: full width on small screens, max width 'sm', centered
                 "text-white overflow-hidden", // Text color, prevent content overflow
                 "p-6 pt-10 sm:p-8 sm:pt-14", // Responsive padding (more padding on larger screens)
                 "bg-gradient-to-bl", // Use gradient direction

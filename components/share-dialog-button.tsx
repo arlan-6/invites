@@ -11,7 +11,14 @@ import {
 	DialogTrigger,
 } from "./motion-primitives/dialog";
 import LZString from "lz-string";
-import { ArrowLeft, ArrowRight, Copy, Phone, Share2 } from "lucide-react";
+import {
+	ArrowLeft,
+	ArrowRight,
+	Copy,
+	Phone,
+	Share2,
+	SquareArrowOutUpRight,
+} from "lucide-react";
 import { toast } from "sonner";
 import { Button } from "./ui/button";
 import { Input } from "./ui/input";
@@ -49,10 +56,10 @@ export const ShareDialogButton: FC<ShareDialogButtonProps> = ({
 	const [shareLink, setShareLink] = useState<string | null>(null);
 	const [directShareLink, setDirectShareLink] = useState<string | null>(null);
 	const [loading, setLoading] = useState<boolean>(false);
-	const [isFailed,setIsFailed] = useState<boolean>(false)
+	const [isFailed, setIsFailed] = useState<boolean>(false);
 	const { data: session, isPending } = authClient.useSession();
 	const { t } = useLanguage();
-	const {  updateInviteData } = useInviteStore();
+	const { updateInviteData } = useInviteStore();
 
 	const isInviteDataValid = useMemo(() => {
 		return (
@@ -100,7 +107,7 @@ export const ShareDialogButton: FC<ShareDialogButtonProps> = ({
 			toast.success("Invite created successfully!");
 		} catch (err: any) {
 			console.error("Error generating share links:", err);
-			setIsFailed(true)
+			setIsFailed(true);
 			toast.error(
 				err.message || "Failed to generate share links. Please try again.",
 			);
@@ -131,8 +138,6 @@ export const ShareDialogButton: FC<ShareDialogButtonProps> = ({
 					redirect("/dashboard");
 				}
 			}}
-
-
 		>
 			<HoverCard>
 				<HoverCardTrigger>
@@ -141,7 +146,11 @@ export const ShareDialogButton: FC<ShareDialogButtonProps> = ({
 						className="shadow"
 					>
 						<>
-							{!session ? t("inviteEditor.needSignUp") : !loading ? shareText : "Loading..."}
+							{!session
+								? t("inviteEditor.needSignUp")
+								: !loading
+								? shareText
+								: "Loading..."}
 							<Share2 size={16} strokeWidth={1.5} />
 						</>
 					</DialogTrigger>
@@ -164,8 +173,9 @@ export const ShareDialogButton: FC<ShareDialogButtonProps> = ({
 						{shareText}
 					</DialogTitle>
 					<DialogDescription className="text-zinc-600 dark:text-zinc-400">
-						<span>{t('inviteEditor.dialogCloseText')} </span><br />
-						<span>{t('inviteEditor.dialogLinkText')}</span>
+						<span>{t("inviteEditor.dialogCloseText")} </span>
+						<br />
+						<span>{t("inviteEditor.dialogLinkText")}</span>
 					</DialogDescription>
 				</DialogHeader>
 
@@ -196,6 +206,15 @@ export const ShareDialogButton: FC<ShareDialogButtonProps> = ({
 									<Copy strokeWidth={1} />
 								</Button>
 								<WhatsAppButton text={directShareLink} />
+								<Link
+									href={directShareLink}
+									target="_blank"
+									rel="noopener noreferrer"
+								>
+									<Button>
+										<SquareArrowOutUpRight />
+									</Button>
+								</Link>
 							</div>
 						)}
 					</>
@@ -204,11 +223,12 @@ export const ShareDialogButton: FC<ShareDialogButtonProps> = ({
 				{!shareLink && !loading && (
 					<div className="text-center text-red-500">No data to share!</div>
 				)}
-					<br />
-					<Link href={'/dashboard'} ><Button variant={'outline'}>Go to dashboard</Button></Link>
+				<br />
+				<Link href={"/dashboard"}>
+					<Button variant={"outline"}>Go to dashboard</Button>
+				</Link>
 				<DialogClose />
 			</DialogContent>
-			
 		</Dialog>
 	);
 };
