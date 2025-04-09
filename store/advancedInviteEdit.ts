@@ -1,3 +1,4 @@
+import { toast } from "sonner";
 import { create } from "zustand";
 import { devtools } from "zustand/middleware";
 
@@ -44,6 +45,15 @@ const useAdvancedInviteStore = create<AdvancedInviteStoreType>()(
 				"contactInfo",
 			];
 			const { inviteData } = get();
+			requiredFields.forEach((field) => {
+				if (
+					inviteData[field] === undefined ||
+					inviteData[field] === null ||
+					inviteData[field] === ""
+				) {
+					toast.info(`${field} is required`);
+				}
+			});
 			return requiredFields.every(
 				(field) =>
 					inviteData[field] !== undefined &&

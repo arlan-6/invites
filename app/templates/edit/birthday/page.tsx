@@ -5,6 +5,7 @@ import useTemplateStore from "@/store/advancedTemplate";
 import { AdvancedTemplateType } from "@/data/advanced-templates";
 import useAdvancedInviteStore from "@/store/advancedInviteEdit";
 import { Birthday } from "@/components/advanced-templates/birthday";
+import { useRouter } from "next/navigation";
 
 interface pageProps {
 }
@@ -36,16 +37,19 @@ const Template: AdvancedTemplateType = {
 		"location",
 		"address",
 		"addressLink",
+    "contactInfo",
 		"message",
     "themeOrMessage",
     "dressCode",
     "giftInfo",
     "rsvpDeadline",
-    "contactInfo",
 	],
 };
 
 const Page: FC<pageProps> = ({  }) => {
+	const router  = useRouter()
+	useEffect(() => {
+		router.refresh()}, [router])
 	const setInputs = useTemplateStore.getState().setInputs;
   const setId = useTemplateStore.getState().setId;
   const setPath = useTemplateStore.getState().setPath;

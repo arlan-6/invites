@@ -1,6 +1,6 @@
 "use client";
 
-import React, { FC, useState, useCallback, useMemo } from "react";
+import React, { FC, useState, useCallback } from "react";
 import {
 	Dialog,
 	DialogClose,
@@ -33,14 +33,15 @@ import { useLanguage } from "../language-provider";
 import { redirect } from "next/navigation";
 import WhatsAppButton from "../whatsapp-button";
 import useInviteStore from "@/store/inviteEdit";
-import useAdvancedInviteStore, { AdvancedInviteData } from "@/store/advancedInviteEdit";
+import useAdvancedInviteStore, {
+	AdvancedInviteData,
+} from "@/store/advancedInviteEdit";
 import useTemplateStore from "@/store/advancedTemplate";
 import { AdvancedInvite } from "@prisma/client";
 import { CreateAdvancedInvite } from "@/lib/advancedInvitesUtils";
 
 interface ShareDialogButtonProps {
 	className?: string;
-
 	shareText?: string;
 }
 
@@ -52,80 +53,96 @@ export const ShareDialogButton: FC<ShareDialogButtonProps> = ({
 	const [createdInvite, setCreatedInvite] = useState<AdvancedInvite | null>(
 		null,
 	);
-	const isready = useAdvancedInviteStore().isReady;
+
+	const isReady = useAdvancedInviteStore().isReady;
 	const { data, isPending, error } = authClient.useSession();
 
-	const handleOpenHange = async (open: boolean) => {
-		setOpen(open);
-		if (open) {
-			const isReady = isready();
+	// Helper function to validate required fields
+	const validateFields = useCallback(() => {
+		const path = useTemplateStore.getState().path;
+		const templateId = useTemplateStore.getState().id;
+		const userId = data?.user?.id;
 
-			if (!isReady) {
-				toast.error("Please fill all required fields");
-				setOpen(false);
-				return;
-			}
-			if (!data || !data.user || error || isPending) {
-				toast.error("Please login to share your invite");
-				setOpen(false);
-				return;
-			}
+		if (!path) {
+			toast.error("Path is not set");
+			return false;
+		}
+		if (!templateId) {
+			toast.error("Template ID is not set");
+			return false;
+		}
+		if (!userId) {
+			toast.error("User ID is not set");
+			return false;
+		}
+		return { path, templateId, userId };
+	}, [data]);
 
-			try {
-				setCreating(true);
-				const InviteData = useAdvancedInviteStore.getState().inviteData;
-				const path = useTemplateStore.getState().path;
-				const userId = data.user.id;
-				const templateId = useTemplateStore.getState().id;
-				if (!path) {
-					toast.error("Path is not set");
-					return;
-				}
-				if (!templateId) {
-					toast.error("Template ID is not set");
-					return;
-				}
-				if (!userId) {
-					toast.error("User ID is not set");
-					return;
-				}
-				const invite = await CreateAdvancedInvite(
-					InviteData,
-					path,
-					userId,
-					templateId,
-				);
-				if (!invite) {
-					toast.error("Error creating invite!");
+	const handleOpenChange = useCallback(
+		async (open: boolean) => {
+			setOpen(open);
+
+			if (open) {
+				if (!isReady()) {
 					setOpen(false);
 					return;
 				}
-				setCreatedInvite(invite);
-			} catch (error) {
-				toast.error("Error creating invite!");
 
-				setOpen(false);
-				setCreating(false);
+				if (!data || error || isPending) {
+					toast.error("Please login to share your invite");
+					setOpen(false);
+					return;
+				}
+
+				const validation = validateFields();
+				if (!validation) {
+					setOpen(false);
+					return;
+				}
+
+				try {
+					setCreating(true);
+					const { path, templateId, userId } = validation;
+					const inviteData = useAdvancedInviteStore.getState().inviteData;
+
+					const invite = await CreateAdvancedInvite(
+						inviteData,
+						path,
+						userId,
+						templateId,
+					);
+					if (!invite) {
+						throw new Error("Error creating invite");
+					}
+
+					setCreatedInvite(invite);
+				} catch (err) {
+					toast.error((err as Error)?.message || "Error creating invite!");
+					setOpen(false);
+				} finally {
+					setCreating(false);
+				}
+			} else {
+				if (createdInvite) {
+					setCreatedInvite(null);
+					redirect("/dashboard");
+				}
 			}
-		}
-		else{
-			if (createdInvite) {
-				setCreatedInvite(null);
-				redirect("/dashboard")
-			}
-		}
-	};
+		},
+		[isReady, data, error, isPending, validateFields, createdInvite],
+	);
+
 	return (
-		<Dialog defaultOpen={false} onOpenChange={handleOpenHange} open={open}>
+		<Dialog defaultOpen={false} onOpenChange={handleOpenChange} open={open}>
 			<DialogTrigger>Publish</DialogTrigger>
 			<DialogContent className="p-5">
 				<DialogHeader>
-					<DialogTitle>Edit profile</DialogTitle>
+					<DialogTitle>Publish Invite</DialogTitle>
 					<DialogDescription>
-						<div className="">
-							{creating && <div>Creating ang Publishing invite</div>}
+						<div>
+							{creating && <div>Creating and Publishing invite...</div>}
 						</div>
-						<div className="">
+						<div>
 							{createdInvite && (
 								<div className="flex flex-col gap-2">
 									<div className="flex gap-2 items-center">
@@ -133,7 +150,12 @@ export const ShareDialogButton: FC<ShareDialogButtonProps> = ({
 										<span>Invite link</span>
 									</div>
 									<Link
-										href={`/invite/${createdInvite.id}`}
+										href={`/invite/${createdInvite.path}/${createdInvite.id}`}
+										target="_blank"
+										onClick={() => {
+											redirect('/dashboard');
+											setOpen(false);
+										}}
 										className="text-blue-500"
 									>
 										{`/invite/${createdInvite.path}/${createdInvite.id}`}
@@ -141,12 +163,9 @@ export const ShareDialogButton: FC<ShareDialogButtonProps> = ({
 								</div>
 							)}
 						</div>
-						Make changes to your profile here. Click save when you're done.
 					</DialogDescription>
 				</DialogHeader>
-				kls
 			</DialogContent>
 		</Dialog>
 	);
 };
-

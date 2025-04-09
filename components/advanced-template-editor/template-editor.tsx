@@ -26,6 +26,11 @@ const inputConfig: Record<
 	location: { type: "text", placeholder: "Location", required: true },
 	address: { type: "text", placeholder: "Address", required: true },
 	addressLink: { type: "text", placeholder: "Address Link", required: true },
+	contactInfo: {
+		type: "text",
+		placeholder: "Contact Information",
+		required: true,
+	},
 	message: { placeholder: "Message", required: false },
 	image: {
 		type: "file",
@@ -41,11 +46,6 @@ const inputConfig: Record<
 	dressCode: { type: "text", placeholder: "Dress Code", required: false },
 	giftInfo: { type: "text", placeholder: "Gift Information", required: false },
 	rsvpDeadline: { type: "datetime-local", placeholder: "RSVP Deadline" },
-	contactInfo: {
-		type: "text",
-		placeholder: "Contact Information",
-		required: true,
-	},
 };
 
 export const TemplateEditor: FC<TemplateEditorProps> = ({ className }) => {
