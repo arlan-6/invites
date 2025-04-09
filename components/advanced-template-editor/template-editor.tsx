@@ -7,6 +7,7 @@ import useAdvancedInviteStore from "@/store/advancedInviteEdit";
 import { ShareDialogButton } from "./share-dialog-button";
 import { Button } from "../ui/button";
 import { ArrowLeft, X } from "lucide-react";
+import { useRouter } from "next/navigation";
 
 interface TemplateEditorProps {
 	className?: string;
@@ -50,7 +51,7 @@ const inputConfig: Record<
 
 export const TemplateEditor: FC<TemplateEditorProps> = ({ className }) => {
 	const [open, setOpen] = useState(true);
-
+	const router = useRouter()
 	const [inputs, setInputs] = useState<string[]>([]);
 	const inviteData = useAdvancedInviteStore.getState().inviteData;
 	const resetInviteData = useAdvancedInviteStore.getState().resetInviteData;
@@ -92,6 +93,13 @@ export const TemplateEditor: FC<TemplateEditorProps> = ({ className }) => {
 			>
 				<ShareDialogButton />
 				<div className="overflow-y-scroll w-full h-full p-4 mt-2">
+					{!inputs ||
+						(inputs.length === 0 && (
+							<div className="flex justify-center items-center h-full">
+								<p className="text-gray-500">Refresh page </p>
+								<div className=""><Button onClick={()=>router.refresh()}>Try again...</Button></div>
+							</div>
+						))}
 					{inputs.map((input) => {
 						const config = inputConfig[input];
 						if (!config) return null;
