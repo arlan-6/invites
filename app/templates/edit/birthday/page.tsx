@@ -38,7 +38,6 @@ const Template: AdvancedTemplateType = {
 		"address",
 		"addressLink",
     "contactInfo",
-		"message",
     "themeOrMessage",
     "dressCode",
     "giftInfo",
