@@ -66,7 +66,7 @@ export const TemplateEditor: FC<TemplateEditorProps> = ({ className }) => {
 
 	const handleInputChange = (input: string, value: string) => {
 		const formattedValue =
-			input === "dateTime" && value
+			(input === "dateTime" || input === "rsvpDeadline") && value
 				? new Date(value).toISOString()
 				: input === "addressLink"
 				? value.split(",")
