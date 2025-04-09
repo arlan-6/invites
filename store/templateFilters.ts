@@ -1,4 +1,3 @@
-import { Search } from "lucide-react";
 import { create } from "zustand";
 
 type TemplateFilter = {

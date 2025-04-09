@@ -5,6 +5,7 @@ import NotLoggedIn from "@/components/dashboard/not-loggedin";
 import Banned from "@/components/dashboard/banned";
 import UserInfo from "@/components/dashboard/user-info";
 import UserInvitesList from "@/components/dashboard/user-invites-list";
+import UseradvancedINivtesLIst from "@/components/dashboard/user-advanced-invites-list";
 
 const DashboardPage: React.FC = async () => {
     const session = await auth.api.getSession({
@@ -34,6 +35,7 @@ const DashboardPage: React.FC = async () => {
             <UserInfo user={user} />
             <br />
             <UserInvitesList userId={user.id}/>
+            <UseradvancedINivtesLIst userId={user.id}/>
         </div>
     );
 };

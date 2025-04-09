@@ -12,6 +12,7 @@ datasource db {
   provider = "mongodb"
   url      = env("DATABASE_URL")
 }
+
 // mongodb+srv://shaqrapp:@cluster0.sofo3oi.mongodb.net/shaqrapp?retryWrites=true&w=majority&appName=Cluster0
 
 model User {
@@ -31,6 +32,8 @@ model User {
   accounts      Account[]
 
   Invite Invite[]
+
+  AdvancedInvite AdvancedInvite[]
 }
 
 model Session {
@@ -74,33 +77,67 @@ model Verification {
   updatedAt  DateTime @updatedAt
 }
 
-
 model Template {
   id             String   @id @default(cuid()) @map("_id") // Unique identifier
-  color          String   // Gradient color or theme
-  imageCorner    String?  // Optional image for the corner
+  color          String // Gradient color or theme
+  imageCorner    String? // Optional image for the corner
   cornerRitarion Boolean? // Optional boolean for corner rotation
-  image          String?  // Optional main image
+  image          String? // Optional main image
   occasions      String[] // Array of occasions
   tags           String[] // Array of tags (e.g., 'timer', 'middleText', etc.)
-  translations   Json     // JSON object for translations (kk, ru, en)
+  translations   Json // JSON object for translations (kk, ru, en)
   createdAt      DateTime @default(now()) // Timestamp for creation
-  updatedAt      DateTime @updatedAt      // Timestamp for last update
+  updatedAt      DateTime @updatedAt // Timestamp for last update
 
   Invite Invite[]
 }
 
 model Invite {
-  id          String   @id @default(cuid()) @map("_id") // Unique identifier
-  title       String   // Title of the invite
-  date        DateTime // Date and time of the event
-  location    String   // Location of the event
-  message     String?  // Optional message for the invite
-  userId      String   // Relation to the User model
-  user        User     @relation(fields: [userId], references: [id], onDelete: Cascade)
-  templateId  String   // Relation to the Template model
-  template    Template @relation(fields: [templateId], references: [id], onDelete: Cascade)
-  expiresAt   DateTime // Expiration date and time for the invite
-  createdAt   DateTime @default(now()) // Timestamp for creation
-  updatedAt   DateTime @updatedAt      // Timestamp for last update
+  id         String   @id @default(cuid()) @map("_id") // Unique identifier
+  title      String // Title of the invite
+  date       DateTime // Date and time of the event
+  location   String // Location of the event
+  message    String? // Optional message for the invite
+  userId     String // Relation to the User model
+  user       User     @relation(fields: [userId], references: [id], onDelete: Cascade)
+  templateId String // Relation to the Template model
+  template   Template @relation(fields: [templateId], references: [id], onDelete: Cascade)
+  expiresAt  DateTime // Expiration date and time for the invite
+  createdAt  DateTime @default(now()) // Timestamp for creation
+  updatedAt  DateTime @updatedAt // Timestamp for last update
+}
+
+model AdvancedInviteTemplate {
+  id           String   @id @default(cuid()) @map("_id")
+  path         String // Path for the template
+  translations Json // JSON object for translations (kk, ru, en)
+  inputs       String[] // Array of input fields (e.g., 'name', 'age', 'dateTime', etc.)
+  createdAt    DateTime @default(now()) // Timestamp for creation
+  updatedAt    DateTime @updatedAt // Timestamp for last update
+
+  AdvancedInvite AdvancedInvite[]
+}
+
+model AdvancedInvite {
+  id                     String                 @id @default(cuid()) @map("_id") // Unique identifier
+  name                   String // Title of the invite
+  age                    String // Age of the person being invited
+  dateTime               DateTime // Date and time of the event
+  location               String // Location of the event and links to map apps
+  address                String // Optional address for the event
+  addressLink            String[] // Optional links to map apps
+  themeOrMessage         String? // Optional theme or message for the invite
+  dressCode              String? // Optional dress code information
+  giftInfo               String? // Optional gift information
+  rsvpDeadline           DateTime? // Optional RSVP deadline
+  contactInfo            String? // Optional contact information
+  path                   String // Path for the template
+  rsvpTrack              Json[]
+  userId                 String // Relation to the User model
+  user                   User                   @relation(fields: [userId], references: [id], onDelete: Cascade)
+  templateId             String // Relation to the Template model
+  AdvancedInviteTemplate AdvancedInviteTemplate @relation(fields: [templateId], references: [id], onDelete: Cascade)
+  expiresAt              DateTime // Expiration date and time for the invite
+  createdAt              DateTime               @default(now()) // Timestamp for creation
+  updatedAt              DateTime               @updatedAt // Timestamp for last update
 }

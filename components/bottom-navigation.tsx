@@ -19,14 +19,18 @@ export default function BottomNavigation() {
 	if (!mounted) {
 		return null;
 	}
-
+	console.log('navigation bottom');
+	
 	return (
-		<footer className="fixed bottom-0 left-0 w-full bg-background/50 ">
+		<footer className=" bottom-0 left-0 w-full bg-background/50 ">
 			<div className="container mx-auto px-4 py-3 flex justify-between items-center">
 				{/* Home Link */}
 				<div className="relative text-xl font-bold text-primary ">
 					<Link href="/"><Logo/></Link>
 					
+				</div>
+				<div className="">
+					Invite was created with ❤️ in Shaqr App
 				</div>
 
 				<div className="flex gap-4">
