@@ -35,6 +35,7 @@ const DashboardPage: React.FC = async () => {
             <UserInfo user={user} />
             <br />
             <UserInvitesList userId={user.id}/>
+            <br />
             <UseradvancedINivtesLIst userId={user.id}/>
         </div>
     );
