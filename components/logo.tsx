@@ -15,8 +15,8 @@ interface logoProps {
 export const Logo: FC<logoProps> = ({ className,  }) => {
   return (
     <div className={cn('',className,fugaz_one.className)}>
-     {/* Shaqr */}
-     Baramyz
+     Shaqr
+     {/* Baramyz */}
      <Badge
 						variant="destructive"
 						className="absolute top-0 right-0 translate-x-1/2 -translate-y-1/2 bg-muted text-destructive dark:text-accent px-2 py-0.5 rounded-full text-[10px] font-medium shadow-sm"
