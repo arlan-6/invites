@@ -145,7 +145,7 @@ export const Birthday: FC<birthdayProps> = ({ className, inviteData, id }) => {
             if (!invite) { // Or check response status if PostRsvpTrackById returns more info
                 throw new Error("RSVP submission failed");
             }
-            toast.success(t("birthday.rsvpSubmissionSuccess")); // Personalize confirmation
+            toast.message(t("birthday.rsvpSubmissionSuccess",{name:rsvpForm.name})); // Personalize confirmation
             // Optionally reset form or show a success message inline
             // setRsvpForm({ name: '', attendance: 'notGoing' }); // Reset form state
 		} catch (error) {
