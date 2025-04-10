@@ -75,7 +75,7 @@ export const translations = {
   "birthday.gifts": "Gifts", // Heading for the gift info section
 
   "birthday.willYouCelebrateWithUs": "Will you celebrate with us?", // Heading for the RSVP section
-  "birthday.yourNamePlaceholder": "Your Name", // Placeholder for the guest name input
+  "birthday.yourNamePlaceholder": "Your Full Name", // Placeholder for the guest name input
   "birthday.attendanceYes": "Yes, I'll be there!", // Radio button label for attending
   "birthday.attendanceNo": "Sorry, I can't make it.", // Radio button label for not attending
   "birthday.sendRSVP": "Send RSVP", // Text for the submit button
@@ -162,7 +162,7 @@ export const translations = {
 		"birthday.attire": "Киім үлгісі",
 		"birthday.gifts": "Сыйлықтар",
 		"birthday.willYouCelebrateWithUs": "Бізбен бірге тойлайсыз ба?",
-		"birthday.yourNamePlaceholder": "Сіздің Есіміңіз",
+		"birthday.yourNamePlaceholder": "Сіздің Есіміңіз және Тегіңіз", // Placeholder for the guest name input
 		"birthday.attendanceYes": "Иә, мен барамын!",
 		"birthday.attendanceNo": "Өкінішке орай, бара алмаймын.",
 		"birthday.sendRSVP": "Жауапты Жіберу",
@@ -243,7 +243,7 @@ export const translations = {
   "birthday.attire": "Дресс-код",
   "birthday.gifts": "Подарки",
   "birthday.willYouCelebrateWithUs": "Отпразднуете с нами?",
-  "birthday.yourNamePlaceholder": "Ваше Имя",
+  "birthday.yourNamePlaceholder": "Ваше Имя и Фамилия", // Placeholder for the guest name input
   "birthday.attendanceYes": "Да, я буду!",
   "birthday.attendanceNo": "К сожалению, не смогу.",
   "birthday.sendRSVP": "Отправить ответ",
