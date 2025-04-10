@@ -65,7 +65,7 @@ const formatDate = (isoDate?: string): string => {
 };
 
 export const Birthday: FC<birthdayProps> = ({ className, inviteData, id }) => {
-	const { t, language } = useLanguage();
+	const { t, setLanguage } = useLanguage();
 
 	const [rsvpForm, setRsvpForm] = useState<{
 		name: string;

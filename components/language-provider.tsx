@@ -2,7 +2,8 @@
 
 import { translations } from "@/data/translations"
 import type React from "react"
-import { createContext, useState, useContext, useEffect } from "react"
+import { createContext, useContext, useEffect } from "react"
+import { useLocalStorage } from "@uidotdev/usehooks";
 
 type Language = "en" | "kk" | "ru"
 
@@ -23,17 +24,17 @@ const LanguageContext = createContext<LanguageContextType>({
 export const useLanguage = () => useContext(LanguageContext)
 
 export const LanguageProvider = ({ children }: { children: React.ReactNode }) => {
-  const [language, setLanguage] = useState<Language>(defaultLanguage)
+  const [language, setLanguage] = useLocalStorage<Language>("app-language", defaultLanguage)
 
   useEffect(() => {
     // Detect browser language
     const browserLang = navigator.language.split("-")[0] as Language
-    const supportedLangs: Language[] = ["en", 'kk', 'ru']
+    const supportedLangs: Language[] = ["en", "kk", "ru"]
 
-    if (supportedLangs.includes(browserLang)) {
+    if (supportedLangs.includes(browserLang) && !localStorage.getItem("app-language")) {
       setLanguage(browserLang)
     }
-  }, [])
+  }, [setLanguage])
 
   const t = (key: string): string => {
     return translations[language][key as keyof (typeof translations)[typeof language]] || `${key} ${language}`
@@ -41,4 +42,3 @@ export const LanguageProvider = ({ children }: { children: React.ReactNode }) =>
 
   return <LanguageContext.Provider value={{ language, setLanguage, t }}>{children}</LanguageContext.Provider>
 }
-
