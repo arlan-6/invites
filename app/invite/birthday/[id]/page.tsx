@@ -10,7 +10,6 @@ interface pageProps {
 const Page: FC<pageProps> =async ({  params }) => {
     const {id}  =  await params
     const invite = await GetAdvancedInviteById(id)
-    console.log('Page');
     
     if(!invite) return <div>Invite not found</div>
   return (
