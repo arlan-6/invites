@@ -15,7 +15,7 @@ export const AdvancedTemplateCard: FC<AdvancedTemplateCardProps> = ({
     const { name, description } = template.translations.en;
 
     return (
-        <Link href={`/templates/edit/${template.id}`} className="w-full">
+        <Link href={`/templates/edit/${template.path}`} className="w-full">
         <div
             className={cn(
                 "p-4 border rounded-lg shadow-sm hover:shadow-md transition-shadow bg-white",

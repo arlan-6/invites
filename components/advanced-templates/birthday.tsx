@@ -63,7 +63,6 @@ const formatDate = (isoDate?: string): string => {
 
 
 export const Birthday: FC<birthdayProps> = ({ className, inviteData, id }) => {
-    console.log("Birthday");
     
     const [rsvpForm, setRsvpForm] = React.useState<{name:string,attendance:'going'|'notGoing'}>({
         name: "",
@@ -143,21 +142,21 @@ export const Birthday: FC<birthdayProps> = ({ className, inviteData, id }) => {
 		>
 			<div className="text-center mb-12 md:mb-16">
 				<div className="py-10">
-					<p
-						className={`text-4xl md:text-6xl font-bold mb-12 md:mb-16 tracking-wider relative inline-block ${roboto.className}`}
+					<div
+						className={`flex items-center justify-center text-4xl md:text-6xl font-bold mb-12 md:mb-16 tracking-wider relative ${roboto.className}`}
 					>
 						<span
-							className={`absolute -left-8 md:-left-12 top-1/2 -translate-y-1/2 opacity-70 ${accentYellow}`}
+							className={`opacity-70 ${accentYellow} mr-4 md:mr-6`}
 						>
 							{"{"}
 						</span>
-						YOU ARE INVITED
+						<span>YOU ARE INVITED</span>
 						<span
-							className={`absolute -right-8 md:-right-12 top-1/2 -translate-y-1/2 opacity-70 ${accentYellow}`}
+							className={`opacity-70 ${accentYellow} ml-4 md:ml-6`}
 						>
 							{"}"}
 						</span>
-					</p>
+					</div>
 					<Cake
 						className={`mx-auto mb-4 ${accentBlue} cursor-pointer hover:scale-110 transition-transform duration-200`}
 						size={100}

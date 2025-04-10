@@ -12,13 +12,15 @@ import { Button } from "./ui/button";
 interface SimpleTemplatesProps {
     className?: string;
     children: React.ReactNode;
-    title:string
+    title:string;
+    titleClassName?: string;
 }
 
 export const Accordion: FC<SimpleTemplatesProps> = ({
     className,
     children,
-    title
+    title,
+    titleClassName,
 }) => {
     const [show, setshow] = React.useState(false);
     const handleshow = () => {
@@ -27,7 +29,7 @@ export const Accordion: FC<SimpleTemplatesProps> = ({
     return (
         <div className={cn("", className)}>
             <div className="w-full flex justify-between items-center"  onClick={handleshow}>
-                <h1 className="text-2xl p-4 whitespace-nowrap">{title}</h1>
+                <h1 className={"text-2xl p-4 whitespace-nowrap " + titleClassName}>{title}</h1>
                 <div className="w-full p-6 cursor-pointer" onClick={handleshow}>
                 <div
                 

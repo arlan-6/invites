@@ -6,8 +6,9 @@ import { Input } from "../ui/input";
 import useAdvancedInviteStore from "@/store/advancedInviteEdit";
 import { ShareDialogButton } from "./share-dialog-button";
 import { Button } from "../ui/button";
-import { ArrowLeft, X } from "lucide-react";
+import { ArrowLeft, ArrowRight, X } from "lucide-react";
 import { useRouter } from "next/navigation";
+import { Accordion } from "../accordion";
 
 interface TemplateEditorProps {
 	className?: string;
@@ -51,7 +52,7 @@ const inputConfig: Record<
 
 export const TemplateEditor: FC<TemplateEditorProps> = ({ className }) => {
 	const [open, setOpen] = useState(true);
-	const router = useRouter()
+	const router = useRouter();
 	const [inputs, setInputs] = useState<string[]>([]);
 	const inviteData = useAdvancedInviteStore.getState().inviteData;
 	const resetInviteData = useAdvancedInviteStore.getState().resetInviteData;
@@ -77,16 +78,21 @@ export const TemplateEditor: FC<TemplateEditorProps> = ({ className }) => {
 		});
 	};
 
+	const requiredInputs = inputs.filter((input) => inputConfig[input]?.required);
+	const optionalInputs = inputs.filter(
+		(input) => !inputConfig[input]?.required,
+	);
+
 	return (
 		<div className=" right-0 top-15 max-w-96 h-full bg-accent ">
-			<div className="fixed right-5 top-20 z-[9999999]">
+			<div className="fixed right-5 top-20 z-[9999999] animate-bounce ">
 				<Button onClick={() => setOpen(!open)}>
-					{!open ? <ArrowLeft /> : <X />}
+					{!open ? <ArrowLeft /> : <ArrowRight />}
 				</Button>
 			</div>
 			<div
 				className={cn(
-					"fixed p-5 pb-32 right-0 w-96 h-screen overflow-hidden bg-background",
+					"fixed p-5 pb-32 right-0 w-96 h-screen overflow-hidden bg-background/50 backdrop-blur-lg",
 					className,
 					open ? "block" : "hidden",
 				)}
@@ -97,10 +103,13 @@ export const TemplateEditor: FC<TemplateEditorProps> = ({ className }) => {
 						(inputs.length === 0 && (
 							<div className="flex justify-center items-center h-full">
 								<p className="text-gray-500">Refresh page </p>
-								<div className=""><Button onClick={()=>router.refresh()}>Try again...</Button></div>
+								<div className="">
+									<Button onClick={() => router.refresh()}>Try again...</Button>
+								</div>
 							</div>
 						))}
-					{inputs.map((input) => {
+						<Accordion title="Required Inputs" titleClassName="text-lg p-1" className="mb-4 ">
+					{requiredInputs.map((input) => {
 						const config = inputConfig[input];
 						if (!config) return null;
 
@@ -125,6 +134,35 @@ export const TemplateEditor: FC<TemplateEditorProps> = ({ className }) => {
 							</div>
 						);
 					})}
+					</Accordion>
+					<hr className="my-4 border-gray-300" />
+					<Accordion title="Optional Inputs" titleClassName="text-lg p-1" className="mb-4 ">
+						{optionalInputs.map((input) => {
+							const config = inputConfig[input];
+							if (!config) return null;
+
+							return (
+								<div key={input} className="mb-4">
+									<label
+										htmlFor={input}
+										className="block text-sm font-medium text-gray-700"
+									>
+										{config.placeholder} {config.required && "*"}
+									</label>
+									<Input
+										id={input}
+										{...config}
+										value={
+											input === "addressLink"
+												? (inviteData as any)[input]?.join(",")
+												: (inviteData as any)[input]
+										}
+										onChange={(e) => handleInputChange(input, e.target.value)}
+									/>
+								</div>
+							);
+						})}
+					</Accordion>
 				</div>
 			</div>
 		</div>
