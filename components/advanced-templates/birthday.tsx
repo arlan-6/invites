@@ -1,5 +1,5 @@
 "use client";
-import React, { FC, useMemo, useState, useCallback } from "react";
+import React, { FC, useState } from "react";
 import { cn } from "@/lib/utils";
 import { Roboto_Mono } from "next/font/google";
 import { format } from "date-fns";
@@ -24,6 +24,7 @@ import { PostRsvpTrackById } from "@/lib/advancedInvitesUtils";
 import { TextRoll } from "../motion-primitives/text-roll";
 import NumberTicker from "@/fancy/components/text/basic-number-ticker";
 import BreathingText from "@/fancy/components/text/breathing-text";
+import { useLanguage } from "../language-provider";
 
 const roboto = Roboto_Mono({
 	weight: ["400", "700"],
@@ -64,7 +65,9 @@ const formatDate = (isoDate?: string): string => {
 };
 
 export const Birthday: FC<birthdayProps> = ({ className, inviteData, id }) => {
-	const [rsvpForm, setRsvpForm] = React.useState<{
+	const { t, language } = useLanguage();
+
+	const [rsvpForm, setRsvpForm] = useState<{
 		name: string;
 		attendance: "going" | "notGoing";
 	}>({
@@ -72,34 +75,35 @@ export const Birthday: FC<birthdayProps> = ({ className, inviteData, id }) => {
 		attendance: "notGoing",
 	});
 
-	const name = inviteData?.name?.toLocaleUpperCase() || "NAME";
+	const name =
+		inviteData?.name?.toLocaleUpperCase() || t("birthday.defaultName");
 	const age = inviteData?.age ? parseInt(inviteData.age, 10) : 99;
 	const dateTime = inviteData?.dateTime;
 
 	const formattedDate = dateTime
 		? format(new Date(dateTime), "EEE, MMM d, yyyy")
-		: "Date TBC";
+		: t("birthday.dateTBC");
 	const formattedTime = dateTime
 		? new Date(dateTime).toLocaleTimeString(undefined, {
 				hour: "numeric",
 				minute: "2-digit",
 				hour12: false,
 		  })
-		: "Time TBC";
+		: t("birthday.timeTBC");
 
-	const location = inviteData?.location || "LOCATION";
+	const location = inviteData?.location || t("birthday.defaultLocation");
 	const address = inviteData?.address || "";
 	const addressLinkRaw = inviteData?.addressLink;
 	const themeOrMessage =
-		inviteData?.themeOrMessage || "Get ready for a fantastic celebration!";
-	const dressCode = inviteData?.dressCode || "Dress Code: Casual";
-	const giftInfo =
-		inviteData?.giftInfo || "Gifts are optional but appreciated!";
+		inviteData?.themeOrMessage || t("birthday.defaultThemeMessage");
+	const dressCode = inviteData?.dressCode || t("birthday.defaultDressCode");
+	const giftInfo = inviteData?.giftInfo || t("birthday.defaultGiftInfo");
 
 	const rsvpDeadlineFormatted = inviteData?.rsvpDeadline
 		? formatDate(inviteData.rsvpDeadline)
-		: "Please RSVP soon";
-	const contactInfo = inviteData?.contactInfo || "Contact: 123-456-7890";
+		: t("birthday.defaultRSVPDeadline");
+	const contactInfo =
+		inviteData?.contactInfo || t("birthday.defaultContactInfo");
 
 	let mapHref = "#";
 	if (addressLinkRaw) {
@@ -118,7 +122,7 @@ export const Birthday: FC<birthdayProps> = ({ className, inviteData, id }) => {
 	const handleSubmit = async (e: React.FormEvent<HTMLFormElement>) => {
 		e.preventDefault();
 		if (!id) {
-			toast.error("Invite ID is missing!");
+			toast.error(t("birthday.missingInviteID"));
 			return;
 		}
 		const invite = await PostRsvpTrackById(id, {
@@ -127,10 +131,10 @@ export const Birthday: FC<birthdayProps> = ({ className, inviteData, id }) => {
 			answerDate: new Date(),
 		});
 		if (!invite) {
-			toast.error("RSVP submission failed!");
+			toast.error(t("birthday.rsvpSubmissionFailed"));
 			return;
 		}
-		toast.success("RSVP submitted successfully!");
+		toast.success(t("birthday.rsvpSubmissionSuccess"));
 	};
 
 	return (
@@ -163,7 +167,7 @@ export const Birthday: FC<birthdayProps> = ({ className, inviteData, id }) => {
 									},
 								}}
 							>
-								YOU ARE INVITED
+								{t("birthday.youAreInvited")}
 							</TextRoll>
 						</span>
 						<span className={`opacity-70 ${accentYellow} ml-4 md:ml-6`}>
@@ -186,7 +190,7 @@ export const Birthday: FC<birthdayProps> = ({ className, inviteData, id }) => {
 						/>
 					</div>
 					<p className="text-4xl md:text-6xl font-bold tracking-wider">
-						YEARS OLD
+						{t("birthday.yearsOld")}
 					</p>
 				</div>
 				<hr className="w-1/3 md:w-1/4 mx-auto border-accent/40 my-8" />
@@ -194,21 +198,20 @@ export const Birthday: FC<birthdayProps> = ({ className, inviteData, id }) => {
 					<span
 						className={`underline decoration-yellow-400 decoration-3 underline-offset-[12px]`}
 					>
-						{name}'S
+						{name}
 					</span>{" "}
-					BIRTHDAY PARTY
+					{t("birthday.birthdayParty")}
 				</p>
 				<p className="text-xl md:text-2xl text-accent/80 mt-6 px-4 text-left max-w-4xl">
 					<PartyPopper
 						className={`inline-block w-6 h-6 mr-2 ${accentYellow}`}
 					/>
 					<BreathingText
-          label={themeOrMessage}
-          staggerDuration={0.5}
-          fromFontVariationSettings="'wght' 100, 'slnt' 0"
-          toFontVariationSettings="'wght' 800, 'slnt' -10"
-        />
-					
+						label={themeOrMessage}
+						staggerDuration={0.5}
+						fromFontVariationSettings="'wght' 100, 'slnt' 0"
+						toFontVariationSettings="'wght' 800, 'slnt' -10"
+					/>
 				</p>
 			</div>
 
@@ -248,7 +251,7 @@ export const Birthday: FC<birthdayProps> = ({ className, inviteData, id }) => {
 							rel="noopener noreferrer"
 						>
 							<Map size={22} strokeWidth={2.5} className="inline-block" />
-							<span>View Map / Directions</span>
+							<span>{t("birthday.viewMapDirections")}</span>
 							<SquareArrowOutUpRight
 								size={22}
 								strokeWidth={2.5}
@@ -265,7 +268,7 @@ export const Birthday: FC<birthdayProps> = ({ className, inviteData, id }) => {
 						<h3
 							className={`text-2xl font-bold mb-3 flex items-center justify-center md:justify-start gap-2 ${accentYellow}`}
 						>
-							<Users size={24} /> Attire
+							<Users size={24} /> {t("birthday.attire")}
 						</h3>
 						<p className="text-lg text-accent/90">{dressCode}</p>
 					</div>
@@ -275,7 +278,7 @@ export const Birthday: FC<birthdayProps> = ({ className, inviteData, id }) => {
 						<h3
 							className={`text-2xl font-bold mb-3 flex items-center justify-center md:justify-start gap-2 ${accentYellow}`}
 						>
-							<Gift size={24} /> Gifts
+							<Gift size={24} /> {t("birthday.gifts")}
 						</h3>
 						<p className="text-lg text-accent/90">{giftInfo}</p>
 					</div>
@@ -286,7 +289,7 @@ export const Birthday: FC<birthdayProps> = ({ className, inviteData, id }) => {
 				<div className="text-center p-6 md:p-10 w-full md:w-2/3 lg:w-1/2 border-2 border-accent/60 rounded-lg m-4 shadow-lg shadow-accent/5 bg-accent-foreground/50 backdrop-blur-sm">
 					<p className="text-3xl md:text-4xl font-bold mb-8 flex items-center justify-center gap-3">
 						<Sparkles className={`${accentYellow}`} size={30} />
-						Will you celebrate with us?
+						{t("birthday.willYouCelebrateWithUs")}
 						<Sparkles className={`${accentYellow}`} size={30} />
 					</p>
 					<form
@@ -296,7 +299,7 @@ export const Birthday: FC<birthdayProps> = ({ className, inviteData, id }) => {
 						<input
 							type="text"
 							name="guestName"
-							placeholder="Your Name(s)"
+							placeholder={t("birthday.yourNamePlaceholder")}
 							required
 							onChange={(e) =>
 								setRsvpForm({ ...rsvpForm, name: e.target.value })
@@ -318,7 +321,7 @@ export const Birthday: FC<birthdayProps> = ({ className, inviteData, id }) => {
 									}
 									className={`w-5 h-5 accent-blue-400`}
 								/>
-								Yes, I'll be there!
+								{t("birthday.attendanceYes")}
 							</label>
 							<label className="text-2xl flex items-center gap-3 cursor-pointer p-2 rounded hover:bg-accent/10 w-full transition-colors duration-200">
 								<input
@@ -334,7 +337,7 @@ export const Birthday: FC<birthdayProps> = ({ className, inviteData, id }) => {
 									}
 									className={`w-5 h-5 accent-blue-400`}
 								/>
-								Sorry, can't make it
+								{t("birthday.attendanceNo")}
 							</label>
 						</div>
 						<button
@@ -342,16 +345,17 @@ export const Birthday: FC<birthdayProps> = ({ className, inviteData, id }) => {
 							disabled={!id}
 							className={`disabled:cursor-not-allowed text-xl md:text-2xl font-bold border-2 border-yellow-400 ${accentYellow} py-3 px-8 hover:bg-yellow-400 hover:text-accent-foreground transition-all duration-300 ease-in-out cursor-pointer rounded-md shadow-sm hover:shadow-md active:scale-95 w-full md:w-auto flex items-center justify-center gap-2`}
 						>
-							<Send size={20} /> Send RSVP
+							<Send size={20} /> {t("birthday.sendRSVP")}
 						</button>
 					</form>
 				</div>
 
-				{(rsvpDeadlineFormatted !== "Please RSVP soon" || contactInfo) && (
+				{(rsvpDeadlineFormatted !== t("birthday.defaultRSVPDeadline") ||
+					contactInfo) && (
 					<div className="mt-6 text-center text-accent/70 text-lg px-4">
-						{rsvpDeadlineFormatted !== "Please RSVP soon" && (
+						{rsvpDeadlineFormatted !== t("birthday.defaultRSVPDeadline") && (
 							<p className="mb-2">
-								Please RSVP by{" "}
+								{t("birthday.pleaseRSVPBy")}{" "}
 								<span className={`font-bold ${accentYellow}`}>
 									{rsvpDeadlineFormatted}
 								</span>
@@ -359,7 +363,7 @@ export const Birthday: FC<birthdayProps> = ({ className, inviteData, id }) => {
 						)}
 						{contactInfo && (
 							<p>
-								Questions? Contact{" "}
+								{t("birthday.questionsContact")}{" "}
 								<span
 									className={`font-bold ${accentBlue} underline decoration-dotted`}
 								>
@@ -372,8 +376,8 @@ export const Birthday: FC<birthdayProps> = ({ className, inviteData, id }) => {
 			</div>
 
 			<footer className="text-center text-accent/60 text-base mt-12 border-t border-accent/20 pt-6">
-				<Info size={18} className="inline mr-1" /> Looking forward to
-				celebrating {name}'s {age}th with you!
+				<Info size={18} className="inline mr-1" />{" "}
+				{t("birthday.footerMessage" )}{ name},{age }
 			</footer>
 		</div>
 	);
