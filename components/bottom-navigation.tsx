@@ -22,18 +22,21 @@ export default function BottomNavigation() {
 	console.log('navigation bottom');
 	
 	return (
-		<footer className=" bottom-0 left-0 w-full bg-background/50 ">
-			<div className="container mx-auto px-4 py-3 flex justify-between items-center">
+		<footer className="bottom-0 left-0 w-full bg-background/50">
+			<div className="container mx-auto px-4 py-3 flex flex-wrap justify-between items-center gap-4">
 				{/* Home Link */}
-				<div className="relative text-xl font-bold text-primary ">
-					<Link href="/"><Logo/></Link>
-					
-				</div>
-				<div className="">
-					Invite was created with ❤️ in Shaqr App
+				<div className="flex justify-between items-center w-full md:w-auto gap-4">
+				<div className="relative text-xl font-bold text-primary flex-shrink-0">
+					<Link href="/"><Logo /></Link>
 				</div>
 
-				<div className="flex gap-4">
+				{/* Center Text */}
+				<div className="text-center text-sm w-full md:w-auto">
+					Invite was created with ❤️ in Shaqr App
+				</div></div>
+
+				{/* Right Section */}
+				<div className="flex gap-4 flex-wrap justify-center">
 					{/* Theme Toggle */}
 					<Button
 						onClick={() => setTheme(theme === "light" ? "dark" : "light")}
@@ -52,7 +55,7 @@ export default function BottomNavigation() {
 					</Button>
 
 					{/* Language Toggle */}
-					<LanguageToggle  />
+					<LanguageToggle />
 				</div>
 			</div>
 		</footer>

@@ -56,18 +56,40 @@ export const translations = {
 		"dashboard.accountSettings": "Account Settings",
 		"dashboard.logout": "Logout",
 
-		"birthday.defaultName": "Guest",
-		"birthday.youAreInvited": "You are invited",
-		"birthday.dateTBC": "Date to be confirmed",
-		"birthday.timeTBC": "Time to be confirmed",
-		"birthday.defaultLocation": "Location to be confirmed",
-		"birthday.defaultThemeMessage": "Join us for a celebration!",
-		"birthday.defaultDressCode": "Dress code to be confirmed",
-		"birthday.defaultGiftInfo": "No gifts required",
-		"birthday.defaultRSVPDeadline": "RSVP deadline to be confirmed",
-		"birthday.defaultContactInfo": "Contact information to be confirmed",
-		"birthday.yearsOld": "years old",
-		"birthday.birthdayParty": "'s Birthday Party",
+"birthday.defaultName": "Guest", // Fallback if inviteData.name is missing
+  "birthday.youAreInvited": "You're Invited", // Main title
+  "birthday.dateTBC": "Date TBC", // Fallback for date
+  "birthday.timeTBC": "Time TBC", // Fallback for time
+  "birthday.defaultLocation": "Location TBC", // Fallback for location
+  "birthday.defaultThemeMessage": "Join us for a celebration!", // Fallback for theme/message
+  "birthday.defaultDressCode": "Dress code: Casual or as you like!", // Example fallback for dress code
+  "birthday.defaultGiftInfo": "Your presence is the only gift required!", // Example fallback for gift info
+  "birthday.defaultRSVPDeadline": "ASAP", // Fallback for RSVP deadline (using "ASAP" as a less specific fallback than TBC)
+  "birthday.defaultContactInfo": "Reach out if you have questions.", // Fallback for contact info
+
+  "birthday.yearsOld": "Years Old", // Appears after the age number
+  "birthday.birthdayParty": "Birthday Party", // Appears after the name
+
+  "birthday.viewMapDirections": "View Map / Directions", // Text for the map link
+  "birthday.attire": "Attire", // Heading for the dress code section
+  "birthday.gifts": "Gifts", // Heading for the gift info section
+
+  "birthday.willYouCelebrateWithUs": "Will you celebrate with us?", // Heading for the RSVP section
+  "birthday.yourNamePlaceholder": "Your Name", // Placeholder for the guest name input
+  "birthday.attendanceYes": "Yes, I'll be there!", // Radio button label for attending
+  "birthday.attendanceNo": "Sorry, I can't make it.", // Radio button label for not attending
+  "birthday.sendRSVP": "Send RSVP", // Text for the submit button
+
+  "birthday.pleaseRSVPBy": "Please RSVP by:", // Text appearing before the deadline date
+  "birthday.questionsContact": "Questions? Contact:", // Text appearing before the contact info
+
+  "birthday.footerMessage": "An invitation for {name}'s {age}th Birthday.", // Footer text (uses interpolation)
+
+  // Toast / User Feedback Messages
+  "birthday.missingInviteID": "Error: Invite ID is missing. Cannot submit RSVP.", // Error if ID prop is missing
+  "birthday.rsvpSubmissionFailed": "Oh no! Something went wrong trying to submit your RSVP. Please try again or contact the host.", // Error on failed API call
+  "birthday.rsvpSubmissionSuccess": "Got it, {name}! Your RSVP has been recorded. Thanks!", // Success message (uses interpolation for name)
+  "birthday.rsvpFormIncomplete": "Please enter your name and select attendance.", // Error if form isn't filled out
 	},
 	kk: {
 		"hero.heading": "Әдемі сандық шақыруларды жасаңыз",
@@ -123,18 +145,32 @@ export const translations = {
 		"dashboard.accountSettings": "Есептік жазба параметрлері",
 		"dashboard.logout": "Шығу",
 		"birthday.defaultName": "Қонақ",
-
-		"birthday.youAreInvited": "Сіз шақырылдыңыз",
-		"birthday.dateTBC": "Күні анықталады",
-		"birthday.timeTBC": "Уақыты анықталады",
-		"birthday.defaultLocation": "Орны анықталады",
-		"birthday.defaultThemeMessage": "Мерекеге қосылыңыз!",
-		"birthday.defaultDressCode": "Киім үлгісі анықталады",
-		"birthday.defaultGiftInfo": "Сыйлықтар қажет емес",
-		"birthday.defaultRSVPDeadline": "RSVP мерзімі анықталады",
-		"birthday.defaultContactInfo": "Байланыс ақпараты анықталады",
-		"birthday.yearsOld": "жаста",
-		"birthday.birthdayParty": " Туған күн кеші",
+		"birthday.youAreInvited": "Сізді шақырамыз",
+		"birthday.dateTBC": "Күні Нақтыланады",
+		"birthday.timeTBC": "Уақыты Нақтыланады",
+		"birthday.defaultLocation": "Орны Нақтыланады",
+		"birthday.defaultThemeMessage": "Мерекелік кешке қосылыңыз!",
+		"birthday.defaultDressCode": "Киім үлгісі: Күнделікті немесе қалауыңызша!",
+		"birthday.defaultGiftInfo": "Сіздің келгеніңіз - ең басты сыйлық!",
+		"birthday.defaultRSVPDeadline": "Мүмкіндігінше тезірек",
+		"birthday.defaultContactInfo": "Сұрақтарыңыз болса, хабарласыңыз.",
+		"birthday.yearsOld": "жас", // "жас" = age/year. Context implies "{age} years old".
+		"birthday.birthdayParty": "Туған Күн Кеші",
+		"birthday.viewMapDirections": "Картаны / Бағытты көру",
+		"birthday.attire": "Киім үлгісі",
+		"birthday.gifts": "Сыйлықтар",
+		"birthday.willYouCelebrateWithUs": "Бізбен бірге тойлайсыз ба?",
+		"birthday.yourNamePlaceholder": "Сіздің Есіміңіз",
+		"birthday.attendanceYes": "Иә, мен барамын!",
+		"birthday.attendanceNo": "Өкінішке орай, бара алмаймын.",
+		"birthday.sendRSVP": "Жауапты Жіберу",
+		"birthday.pleaseRSVPBy": "Өтінеміз, осы күнге дейін жауап беріңіз:",
+		"birthday.questionsContact": "Сұрақтар? Хабарласыңыз:",
+		"birthday.footerMessage": "{name} есімдінің {age} жасқа толуына арналған шақыру.", // Handles Genitive case implication for {name}.
+		"birthday.missingInviteID": "Қате: Шақыру идентификаторы жоқ. Жауап жіберу мүмкін емес.",
+		"birthday.rsvpSubmissionFailed": "Ой! Жауап жіберу кезінде қате пайда болды. Қайталап көріңіз немесе ұйымдастырушымен хабарласыңыз.",
+		"birthday.rsvpSubmissionSuccess": "Қабылданды, {name}! Сіздің жауабыңыз сақталды. Рахмет!",
+		"birthday.rsvpFormIncomplete": "Есіміңізді енгізіп, келетініңізді/келмейтініңізді таңдаңыз."
 	},
 	ru: {
 		"hero.heading": "Создавайте красивые цифровые приглашения",
@@ -189,17 +225,31 @@ export const translations = {
 		"dashboard.accountSettings": "Настройки аккаунта",
 		"dashboard.logout": "Выйти",
 		"birthday.defaultName": "Гость",
-
-		"birthday.youAreInvited": "Вы приглашены",
-		"birthday.dateTBC": "Дата будет уточнена",
-		"birthday.timeTBC": "Время будет уточнено",
-		"birthday.defaultLocation": "Место будет уточнено",
-		"birthday.defaultThemeMessage": "Присоединяйтесь к празднику!",
-		"birthday.defaultDressCode": "Дресс-код будет уточнен",
-		"birthday.defaultGiftInfo": "Подарки не требуются",
-		"birthday.defaultRSVPDeadline": "Срок RSVP будет уточнен",
-		"birthday.defaultContactInfo": "Контактная информация будет уточнена",
-		"birthday.yearsOld": "лет",
-		"birthday.birthdayParty": " День Рождения",
+  "birthday.youAreInvited": "Приглашаем Вас",
+  "birthday.dateTBC": "Дата Уточняется",
+  "birthday.timeTBC": "Время Уточняется",
+  "birthday.defaultLocation": "Место Уточняется",
+  "birthday.defaultThemeMessage": "Присоединяйтесь к празднованию!",
+  "birthday.defaultDressCode": "Дресс-код: Повседневный или как Вам удобно!",
+  "birthday.defaultGiftInfo": "Ваше присутствие - лучший подарок!",
+  "birthday.defaultRSVPDeadline": "Как можно скорее",
+  "birthday.defaultContactInfo": "Если есть вопросы, обращайтесь.",
+  "birthday.yearsOld": "лет", // Note: Russian uses год/года/лет depending on number; "лет" is a common simplification but may not be perfectly grammatical for all ages.
+  "birthday.birthdayParty": "Вечеринка в честь Дня Рождения",
+  "birthday.viewMapDirections": "Посмотреть карту / Маршрут",
+  "birthday.attire": "Дресс-код",
+  "birthday.gifts": "Подарки",
+  "birthday.willYouCelebrateWithUs": "Отпразднуете с нами?",
+  "birthday.yourNamePlaceholder": "Ваше Имя",
+  "birthday.attendanceYes": "Да, я буду!",
+  "birthday.attendanceNo": "К сожалению, не смогу.",
+  "birthday.sendRSVP": "Отправить ответ",
+  "birthday.pleaseRSVPBy": "Пожалуйста, ответьте до:",
+  "birthday.questionsContact": "Вопросы? Обращайтесь:",
+  "birthday.footerMessage": "Приглашение на {age}-летие {name}.", // Assumes {name} is provided in the Genitive case or system handles it.
+  "birthday.missingInviteID": "Ошибка: Отсутствует ID приглашения. Невозможно отправить ответ.",
+  "birthday.rsvpSubmissionFailed": "Ой! Что-то пошло не так при отправке ответа. Пожалуйста, попробуйте еще раз или свяжитесь с организатором.",
+  "birthday.rsvpSubmissionSuccess": "Принято, {name}! Ваш ответ записан. Спасибо!",
+  "birthday.rsvpFormIncomplete": "Пожалуйста, введите Ваше имя и выберите, придете ли Вы."
 	},
 };
