@@ -14,6 +14,7 @@ interface SimpleTemplatesProps {
     children: React.ReactNode;
     title:string;
     titleClassName?: string;
+    isClosed?: boolean;
 }
 
 export const Accordion: FC<SimpleTemplatesProps> = ({
@@ -21,8 +22,9 @@ export const Accordion: FC<SimpleTemplatesProps> = ({
     children,
     title,
     titleClassName,
+    isClosed = false,
 }) => {
-    const [show, setshow] = React.useState(false);
+    const [show, setshow] = React.useState(isClosed);
     const handleshow = () => {
         setshow(!show);
     };

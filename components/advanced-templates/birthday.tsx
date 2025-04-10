@@ -4,9 +4,9 @@ import { cn } from "@/lib/utils";
 import { Roboto_Mono } from "next/font/google";
 import { format } from "date-fns";
 import {
-    Cake,
-    Calendar,
-    Clock,
+	Cake,
+	Calendar,
+	Clock,
 	MapPin,
 	SquareArrowOutUpRight,
 	Home,
@@ -21,6 +21,9 @@ import {
 import Link from "next/link";
 import { toast } from "sonner";
 import { PostRsvpTrackById } from "@/lib/advancedInvitesUtils";
+import { TextRoll } from "../motion-primitives/text-roll";
+import NumberTicker from "@/fancy/components/text/basic-number-ticker";
+import BreathingText from "@/fancy/components/text/breathing-text";
 
 const roboto = Roboto_Mono({
 	weight: ["400", "700"],
@@ -60,19 +63,18 @@ const formatDate = (isoDate?: string): string => {
 	}
 };
 
-
-
 export const Birthday: FC<birthdayProps> = ({ className, inviteData, id }) => {
-    
-    const [rsvpForm, setRsvpForm] = React.useState<{name:string,attendance:'going'|'notGoing'}>({
-        name: "",
-        attendance: 'notGoing',
-    });
+	const [rsvpForm, setRsvpForm] = React.useState<{
+		name: string;
+		attendance: "going" | "notGoing";
+	}>({
+		name: "",
+		attendance: "notGoing",
+	});
 
 	const name = inviteData?.name?.toLocaleUpperCase() || "NAME";
-	const age = inviteData?.age || 99;
+	const age = inviteData?.age ? parseInt(inviteData.age, 10) : 99;
 	const dateTime = inviteData?.dateTime;
-
 
 	const formattedDate = dateTime
 		? format(new Date(dateTime), "EEE, MMM d, yyyy")
@@ -113,24 +115,23 @@ export const Birthday: FC<birthdayProps> = ({ className, inviteData, id }) => {
 	const accentYellow = "text-yellow-400";
 	const accentBlue = "text-blue-400";
 
-    const handleSubmit = async (e: React.FormEvent<HTMLFormElement>) => {
-        e.preventDefault();
-        if(!id) {
-            toast.error("Invite ID is missing!");
-            return;
-        };
-        const invite = await PostRsvpTrackById(id, {
-            name: rsvpForm.name,
-            attendance: rsvpForm.attendance,
-            answerDate: new Date(),
-        });
-        if (!invite) {
-            toast.error("RSVP submission failed!");
-            return;
-        }
-        toast.success("RSVP submitted successfully!");
-
-    }
+	const handleSubmit = async (e: React.FormEvent<HTMLFormElement>) => {
+		e.preventDefault();
+		if (!id) {
+			toast.error("Invite ID is missing!");
+			return;
+		}
+		const invite = await PostRsvpTrackById(id, {
+			name: rsvpForm.name,
+			attendance: rsvpForm.attendance,
+			answerDate: new Date(),
+		});
+		if (!invite) {
+			toast.error("RSVP submission failed!");
+			return;
+		}
+		toast.success("RSVP submitted successfully!");
+	};
 
 	return (
 		<div
@@ -145,25 +146,44 @@ export const Birthday: FC<birthdayProps> = ({ className, inviteData, id }) => {
 					<div
 						className={`flex items-center justify-center text-4xl md:text-6xl font-bold mb-12 md:mb-16 tracking-wider relative ${roboto.className}`}
 					>
-						<span
-							className={`opacity-70 ${accentYellow} mr-4 md:mr-6`}
-						>
+						<span className={`opacity-70 ${accentYellow} mr-4 md:mr-6`}>
 							{"{"}
 						</span>
-						<span>YOU ARE INVITED</span>
-						<span
-							className={`opacity-70 ${accentYellow} ml-4 md:ml-6`}
-						>
+						<span>
+							<TextRoll
+								className=" dark:text-black text-white"
+								variants={{
+									enter: {
+										initial: { rotateX: 0, filter: "blur(0px)" },
+										animate: { rotateX: 90, filter: "blur(2px)" },
+									},
+									exit: {
+										initial: { rotateX: 90, filter: "blur(2px)" },
+										animate: { rotateX: 0, filter: "blur(0px)" },
+									},
+								}}
+							>
+								YOU ARE INVITED
+							</TextRoll>
+						</span>
+						<span className={`opacity-70 ${accentYellow} ml-4 md:ml-6`}>
 							{"}"}
 						</span>
 					</div>
 					<Cake
-						className={`mx-auto mb-4 ${accentBlue} cursor-pointer hover:scale-110 transition-transform duration-200`}
-						size={100}
-						strokeWidth={2}
+						className={`mx-auto mb-4 ${accentBlue} cursor-pointer hover:scale-110 transition-transform duration-1500 animate-bounce`}
+						size={150}
+						strokeWidth={1.5}
 					/>
 					<div className="font-extrabold text-8xl md:text-9xl text-accent/90">
-						{age}
+						<NumberTicker
+							from={0}
+							target={age}
+							autoStart={true}
+							transition={{ duration: 3.5, type: "tween", ease: "easeInOut" }}
+							onComplete={() => console.log("complete")}
+							onStart={() => console.log("start")}
+						/>
 					</div>
 					<p className="text-4xl md:text-6xl font-bold tracking-wider">
 						YEARS OLD
@@ -182,7 +202,13 @@ export const Birthday: FC<birthdayProps> = ({ className, inviteData, id }) => {
 					<PartyPopper
 						className={`inline-block w-6 h-6 mr-2 ${accentYellow}`}
 					/>
-					{themeOrMessage}
+					<BreathingText
+          label={themeOrMessage}
+          staggerDuration={0.5}
+          fromFontVariationSettings="'wght' 100, 'slnt' 0"
+          toFontVariationSettings="'wght' 800, 'slnt' -10"
+        />
+					
 				</p>
 			</div>
 
@@ -272,9 +298,9 @@ export const Birthday: FC<birthdayProps> = ({ className, inviteData, id }) => {
 							name="guestName"
 							placeholder="Your Name(s)"
 							required
-                            onChange={(e) =>
-                                setRsvpForm({...rsvpForm,name:e.target.value})
-                            }
+							onChange={(e) =>
+								setRsvpForm({ ...rsvpForm, name: e.target.value })
+							}
 							className={`text-xl p-3 border-2 border-accent/50 bg-accent-foreground text-accent w-full md:w-3/4 placeholder-gray-500 rounded focus:outline-none focus:border-yellow-400 focus:ring-1 focus:ring-yellow-400 transition-all duration-200`}
 						/>
 						<div className="flex gap-6 items-start flex-col justify-start w-full">
@@ -284,9 +310,12 @@ export const Birthday: FC<birthdayProps> = ({ className, inviteData, id }) => {
 									name="attendance"
 									value="going"
 									required
-                                    onChange={(e) =>
-                                        setRsvpForm({...rsvpForm,attendance:e.target.value as 'going'})
-                                    }
+									onChange={(e) =>
+										setRsvpForm({
+											...rsvpForm,
+											attendance: e.target.value as "going",
+										})
+									}
 									className={`w-5 h-5 accent-blue-400`}
 								/>
 								Yes, I'll be there!
@@ -297,9 +326,12 @@ export const Birthday: FC<birthdayProps> = ({ className, inviteData, id }) => {
 									name="attendance"
 									value="notGoing"
 									required
-                                    onChange={(e) =>
-                                        setRsvpForm({...rsvpForm,attendance:e.target.value as 'notGoing'})
-                                    }
+									onChange={(e) =>
+										setRsvpForm({
+											...rsvpForm,
+											attendance: e.target.value as "notGoing",
+										})
+									}
 									className={`w-5 h-5 accent-blue-400`}
 								/>
 								Sorry, can't make it

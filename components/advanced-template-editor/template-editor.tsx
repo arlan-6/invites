@@ -108,35 +108,44 @@ export const TemplateEditor: FC<TemplateEditorProps> = ({ className }) => {
 								</div>
 							</div>
 						))}
-						<Accordion title="Required Inputs" titleClassName="text-lg p-1" className="mb-4 ">
-					{requiredInputs.map((input) => {
-						const config = inputConfig[input];
-						if (!config) return null;
+					<Accordion
+						title="Required Inputs"
+						titleClassName="text-lg p-1"
+						className="mb-4 "
+					>
+						{requiredInputs.map((input) => {
+							const config = inputConfig[input];
+							if (!config) return null;
 
-						return (
-							<div key={input} className="mb-4">
-								<label
-									htmlFor={input}
-									className="block text-sm font-medium text-gray-700"
-								>
-									{config.placeholder} {config.required && "*"}
-								</label>
-								<Input
-									id={input}
-									{...config}
-									value={
-										input === "addressLink"
-											? (inviteData as any)[input]?.join(",")
-											: (inviteData as any)[input]
-									}
-									onChange={(e) => handleInputChange(input, e.target.value)}
-								/>
-							</div>
-						);
-					})}
+							return (
+								<div key={input} className="mb-4">
+									<label
+										htmlFor={input}
+										className="block text-sm font-medium text-gray-700"
+									>
+										{config.placeholder} {config.required && "*"}
+									</label>
+									<Input
+										id={input}
+										{...config}
+										value={
+											input === "addressLink"
+												? (inviteData as any)[input]?.join(",")
+												: (inviteData as any)[input]
+										}
+										onChange={(e) => handleInputChange(input, e.target.value)}
+									/>
+								</div>
+							);
+						})}
 					</Accordion>
 					<hr className="my-4 border-gray-300" />
-					<Accordion title="Optional Inputs" titleClassName="text-lg p-1" className="mb-4 ">
+					<Accordion
+						title="Optional Inputs"
+						titleClassName="text-lg p-1"
+						className="mb-4 "
+						isClosed={true}
+					>
 						{optionalInputs.map((input) => {
 							const config = inputConfig[input];
 							if (!config) return null;
