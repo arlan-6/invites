@@ -24,7 +24,7 @@ export async function generateMetadata({ params }: Props): Promise<Metadata> {
 			description: invite?.themeOrMessage
 				? invite.themeOrMessage
 				: "Join us for a memorable birthday celebration filled with joy and surprises!",
-			images: `${process.env.BETTER_AUTH_URL}/birthday/image.png`,
+			images: `${process.env.BETTER_AUTH_URL}/birthday/image.jpg`,
 		},
 		twitter: {
 			card: "summary_large_image",
@@ -34,7 +34,7 @@ export async function generateMetadata({ params }: Props): Promise<Metadata> {
 			description: invite?.themeOrMessage
 				? invite.themeOrMessage
 				: "Join us for a memorable birthday celebration filled with joy and surprises!",
-			images: `${process.env.BETTER_AUTH_URL}/birthday/image.png`,
+			images: `${process.env.BETTER_AUTH_URL}/birthday/image.jpg`,
 		},
 	};
 }
