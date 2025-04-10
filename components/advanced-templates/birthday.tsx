@@ -66,6 +66,7 @@ const formatDate = (isoDate?: string): string => {
 
 export const Birthday: FC<birthdayProps> = ({ className, inviteData, id }) => {
 	const { t } = useLanguage();
+	const [numberTickerComplete, setNumberTickerComplete] = useState(false);
 
 	const [rsvpForm, setRsvpForm] = useState<{
 		name: string;
@@ -155,7 +156,7 @@ export const Birthday: FC<birthdayProps> = ({ className, inviteData, id }) => {
 						</span>
 						<span>
 							<TextRoll
-								className=" dark:text-black text-white"
+								className=" "
 								variants={{
 									enter: {
 										initial: { rotateX: 0, filter: "blur(0px)" },
@@ -179,14 +180,22 @@ export const Birthday: FC<birthdayProps> = ({ className, inviteData, id }) => {
 						size={150}
 						strokeWidth={1.5}
 					/>
-					<div className="font-extrabold text-8xl md:text-9xl text-accent/90">
+					<div
+						className={cn(
+							"font-extrabold text-8xl md:text-9xl text-accent/90 transition-transform duration-500",
+							{
+								"scale-150": numberTickerComplete,
+							}
+						)}
+					>
 						<NumberTicker
 							from={0}
 							target={age}
 							autoStart={true}
 							transition={{ duration: 3.5, type: "tween", ease: "easeInOut" }}
-							onComplete={() => console.log("complete")}
-							onStart={() => console.log("start")}
+							onComplete={() => {
+								setNumberTickerComplete(true);
+							}}
 						/>
 					</div>
 					<p className="text-4xl md:text-6xl font-bold tracking-wider">

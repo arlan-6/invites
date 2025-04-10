@@ -39,7 +39,7 @@ const NumberTicker = forwardRef<NumberTickerRef, NumberTickerProps>(
       from = 0,
       target = 100,
       transition = {
-        duration: .5,
+        duration: 2.5,
         type: "tween",
         ease: "easeInOut",
       },
