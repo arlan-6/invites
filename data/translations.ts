@@ -79,8 +79,10 @@ export const translations = {
   "birthday.attendanceYes": "Yes, I'll be there!", // Radio button label for attending
   "birthday.attendanceNo": "Sorry, I can't make it.", // Radio button label for not attending
   "birthday.sendRSVP": "Send RSVP", // Text for the submit button
+  "birthday.sendRSVPLoading": "Sending",
 
   "birthday.pleaseRSVPBy": "Please RSVP by:", // Text appearing before the deadline date
+  
   "birthday.questionsContact": "Questions? Contact:", // Text appearing before the contact info
 
   "birthday.footerMessage": "An invitation for {name}'s {age}th Birthday.", // Footer text (uses interpolation)
@@ -164,6 +166,7 @@ export const translations = {
 		"birthday.attendanceYes": "Иә, мен барамын!",
 		"birthday.attendanceNo": "Өкінішке орай, бара алмаймын.",
 		"birthday.sendRSVP": "Жауапты Жіберу",
+		"birthday.sendRSVPLoading": "Жіберілуде",
 		"birthday.pleaseRSVPBy": "Өтінеміз, осы күнге дейін жауап беріңіз:",
 		"birthday.questionsContact": "Сұрақтар? Хабарласыңыз:",
 		"birthday.footerMessage": "{name} есімдінің {age} жасқа толуына арналған шақыру.", // Handles Genitive case implication for {name}.
@@ -244,6 +247,7 @@ export const translations = {
   "birthday.attendanceYes": "Да, я буду!",
   "birthday.attendanceNo": "К сожалению, не смогу.",
   "birthday.sendRSVP": "Отправить ответ",
+  "birthday.sendRSVPLoading": "Отправляется",
   "birthday.pleaseRSVPBy": "Пожалуйста, ответьте до:",
   "birthday.questionsContact": "Вопросы? Обращайтесь:",
   "birthday.footerMessage": "Приглашение на {age}-летие {name}.", // Assumes {name} is provided in the Genitive case or system handles it.

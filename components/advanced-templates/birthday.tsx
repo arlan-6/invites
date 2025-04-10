@@ -17,6 +17,7 @@ import {
 	PartyPopper,
 	Users,
 	Map,
+	LoaderIcon,
 } from "lucide-react";
 import Link from "next/link";
 import { toast } from "sonner";
@@ -57,13 +58,14 @@ interface birthdayProps {
 const formatDate = (isoDate?: string): string => {
 	if (!isoDate) return "TBC";
 	try {
-        // Add explicit time to avoid timezone issues based solely on date
+		// Add explicit time to avoid timezone issues based solely on date
 		const dateObj = new Date(isoDate + "T00:00:00Z"); // Assuming UTC date input
-		return dateObj.toLocaleDateString(undefined, { // Use locale default
+		return dateObj.toLocaleDateString(undefined, {
+			// Use locale default
 			year: "numeric",
 			month: "short",
 			day: "numeric",
-			timeZone: "UTC" // Specify timezone if the input date has no offset
+			timeZone: "UTC", // Specify timezone if the input date has no offset
 		});
 	} catch {
 		return isoDate; // Fallback if parsing fails
@@ -81,6 +83,7 @@ export const Birthday: FC<birthdayProps> = ({ className, inviteData, id }) => {
 		name: "",
 		attendance: "notGoing", // Default to notGoing? Or maybe empty initially?
 	});
+	const [rsvpSending, setRsvpSending] = useState(false); // Optional state for loading
 
 	const name =
 		inviteData?.name?.toLocaleUpperCase() || t("birthday.defaultName");
@@ -132,23 +135,29 @@ export const Birthday: FC<birthdayProps> = ({ className, inviteData, id }) => {
 			toast.error(t("birthday.missingInviteID"));
 			return;
 		}
-        if (!rsvpForm.name || !rsvpForm.attendance) {
-            toast.error(t("birthday.rsvpFormIncomplete"));
-            return;
-        }
+		if (!rsvpForm.name || !rsvpForm.attendance) {
+			toast.error(t("birthday.rsvpFormIncomplete"));
+			return;
+		}
+		setRsvpSending(true); // Optional loading state
 		try {
-            const invite = await PostRsvpTrackById(id, {
-                name: rsvpForm.name,
-                attendance: rsvpForm.attendance,
-                answerDate: new Date(),
-            });
-            if (!invite) { // Or check response status if PostRsvpTrackById returns more info
-                throw new Error("RSVP submission failed");
-            }
-            toast.message(t("birthday.rsvpSubmissionSuccess",{name:rsvpForm.name})); // Personalize confirmation
-            // Optionally reset form or show a success message inline
-            // setRsvpForm({ name: '', attendance: 'notGoing' }); // Reset form state
+			const invite = await PostRsvpTrackById(id, {
+				name: rsvpForm.name,
+				attendance: rsvpForm.attendance,
+				answerDate: new Date(),
+			});
+			if (!invite) {
+				// Or check response status if PostRsvpTrackById returns more info
+				throw new Error("RSVP submission failed");
+			}
+			setRsvpSending(false); // Reset loading state
+			toast.message(
+				t("birthday.rsvpSubmissionSuccess", { name: rsvpForm.name }),
+			); // Personalize confirmation
+			// Optionally reset form or show a success message inline
+			// setRsvpForm({ name: '', attendance: 'notGoing' }); // Reset form state
 		} catch (error) {
+			setRsvpSending(false); // Reset loading state
 			console.error("RSVP Error:", error);
 			toast.error(t("birthday.rsvpSubmissionFailed"));
 		}
@@ -167,7 +176,7 @@ export const Birthday: FC<birthdayProps> = ({ className, inviteData, id }) => {
 			{/* === HEADER SECTION === */}
 			<div className="text-center mb-10 md:mb-16">
 				<div className="py-8 md:py-10">
-                    {/* --- "You're Invited" Title --- */}
+					{/* --- "You're Invited" Title --- */}
 					<div
 						className={`flex items-center justify-center text-3xl sm:text-4xl md:text-5xl font-bold mb-10 md:mb-16 tracking-wider relative`}
 					>
@@ -183,13 +192,13 @@ export const Birthday: FC<birthdayProps> = ({ className, inviteData, id }) => {
 						</span>
 					</div>
 
-                    {/* --- Cake Icon & Age --- */}
+					{/* --- Cake Icon & Age --- */}
 					<Cake
 						className={`mx-auto mb-4 ${accentBlue} transition-transform duration-1500 animate-bounce-slow`} // Using custom bounce animation
 						size={100} // Smaller size for mobile
 						md-size={150} // Larger size for medium screens and up
 						strokeWidth={1.5}
-                        style={{ animationDuration: '2s' }} // Slower bounce
+						style={{ animationDuration: "2s" }} // Slower bounce
 					/>
 					<div
 						className={cn(
@@ -197,7 +206,7 @@ export const Birthday: FC<birthdayProps> = ({ className, inviteData, id }) => {
 							"font-extrabold text-7xl sm:text-8xl md:text-9xl text-accent/90 transition-transform duration-500 w-full",
 							{
 								"scale-125 md:scale-150": numberTickerComplete, // Slightly less scale on smaller screens
-							}
+							},
 						)}
 					>
 						<NumberTicker
@@ -206,8 +215,8 @@ export const Birthday: FC<birthdayProps> = ({ className, inviteData, id }) => {
 							autoStart={true}
 							transition={{ duration: 3.5, type: "tween", ease: "easeInOut" }}
 							onComplete={() => {
-                                // Add a small delay before setting complete to allow animation finish
-                                setTimeout(() => setNumberTickerComplete(true), 100);
+								// Add a small delay before setting complete to allow animation finish
+								setTimeout(() => setNumberTickerComplete(true), 100);
 							}}
 						/>
 					</div>
@@ -216,28 +225,29 @@ export const Birthday: FC<birthdayProps> = ({ className, inviteData, id }) => {
 					</p>
 				</div>
 
-                {/* --- Divider --- */}
+				{/* --- Divider --- */}
 				<hr className="w-1/3 md:w-1/4 mx-auto border-accent/30 my-6 md:my-8" />
 
-                {/* --- Person's Name & Party Type --- */}
+				{/* --- Person's Name & Party Type --- */}
 				<p className="text-4xl sm:text-5xl md:text-6xl lg:text-7xl font-bold text-left px-2 sm:px-4 md:px-0 break-words">
 					<span
 						className={`underline decoration-yellow-400 decoration-3 underline-offset-[8px] md:underline-offset-[12px]`} // Adjusted underline offset
 					>
 						{name}
-					</span>{"'s"}
+					</span>
+					{"'s"}
 					<br className="sm:hidden" /> {/* Break line on mobile only */}
 					<span className="ml-0 sm:ml-4">{t("birthday.birthdayParty")}</span>
 				</p>
 
-                {/* --- Theme/Message --- */}
+				{/* --- Theme/Message --- */}
 				<p className="text-lg sm:text-xl text-accent/80 mt-6 px-2 sm:px-4 text-left max-w-full md:max-w-4xl mx-auto">
 					<PartyPopper
 						className={`inline-block w-5 h-5 sm:w-6 sm:h-6 mr-2 ${accentYellow}`}
 					/>
-                     {/* BreathingText could be complex on performance/mobile, consider simpler display first */}
-					 <span className="italic">{themeOrMessage}</span>
-                     {/* If BreathingText is desired:
+					{/* BreathingText could be complex on performance/mobile, consider simpler display first */}
+					<span className="italic">{themeOrMessage}</span>
+					{/* If BreathingText is desired:
                      <BreathingText
 						label={themeOrMessage}
 						staggerDuration={0.5}
@@ -252,8 +262,18 @@ export const Birthday: FC<birthdayProps> = ({ className, inviteData, id }) => {
 				{/* --- Date & Time Card --- */}
 				<div className="flex flex-col items-center justify-start gap-2 m-2 p-4 sm:p-6 rounded border border-accent/20 shadow-sm shadow-accent/10 text-center w-full md:flex-1 bg-accent-foreground/30 backdrop-blur-sm">
 					<div className="flex items-center gap-3 mb-2">
-						<Calendar size={32} sm-size={40} strokeWidth={2} className={`${accentBlue}`} />
-						<Clock size={32} sm-size={40} strokeWidth={2} className={`${accentBlue}`} />
+						<Calendar
+							size={32}
+							sm-size={40}
+							strokeWidth={2}
+							className={`${accentBlue}`}
+						/>
+						<Clock
+							size={32}
+							sm-size={40}
+							strokeWidth={2}
+							className={`${accentBlue}`}
+						/>
 					</div>
 					<span className="text-2xl sm:text-3xl font-bold bg-accent/10 px-4 py-1 rounded block w-full">
 						{formattedDate}
@@ -266,7 +286,8 @@ export const Birthday: FC<birthdayProps> = ({ className, inviteData, id }) => {
 				{/* --- Location Card --- */}
 				<div className="flex flex-col items-center justify-start gap-2 m-2 p-4 sm:p-6 rounded border border-accent/20 shadow-sm shadow-accent/10 text-center w-full md:flex-1 bg-accent-foreground/30 backdrop-blur-sm">
 					<MapPin
-						size={40} sm-size={50} // Slightly adjusted size
+						size={40}
+						sm-size={50} // Slightly adjusted size
 						strokeWidth={2}
 						className={`${accentBlue} mb-2`}
 					/>
@@ -285,10 +306,16 @@ export const Birthday: FC<birthdayProps> = ({ className, inviteData, id }) => {
 							target="_blank"
 							rel="noopener noreferrer"
 						>
-							<Map size={18} sm-size={20} strokeWidth={2.5} className="inline-block" />
+							<Map
+								size={18}
+								sm-size={20}
+								strokeWidth={2.5}
+								className="inline-block"
+							/>
 							<span>{t("birthday.viewMapDirections")}</span>
 							<SquareArrowOutUpRight
-								size={18} sm-size={20}
+								size={18}
+								sm-size={20}
 								strokeWidth={2.5}
 								className="inline-block ml-1"
 							/>
@@ -305,18 +332,18 @@ export const Birthday: FC<birthdayProps> = ({ className, inviteData, id }) => {
 						<h3
 							className={`text-xl sm:text-2xl font-bold mb-3 flex items-center justify-center md:justify-start gap-2 ${accentYellow}`}
 						>
-							<Users size={20} sm-size={24}/> {t("birthday.attire")}
+							<Users size={20} sm-size={24} /> {t("birthday.attire")}
 						</h3>
 						<p className="text-base sm:text-lg text-accent/90">{dressCode}</p>
 					</div>
 				)}
-                 {/* --- Gift Card --- */}
+				{/* --- Gift Card --- */}
 				{giftInfo && (
 					<div className="text-center md:text-left p-4 sm:p-5 border border-accent/30 rounded w-full md:flex-1 md:max-w-md bg-accent-foreground/30 backdrop-blur-sm">
 						<h3
 							className={`text-xl sm:text-2xl font-bold mb-3 flex items-center justify-center md:justify-start gap-2 ${accentYellow}`}
 						>
-							<Gift size={20} sm-size={24}/> {t("birthday.gifts")}
+							<Gift size={20} sm-size={24} /> {t("birthday.gifts")}
 						</h3>
 						<p className="text-base sm:text-lg text-accent/90">{giftInfo}</p>
 					</div>
@@ -325,18 +352,18 @@ export const Birthday: FC<birthdayProps> = ({ className, inviteData, id }) => {
 
 			{/* === RSVP SECTION === */}
 			<div className="flex flex-col items-center justify-center my-10 md:my-16">
-                {/* --- RSVP Form Box --- */}
+				{/* --- RSVP Form Box --- */}
 				<div className="text-center p-4 sm:p-6 md:p-8 lg:p-10 w-full sm:w-11/12 md:w-2/3 lg:w-1/2 border-2 border-accent/50 rounded-lg m-2 sm:m-4 shadow-lg shadow-accent/15 bg-accent-foreground/50 backdrop-blur-sm">
 					<p className="text-2xl sm:text-3xl md:text-4xl font-bold mb-6 sm:mb-8 flex items-center justify-center gap-2 sm:gap-3">
-						<Sparkles className={`${accentYellow}`} size={24} sm-size={30}/>
+						<Sparkles className={`${accentYellow}`} size={24} sm-size={30} />
 						{t("birthday.willYouCelebrateWithUs")}
-						<Sparkles className={`${accentYellow}`} size={24} sm-size={30}/>
+						<Sparkles className={`${accentYellow}`} size={24} sm-size={30} />
 					</p>
 					<form
 						className="flex flex-col items-start gap-4 sm:gap-6" // Adjusted gap
 						onSubmit={handleSubmit}
 					>
-                        {/* --- Name Input --- */}
+						{/* --- Name Input --- */}
 						<input
 							type="text"
 							name="guestName"
@@ -349,7 +376,7 @@ export const Birthday: FC<birthdayProps> = ({ className, inviteData, id }) => {
 							}
 							className={`text-base sm:text-lg p-3 border-2 border-accent/40 bg-accent-foreground/80 text-accent w-full placeholder-gray-400 rounded focus:outline-none focus:border-yellow-400 focus:ring-1 focus:ring-yellow-400 transition-all duration-200`}
 						/>
-                        {/* --- Attendance Radios --- */}
+						{/* --- Attendance Radios --- */}
 						<div className="flex gap-3 sm:gap-4 items-start flex-col justify-start w-full text-left">
 							<label className="text-lg sm:text-xl flex items-center gap-3 cursor-pointer p-2 rounded hover:bg-accent/10 w-full transition-colors duration-200">
 								<input
@@ -357,7 +384,7 @@ export const Birthday: FC<birthdayProps> = ({ className, inviteData, id }) => {
 									name="attendance"
 									value="going"
 									required
-									checked={rsvpForm.attendance === 'going'}
+									checked={rsvpForm.attendance === "going"}
 									onChange={(e) =>
 										setRsvpForm({
 											...rsvpForm,
@@ -374,7 +401,7 @@ export const Birthday: FC<birthdayProps> = ({ className, inviteData, id }) => {
 									name="attendance"
 									value="notGoing"
 									required
-                                    checked={rsvpForm.attendance === 'notGoing'}
+									checked={rsvpForm.attendance === "notGoing"}
 									onChange={(e) =>
 										setRsvpForm({
 											...rsvpForm,
@@ -386,13 +413,21 @@ export const Birthday: FC<birthdayProps> = ({ className, inviteData, id }) => {
 								{t("birthday.attendanceNo")}
 							</label>
 						</div>
-                        {/* --- Submit Button --- */}
+						{/* --- Submit Button --- */}
 						<button
 							type="submit"
-							disabled={!id || !rsvpForm.name || !rsvpForm.attendance} // Disable if no id or incomplete form
+							disabled={
+								!id || !rsvpForm.name || !rsvpForm.attendance || rsvpSending
+							} // Disable if no id or incomplete form
 							className={`disabled:cursor-not-allowed disabled:opacity-60 text-lg sm:text-xl font-bold border-2 border-yellow-400 ${accentYellow} py-3 px-6 sm:px-8 hover:bg-yellow-400 hover:text-accent-foreground transition-all duration-300 ease-in-out cursor-pointer rounded-md shadow-sm hover:shadow-md active:scale-95 w-full sm:w-auto flex items-center justify-center gap-2 mt-2`} // Full width on mobile, auto on larger
 						>
-							<Send size={18} sm-size={20} /> {t("birthday.sendRSVP")}
+							{rsvpSending ? (
+								<span className="flex gap-3 items-center"><LoaderIcon className="animate-spin"/> {t("birthday.sendRSVPLoading")}</span> // Loading spinner or text
+							) : (
+								<>
+									<Send size={18} sm-size={20} /> {t("birthday.sendRSVP")}
+								</>
+							)}
 						</button>
 					</form>
 				</div>
@@ -426,26 +461,27 @@ export const Birthday: FC<birthdayProps> = ({ className, inviteData, id }) => {
 			{/* === FOOTER === */}
 			<footer className="text-center text-accent/60 text-sm sm:text-base mt-10 md:mt-12 border-t border-accent/20 pt-6">
 				<Info size={16} sm-size={18} className="inline mr-1" />{" "}
-                {/* Adjusted template literal usage */}
+				{/* Adjusted template literal usage */}
 				{t("birthday.footerMessage", { name: name, age: age })}
 			</footer>
 
-             {/* Add custom bounce animation styles (can be in global css or style jsx) */}
-            <style jsx global>{`
-              @keyframes bounce-slow {
-                0%, 100% {
-                  transform: translateY(-10%);
-                  animation-timing-function: cubic-bezier(0.8, 0, 1, 1);
-                }
-                50% {
-                  transform: translateY(0);
-                  animation-timing-function: cubic-bezier(0, 0, 0.2, 1);
-                }
-              }
-              .animate-bounce-slow {
-                animation: bounce-slow 2s infinite; /* Use 2s duration from above */
-              }
-            `}</style>
+			{/* Add custom bounce animation styles (can be in global css or style jsx) */}
+			<style jsx global>{`
+				@keyframes bounce-slow {
+					0%,
+					100% {
+						transform: translateY(-10%);
+						animation-timing-function: cubic-bezier(0.8, 0, 1, 1);
+					}
+					50% {
+						transform: translateY(0);
+						animation-timing-function: cubic-bezier(0, 0, 0.2, 1);
+					}
+				}
+				.animate-bounce-slow {
+					animation: bounce-slow 2s infinite; /* Use 2s duration from above */
+				}
+			`}</style>
 		</div>
 	);
 };
