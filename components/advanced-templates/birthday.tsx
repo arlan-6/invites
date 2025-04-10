@@ -156,6 +156,7 @@ export const Birthday: FC<birthdayProps> = ({ className, inviteData, id }) => {
 			); // Personalize confirmation
 			// Optionally reset form or show a success message inline
 			// setRsvpForm({ name: '', attendance: 'notGoing' }); // Reset form state
+			setRsvpForm({ name: "", attendance: "notGoing" }); // Reset form state
 		} catch (error) {
 			setRsvpSending(false); // Reset loading state
 			console.error("RSVP Error:", error);
