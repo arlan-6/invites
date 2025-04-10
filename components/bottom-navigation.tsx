@@ -32,7 +32,7 @@ export default function BottomNavigation() {
 
 				{/* Center Text */}
 				<div className="text-center text-sm w-full md:w-auto">
-					Invite was created with ❤️ in Shaqr App
+					Invite was created with ❤️ in Baramyz App
 				</div></div>
 
 				{/* Right Section */}
