@@ -71,8 +71,8 @@ export const TemplateCard: FC<templateCardProps> = ({ template, i }) => {
 					)}
 				</div>
 
-				<div className="mt-4">
-					{translation?.occasions && (<><h4 className="text-gray-100">{t("templates.occasions")}</h4>
+				<div className="">
+					{/* {translation?.occasions && (<><h4 className="text-gray-100">{t("templates.occasions")}</h4>
 					<ul className="mt-2 flex flex-wrap gap-2 bg-background/50 text-foreground p-2 rounded-sm">
 						{translation?.occasions?.map((occasion) => (
 							<div key={occasion} className={cn("flex gap-1 items-center")}>
@@ -82,7 +82,7 @@ export const TemplateCard: FC<templateCardProps> = ({ template, i }) => {
 								</li>
 							</div>
 						))}
-					</ul></>)}
+					</ul></>)} */}
 					
 				</div>
 				{/* <div className="flex gap-2 mt-2">
