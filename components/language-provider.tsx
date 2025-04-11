@@ -86,7 +86,7 @@ export const LanguageProvider = ({ children }: { children: React.ReactNode }) =>
     const rawString = translations[language]?.[key as keyof (typeof translations)[typeof language]] || null;
 
     if (rawString === null) {
-      console.warn(`Translation key "${key}" not found for language "${language}".`);
+      // console.warn(`Translation key "${key}" not found for language "${language}".`);
       // Fallback: Return key possibly with placeholders for easier debugging
       let fallback = key;
         if (variables) {
