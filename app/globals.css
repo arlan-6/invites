@@ -133,3 +133,22 @@
 		transform: translateY(-100%);
 	}
 }
+
+.nauryz{
+	background: linear-gradient(-45deg, #16a34a, #a3e635);
+}
+.zord{
+	background: linear-gradient(-45deg, #b91c1c, #0f172a);
+}
+.aurora{
+	background: linear-gradient(-45deg, #ec4899, #f59e0b);
+}
+.mayday{
+	background: linear-gradient(-45deg, #f472b6, #8b5cf6);
+}
+.spring{
+	background: linear-gradient(-45deg, #facc15, #4ade80);
+}
+.simple{
+	background: linear-gradient(-45deg, #06b6d4, #4f46e5);
+}
