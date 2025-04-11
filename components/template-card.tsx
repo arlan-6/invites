@@ -39,6 +39,7 @@ export const TemplateCard: FC<templateCardProps> = ({ template, i }) => {
 	};
 
 	const translation = translations?.[language];
+console.log(typeof template.color);
 
 	return (
 		<motion.div
@@ -49,6 +50,7 @@ export const TemplateCard: FC<templateCardProps> = ({ template, i }) => {
 			className={cn(
 				"container p-4 px-4 rounded-lg shadow-2xl bg-gradient-to-tl min-w-64 flex-1 select-none",
 				template.color,
+				''
 			)}
 		>
 			<Link
