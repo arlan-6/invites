@@ -1,179 +1,263 @@
 "use client";
-import React, { FC, useCallback, useEffect, useState } from "react";
+
+import React, { FC, useCallback, useEffect, useState, ChangeEvent } from "react";
+import { useRouter } from "next/navigation";
+import { ArrowLeft, ArrowRight } from "lucide-react";
+
 import { cn } from "@/lib/utils";
 import useTemplateStore from "@/store/advancedTemplate";
-import { Input } from "../ui/input";
 import useAdvancedInviteStore from "@/store/advancedInviteEdit";
-import { ShareDialogButton } from "./share-dialog-button";
+
+import { Input } from "../ui/input";
 import { Button } from "../ui/button";
-import { ArrowLeft, ArrowRight, X } from "lucide-react";
-import { useRouter } from "next/navigation";
-import { Accordion } from "../accordion";
+import { Accordion } from "../accordion"; // Assuming this is your custom Accordion or Shadcn's
+import { ScrollArea } from "../ui/scroll-area";
+import { ShareDialogButton } from "./share-dialog-button"; // Assume this handles its own localization internally or pass `t`
+import { Label } from "../ui/label";
+import { useLanguage } from "../language-provider";
+
+// Import your localization hook
 
 interface TemplateEditorProps {
 	className?: string;
 }
 
-const inputConfig: Record<
+// Keep the original config for structure and non-translatable parts like type/accept
+const inputBaseConfig: Record<
 	string,
-	{ type?: string; placeholder?: string; accept?: string; required?: boolean }
+	{
+		type?: string;
+		accept?: string;
+		required?: boolean;
+        // Note: Label and Placeholder are now handled via translation keys
+	}
 > = {
-	name: { type: "text", placeholder: "Name", required: true },
-	age: { type: "number", placeholder: "Age", required: true },
-	dateTime: {
-		type: "datetime-local",
-		placeholder: "Date and Time",
-		required: true,
-	},
-	location: { type: "text", placeholder: "Location", required: true },
-	address: { type: "text", placeholder: "Address", required: true },
-	addressLink: { type: "text", placeholder: "Address Link", required: true },
-	contactInfo: {
-		type: "text",
-		placeholder: "Contact Information",
-		required: true,
-	},
-	message: { placeholder: "Message", required: false },
-	image: {
-		type: "file",
-		accept: "image/*",
-		placeholder: "Image",
-		required: false,
-	},
-	themeOrMessage: {
-		type: "text",
-		placeholder: "Theme or Message",
-		required: false,
-	},
-	dressCode: { type: "text", placeholder: "Dress Code", required: false },
-	giftInfo: { type: "text", placeholder: "Gift Information", required: false },
-	rsvpDeadline: { type: "datetime-local", placeholder: "RSVP Deadline" },
+	name: { type: "text", required: true },
+	age: { type: "number", required: true },
+	dateTime: { type: "datetime-local", required: true },
+	location: { type: "text", required: true },
+	address: { type: "text", required: true },
+	addressLink: { type: "text", required: true },
+	contactInfo: { type: "text", required: true },
+	message: { required: false },
+	image: { type: "file", accept: "image/*", required: false },
+	themeOrMessage: { type: "text", required: false },
+	dressCode: { type: "text", required: false },
+	giftInfo: { type: "text", required: false },
+	rsvpDeadline: { type: "datetime-local" },
 };
 
 export const TemplateEditor: FC<TemplateEditorProps> = ({ className }) => {
-	const [open, setOpen] = useState(true);
+	const [isEditorOpen, setIsEditorOpen] = useState(true);
 	const router = useRouter();
-	const [inputs, setInputs] = useState<string[]>([]);
-	const inviteData = useAdvancedInviteStore.getState().inviteData;
-	const resetInviteData = useAdvancedInviteStore.getState().resetInviteData;
-	const setInviteData = useAdvancedInviteStore.getState().setInviteData;
+
+    // --- Localization Hook ---
+    const { t } = useLanguage();
+
+	const inputs = useTemplateStore((state) => state.inputs as (keyof typeof inputBaseConfig)[]);
+	const inviteData = useAdvancedInviteStore((state) => state.inviteData);
+	const setInviteData = useAdvancedInviteStore((state) => state.setInviteData);
+	const resetInviteData = useAdvancedInviteStore((state) => state.resetInviteData);
+
+	const [fileInputKey, setFileInputKey] = useState(Date.now());
+	const [fileName, setFileName] = useState<string | null>(null);
 
 	useEffect(() => {
-		const inputss = useTemplateStore.getState()
-			.inputs as (keyof typeof inputConfig)[];
-		setInputs(inputss);
-	}, [setInputs]);
-	resetInviteData();
+		resetInviteData();
+	}, [resetInviteData]);
 
-	const handleInputChange = (input: string, value: string) => {
-		const formattedValue =
-			(input === "dateTime" || input === "rsvpDeadline") && value
-				? new Date(value).toISOString()
-				: input === "addressLink"
-				? value.split(",")
-				: value;
 
-		setInviteData({
-			[input]: formattedValue,
-		});
+	const handleInputChange = useCallback(
+		(e: ChangeEvent<HTMLInputElement>) => {
+            const { id: inputKey, value, type, files } = e.target;
+
+            let formattedValue: any;
+
+            if (type === 'file') {
+                const file = files?.[0];
+                if (file) {
+                    const reader = new FileReader();
+                    reader.onloadend = () => {
+                        setInviteData({ [inputKey]: reader.result as string });
+                        if (inputKey === 'image') { // Assuming 'image' is the key for the file input we track name for
+                           setFileName(file.name);
+                        }
+                    };
+                    reader.readAsDataURL(file);
+                } else {
+                    setInviteData({ [inputKey]: null });
+                    if (inputKey === 'image') {
+                         setFileName(null);
+                         setFileInputKey(Date.now());
+                    }
+                }
+                return;
+			} else if ((inputKey === "dateTime" || inputKey === "rsvpDeadline") && value) {
+				const isoDateTime = new Date(value).toISOString();
+				if (!isNaN(Date.parse(isoDateTime))) {
+					formattedValue = isoDateTime; // Ensure valid ISO-8601 DateTime
+				} else {
+					console.error(`Invalid ISO-8601 DateTime: ${value}`);
+					return; // Exit if invalid
+				}
+			} else {
+				formattedValue = value; // Default for text, number etc.
+			}
+
+            if (type !== 'file') {
+                 setInviteData({ [inputKey]: formattedValue });
+            }
+        },
+        [setInviteData] // Removed fileName/setFileName dependencies unless more complex logic needed
+    );
+
+	const handleClearFile = (inputKey: string) => {
+		setInviteData({ [inputKey]: null });
+		if (inputKey === 'image') { // Only reset fileName display for the image input
+           setFileName(null);
+           setFileInputKey(Date.now());
+        }
 	};
 
-	const requiredInputs = inputs.filter((input) => inputConfig[input]?.required);
-	const optionalInputs = inputs.filter(
-		(input) => !inputConfig[input]?.required,
-	);
+	const requiredInputs = inputs?.filter((key) => inputBaseConfig[key]?.required) ?? [];
+	const optionalInputs = inputs?.filter((key) => !inputBaseConfig[key]?.required) ?? [];
+
+	const renderInput = (inputKey: keyof typeof inputBaseConfig) => {
+		const baseConfig = inputBaseConfig[inputKey];
+		if (!baseConfig) return null;
+
+        // --- Get translated labels and placeholders ---
+        const label = t(`advanced-template-editor.label.${inputKey}`);
+        const placeholder = t(`advanced-template-editor.placeholder.${inputKey}`); // Get placeholder translation
+
+		const currentValue = (inviteData as any)[inputKey];
+		const isFile = baseConfig.type === "file";
+
+		let displayValue: string | number | readonly string[] | undefined = currentValue;
+
+		if (isFile) {
+            // We specifically target 'image' key for the filename display logic here
+            const showClearButton = inputKey === 'image' && fileName;
+            const selectedText = inputKey === 'image' && fileName
+                 ? t('advanced-template-editor.fileInput.selected', { fileName }) // Use interpolation
+                 : '';
+
+
+			return (
+				<div key={inputKey} className="mb-4 space-y-1.5">
+					<Label htmlFor={inputKey} className="flex justify-between items-center">
+						<span>{label} {baseConfig.required && "*"}</span>
+                        {showClearButton && (
+                            <Button variant="ghost" size="sm" onClick={() => handleClearFile(inputKey)} className="text-xs h-auto p-1">
+                                {t('advanced-template-editor.clearButton')}
+                            </Button>
+                        )}
+					</Label>
+					<Input
+						id={inputKey}
+						type="file"
+						accept={baseConfig.accept}
+						onChange={handleInputChange}
+						className="cursor-pointer file:mr-4 file:py-2 file:px-4 file:rounded-full file:border-0 file:text-sm file:font-semibold file:bg-primary file:text-primary-foreground hover:file:bg-primary/90"
+						key={fileInputKey}
+					/>
+                    {selectedText && <p className="text-sm text-muted-foreground mt-1">{selectedText}</p>}
+				 </div>
+			);
+		}
+
+		return (
+			<div key={inputKey} className="mb-4 space-y-1.5">
+				<Label htmlFor={inputKey}>
+					{label} {baseConfig.required && "*"}
+				</Label>
+				<Input
+					id={inputKey}
+					type={baseConfig.type || "text"}
+					placeholder={placeholder} // Use translated placeholder
+					required={baseConfig.required}
+					value={
+						baseConfig.type === "datetime-local" && displayValue
+							? displayValue.toString().slice(0, 16) // Format ISO string for datetime-local input
+							: displayValue ?? ""
+					}
+					onChange={handleInputChange}
+					min={baseConfig.type === "number" ? "0" : undefined}
+					autoComplete="off"
+				/>
+			</div>
+		);
+	};
+
 
 	return (
-		<div className=" right-0 top-15 max-w-96 h-full bg-accent ">
-			<div className="fixed right-5 top-20 z-[9999999] animate-bounce ">
-				<Button onClick={() => setOpen(!open)}>
-					{!open ? <ArrowLeft /> : <ArrowRight />}
+		<>
+			<div className="fixed right-5 top-20 z-[100] ">
+				<Button onClick={() => setIsEditorOpen(!isEditorOpen)} size="icon"
+                    // --- Translate aria-label ---
+                    aria-label={isEditorOpen ? t('advanced-template-editor.toggleButton.close') : t('advanced-template-editor.toggleButton.open')}>
+					{isEditorOpen ? <ArrowRight /> : <ArrowLeft />}
 				</Button>
 			</div>
+
 			<div
 				className={cn(
-					"fixed p-5 pb-32 right-0 w-96 h-screen overflow-hidden bg-background/50 backdrop-blur-lg",
-					className,
-					open ? "block" : "hidden",
+					"fixed top-0 right-0 w-96 h-screen bg-background/80 backdrop-blur-lg border-l border-border shadow-lg",
+					"transition-transform duration-300 ease-in-out z-[99]",
+					isEditorOpen ? "translate-x-0" : "translate-x-full",
+					className
 				)}
 			>
-				<ShareDialogButton />
-				<div className="overflow-y-scroll w-full h-full p-4 mt-2">
-					{!inputs ||
-						(inputs.length === 0 && (
-							<div className="flex justify-center items-center h-full">
-								<p className="text-gray-500">Refresh page </p>
-								<div className="">
-									<Button onClick={() => router.refresh()}>Try again...</Button>
-								</div>
-							</div>
-						))}
-					<Accordion
-						title="Required Inputs"
-						titleClassName="text-lg p-1"
-						className="mb-4 "
-					>
-						{requiredInputs.map((input) => {
-							const config = inputConfig[input];
-							if (!config) return null;
+				 <ScrollArea className="h-full">
+					 <div className="p-5 pb-20">
+                         <div className="flex justify-between items-center mb-4">
+                             {/* --- Translate Title --- */}
+                            <h2 className="text-xl font-semibold">{t('advanced-template-editor.title')}</h2>
+                         </div>
 
-							return (
-								<div key={input} className="mb-4">
-									<label
-										htmlFor={input}
-										className="block text-sm font-medium text-gray-700"
-									>
-										{config.placeholder} {config.required && "*"}
-									</label>
-									<Input
-										id={input}
-										{...config}
-										value={
-											input === "addressLink"
-												? (inviteData as any)[input]?.join(",")
-												: (inviteData as any)[input]
-										}
-										onChange={(e) => handleInputChange(input, e.target.value)}
-									/>
-								</div>
-							);
-						})}
-					</Accordion>
-					<hr className="my-4 border-gray-300" />
-					<Accordion
-						title="Optional Inputs"
-						titleClassName="text-lg p-1"
-						className="mb-4 "
-						isClosed={true}
-					>
-						{optionalInputs.map((input) => {
-							const config = inputConfig[input];
-							if (!config) return null;
+                        {/* Assuming ShareDialogButton handles its own localization or takes `t` as a prop */}
+						<ShareDialogButton />
 
-							return (
-								<div key={input} className="mb-4">
-									<label
-										htmlFor={input}
-										className="block text-sm font-medium text-gray-700"
-									>
-										{config.placeholder} {config.required && "*"}
-									</label>
-									<Input
-										id={input}
-										{...config}
-										value={
-											input === "addressLink"
-												? (inviteData as any)[input]?.join(",")
-												: (inviteData as any)[input]
-										}
-										onChange={(e) => handleInputChange(input, e.target.value)}
-									/>
+						<div className="mt-6 space-y-6">
+							{!inputs || inputs.length === 0 ? (
+								<div className="flex flex-col justify-center items-center h-40 text-center">
+                                    {/* --- Translate Empty State --- */}
+									<p className="text-muted-foreground mb-2">{t('advanced-template-editor.emptyState.message')}</p>
+									<Button onClick={() => router.refresh()} variant="outline">
+                                        {/* --- Translate Refresh Button --- */}
+                                        {t('advanced-template-editor.refreshButton')}
+                                    </Button>
 								</div>
-							);
-						})}
-					</Accordion>
-				</div>
+							) : (
+								<>
+									<Accordion
+                                        // --- Translate Accordion Title ---
+										title={t('advanced-template-editor.accordion.required')}
+										titleClassName="text-lg font-medium p-1"
+										className="border-b border-border pb-4"
+									>
+										<div className="pt-2">
+											 {requiredInputs.map(renderInput)}
+										</div>
+									</Accordion>
+
+									<Accordion
+                                         // --- Translate Accordion Title ---
+										title={t('advanced-template-editor.accordion.optional')}
+										titleClassName="text-lg font-medium p-1"
+										 className="border-b border-border pb-4"
+										isClosed={true}
+									>
+									   <div className="pt-2">
+											{optionalInputs.map(renderInput)}
+									   </div>
+									</Accordion>
+								</>
+							)}
+						</div>
+					</div>
+				</ScrollArea>
 			</div>
-		</div>
+		</>
 	);
 };

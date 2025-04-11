@@ -56,42 +56,82 @@ export const translations = {
 		"dashboard.accountSettings": "Account Settings",
 		"dashboard.logout": "Logout",
 
-"birthday.defaultName": "Guest", // Fallback if inviteData.name is missing
-  "birthday.youAreInvited": "You're Invited", // Main title
-  "birthday.dateTBC": "Date TBC", // Fallback for date
-  "birthday.timeTBC": "Time TBC", // Fallback for time
-  "birthday.defaultLocation": "Location TBC", // Fallback for location
-  "birthday.defaultThemeMessage": "Join us for a celebration!", // Fallback for theme/message
-  "birthday.defaultDressCode": "Dress code: Casual or as you like!", // Example fallback for dress code
-  "birthday.defaultGiftInfo": "Your presence is the only gift required!", // Example fallback for gift info
-  "birthday.defaultRSVPDeadline": "ASAP", // Fallback for RSVP deadline (using "ASAP" as a less specific fallback than TBC)
-  "birthday.defaultContactInfo": "Reach out if you have questions.", // Fallback for contact info
+		"advanced-template-editor.title": "Edit Invitation",
+		"advanced-template-editor.toggleButton.open": "Open Editor",
+		"advanced-template-editor.toggleButton.close": "Close Editor",
+		"advanced-template-editor.clearButton": "Clear",
+		"advanced-template-editor.refreshButton": "Try Refreshing",
+		"advanced-template-editor.emptyState.message": "Template not loaded or has no fields.",
+		"advanced-template-editor.accordion.required": "Required Details",
+		"advanced-template-editor.accordion.optional": "Optional Details",
+		"advanced-template-editor.fileInput.selected": "Selected: {fileName}",
+		"advanced-template-editor.label.name": "Name",
+		"advanced-template-editor.placeholder.name": "E.g., John Doe",
+		"advanced-template-editor.label.age": "Age",
+		"advanced-template-editor.placeholder.age": "E.g., 30",
+		"advanced-template-editor.label.dateTime": "Date and Time",
+		"advanced-template-editor.placeholder.dateTime": " ", // datetime-local inputs often don't show placeholders well
+		"advanced-template-editor.label.location": "Location Name",
+		"advanced-template-editor.placeholder.location": "E.g., Grand Hall",
+		"advanced-template-editor.label.address": "Full Address",
+		"advanced-template-editor.placeholder.address": "E.g., 123 Main St, Anytown",
+		"advanced-template-editor.label.addressLink": "Address Map Link",
+		"advanced-template-editor.placeholder.addressLink": "E.g., https://maps.app.goo.gl/...",
+		"advanced-template-editor.label.contactInfo": "Contact Information",
+		"advanced-template-editor.placeholder.contactInfo": "E.g., Jane Doe (555-1234)",
+		"advanced-template-editor.label.message": "Invitation Message",
+		"advanced-template-editor.placeholder.message": "E.g., Join us for a celebration!",
+		"advanced-template-editor.label.image": "Upload Image",
+		"advanced-template-editor.placeholder.image": "Select an image", // Placeholder for file input doesn't visually appear but is good for context
+		"advanced-template-editor.label.themeOrMessage": "Theme or Short Message",
+		"advanced-template-editor.placeholder.themeOrMessage": "E.g., Tropical Paradise",
+		"advanced-template-editor.label.dressCode": "Dress Code",
+		"advanced-template-editor.placeholder.dressCode": "E.g., Casual, Formal",
+		"advanced-template-editor.label.giftInfo": "Gift Information",
+		"advanced-template-editor.placeholder.giftInfo": "E.g., Registry link or 'No gifts please'",
+		"advanced-template-editor.label.rsvpDeadline": "RSVP Deadline",
+		"advanced-template-editor.placeholder.rsvpDeadline": "", // datetime-local inputs often don't show placeholders well
 
-  "birthday.yearsOld": "Years Old", // Appears after the age number
-  "birthday.birthdayParty": "Birthday Party", // Appears after the name
+		"birthday.defaultName": "Guest", // Fallback if inviteData.name is missing
+		"birthday.youAreInvited": "You're Invited", // Main title
+		"birthday.dateTBC": "Date TBC", // Fallback for date
+		"birthday.timeTBC": "Time TBC", // Fallback for time
+		"birthday.defaultLocation": "Location TBC", // Fallback for location
+		"birthday.defaultThemeMessage": "Join us for a celebration!", // Fallback for theme/message
+		"birthday.defaultDressCode": "Dress code: Casual or as you like!", // Example fallback for dress code
+		"birthday.defaultGiftInfo": "Your presence is the only gift required!", // Example fallback for gift info
+		"birthday.defaultRSVPDeadline": "ASAP", // Fallback for RSVP deadline (using "ASAP" as a less specific fallback than TBC)
+		"birthday.defaultContactInfo": "Reach out if you have questions.", // Fallback for contact info
 
-  "birthday.viewMapDirections": "View Map / Directions", // Text for the map link
-  "birthday.attire": "Attire", // Heading for the dress code section
-  "birthday.gifts": "Gifts", // Heading for the gift info section
+		"birthday.yearsOld": "Years Old", // Appears after the age number
+		"birthday.birthdayParty": "Birthday Party", // Appears after the name
 
-  "birthday.willYouCelebrateWithUs": "Will you celebrate with us?", // Heading for the RSVP section
-  "birthday.yourNamePlaceholder": "Your Full Name", // Placeholder for the guest name input
-  "birthday.attendanceYes": "Yes, I'll be there!", // Radio button label for attending
-  "birthday.attendanceNo": "Sorry, I can't make it.", // Radio button label for not attending
-  "birthday.sendRSVP": "Send RSVP", // Text for the submit button
-  "birthday.sendRSVPLoading": "Sending",
+		"birthday.viewMapDirections": "View Map / Directions", // Text for the map link
+		"birthday.attire": "Attire", // Heading for the dress code section
+		"birthday.gifts": "Gifts", // Heading for the gift info section
 
-  "birthday.pleaseRSVPBy": "Please RSVP by:", // Text appearing before the deadline date
-  
-  "birthday.questionsContact": "Questions? Contact:", // Text appearing before the contact info
+		"birthday.willYouCelebrateWithUs": "Will you celebrate with us?", // Heading for the RSVP section
+		"birthday.yourNamePlaceholder": "Your Full Name", // Placeholder for the guest name input
+		"birthday.attendanceYes": "Yes, I'll be there!", // Radio button label for attending
+		"birthday.attendanceNo": "Sorry, I can't make it.", // Radio button label for not attending
+		"birthday.sendRSVP": "Send RSVP", // Text for the submit button
+		"birthday.sendRSVPLoading": "Sending",
 
-  "birthday.footerMessage": "An invitation for {name}'s {age}th Birthday.", // Footer text (uses interpolation)
+		"birthday.pleaseRSVPBy": "Please RSVP by:", // Text appearing before the deadline date
 
-  // Toast / User Feedback Messages
-  "birthday.missingInviteID": "Error: Invite ID is missing. Cannot submit RSVP.", // Error if ID prop is missing
-  "birthday.rsvpSubmissionFailed": "Oh no! Something went wrong trying to submit your RSVP. Please try again or contact the host.", // Error on failed API call
-  "birthday.rsvpSubmissionSuccess": "Got it, {name}! Your RSVP has been recorded. Thanks!", // Success message (uses interpolation for name)
-  "birthday.rsvpFormIncomplete": "Please enter your name and select attendance.", // Error if form isn't filled out
+		"birthday.questionsContact": "Questions? Contact:", // Text appearing before the contact info
+
+		"birthday.footerMessage": "An invitation for {name}'s {age}th Birthday.", // Footer text (uses interpolation)
+
+		// Toast / User Feedback Messages
+		"birthday.missingInviteID":
+			"Error: Invite ID is missing. Cannot submit RSVP.", // Error if ID prop is missing
+		"birthday.rsvpSubmissionFailed":
+			"Oh no! Something went wrong trying to submit your RSVP. Please try again or contact the host.", // Error on failed API call
+		"birthday.rsvpSubmissionSuccess":
+			"Got it, {name}! Your RSVP has been recorded. Thanks!", // Success message (uses interpolation for name)
+		"birthday.rsvpFormIncomplete":
+			"Please enter your name and select attendance.", // Error if form isn't filled out
 	},
 	kk: {
 		"hero.heading": "Әдемі сандық шақыруларды жасаңыз",
@@ -146,6 +186,41 @@ export const translations = {
 		"dashboard.editProfile": "Профильді өңдеу",
 		"dashboard.accountSettings": "Есептік жазба параметрлері",
 		"dashboard.logout": "Шығу",
+		"advanced-template-editor.title": "Шақыруды өңдеу",
+  "advanced-template-editor.toggleButton.open": "Редакторды ашу",
+  "advanced-template-editor.toggleButton.close": "Редакторды жабу",
+  "advanced-template-editor.clearButton": "Тазарту",
+  "advanced-template-editor.refreshButton": "Жаңартып көріңіз",
+  "advanced-template-editor.emptyState.message": "Үлгі жүктелмеген немесе өрістері жоқ.",
+  "advanced-template-editor.accordion.required": "Міндетті мәліметтер",
+  "advanced-template-editor.accordion.optional": "Қосымша мәліметтер",
+  "advanced-template-editor.fileInput.selected": "Таңдалды: {fileName}",
+  "advanced-template-editor.label.name": "Аты",
+  "advanced-template-editor.placeholder.name": "Мыс., Әлихан Бектаев",
+  "advanced-template-editor.label.age": "Жасы",
+  "advanced-template-editor.placeholder.age": "Мыс., 30",
+  "advanced-template-editor.label.dateTime": "Күні мен уақыты",
+  "advanced-template-editor.placeholder.dateTime": "",
+  "advanced-template-editor.label.location": "Орынның атауы",
+  "advanced-template-editor.placeholder.location": "Мыс., Үлкен Зал",
+  "advanced-template-editor.label.address": "Толық мекенжайы",
+  "advanced-template-editor.placeholder.address": "Мыс., Басты көше, 123, Қайсар қаласы",
+  "advanced-template-editor.label.addressLink": "Картаға сілтеме",
+  "advanced-template-editor.placeholder.addressLink": "Мыс., https://maps.google.com/...",
+  "advanced-template-editor.label.contactInfo": "Байланыс ақпараты",
+  "advanced-template-editor.placeholder.contactInfo": "Мыс., Айгүл Серікова (555-1234)",
+  "advanced-template-editor.label.message": "Шақыру мәтіні",
+  "advanced-template-editor.placeholder.message": "Мыс., Мерекеге шақырамыз!",
+  "advanced-template-editor.label.image": "Суретті жүктеу",
+  "advanced-template-editor.placeholder.image": "Суретті таңдаңыз",
+  "advanced-template-editor.label.themeOrMessage": "Тақырыбы немесе қысқа хабарлама",
+  "advanced-template-editor.placeholder.themeOrMessage": "Мыс., Тропикалық жұмақ",
+  "advanced-template-editor.label.dressCode": "Дресс-код",
+  "advanced-template-editor.placeholder.dressCode": "Мыс., Күнделікті, Кешкі",
+  "advanced-template-editor.label.giftInfo": "Сыйлық туралы ақпарат",
+  "advanced-template-editor.placeholder.giftInfo": "Мыс., Тізімге сілтеме немесе 'Сыйлық қажет емес'",
+  "advanced-template-editor.label.rsvpDeadline": "Жауап беру мерзімі",
+  "advanced-template-editor.placeholder.rsvpDeadline": "",
 		"birthday.defaultName": "Қонақ",
 		"birthday.youAreInvited": "Сізді шақырамыз",
 		"birthday.dateTBC": "Күні Нақтыланады",
@@ -169,11 +244,16 @@ export const translations = {
 		"birthday.sendRSVPLoading": "Жіберілуде",
 		"birthday.pleaseRSVPBy": "Өтінеміз, осы күнге дейін жауап беріңіз:",
 		"birthday.questionsContact": "Сұрақтар? Хабарласыңыз:",
-		"birthday.footerMessage": "{name} есімдінің {age} жасқа толуына арналған шақыру.", // Handles Genitive case implication for {name}.
-		"birthday.missingInviteID": "Қате: Шақыру идентификаторы жоқ. Жауап жіберу мүмкін емес.",
-		"birthday.rsvpSubmissionFailed": "Ой! Жауап жіберу кезінде қате пайда болды. Қайталап көріңіз немесе ұйымдастырушымен хабарласыңыз.",
-		"birthday.rsvpSubmissionSuccess": "Қабылданды, {name}! Сіздің жауабыңыз сақталды. Рахмет!",
-		"birthday.rsvpFormIncomplete": "Есіміңізді енгізіп, келетініңізді/келмейтініңізді таңдаңыз."
+		"birthday.footerMessage":
+			"{name} есімдінің {age} жасқа толуына арналған шақыру.", // Handles Genitive case implication for {name}.
+		"birthday.missingInviteID":
+			"Қате: Шақыру идентификаторы жоқ. Жауап жіберу мүмкін емес.",
+		"birthday.rsvpSubmissionFailed":
+			"Ой! Жауап жіберу кезінде қате пайда болды. Қайталап көріңіз немесе ұйымдастырушымен хабарласыңыз.",
+		"birthday.rsvpSubmissionSuccess":
+			"Қабылданды, {name}! Сіздің жауабыңыз сақталды. Рахмет!",
+		"birthday.rsvpFormIncomplete":
+			"Есіміңізді енгізіп, келетініңізді/келмейтініңізді таңдаңыз.",
 	},
 	ru: {
 		"hero.heading": "Создавайте красивые цифровые приглашения",
@@ -227,33 +307,72 @@ export const translations = {
 		"dashboard.editProfile": "Редактировать профиль",
 		"dashboard.accountSettings": "Настройки аккаунта",
 		"dashboard.logout": "Выйти",
+		"advanced-template-editor.title": "Редактировать приглашение",
+  "advanced-template-editor.toggleButton.open": "Открыть редактор",
+  "advanced-template-editor.toggleButton.close": "Закрыть редактор",
+  "advanced-template-editor.clearButton": "Очистить",
+  "advanced-template-editor.refreshButton": "Попробовать обновить",
+  "advanced-template-editor.emptyState.message": "Шаблон не загружен или не содержит полей.",
+  "advanced-template-editor.accordion.required": "Обязательные данные",
+  "advanced-template-editor.accordion.optional": "Дополнительные данные",
+  "advanced-template-editor.fileInput.selected": "Выбрано: {fileName}",
+  "advanced-template-editor.label.name": "Имя",
+  "advanced-template-editor.placeholder.name": "Напр., Иван Иванов",
+  "advanced-template-editor.label.age": "Возраст",
+  "advanced-template-editor.placeholder.age": "Напр., 30",
+  "advanced-template-editor.label.dateTime": "Дата и время",
+  "advanced-template-editor.placeholder.dateTime": " ",
+  "advanced-template-editor.label.location": "Название места",
+  "advanced-template-editor.placeholder.location": "Напр., Большой Зал",
+  "advanced-template-editor.label.address": "Полный адрес",
+  "advanced-template-editor.placeholder.address": "Напр., ул. Главная, 123, г. Любойгород",
+  "advanced-template-editor.label.addressLink": "Ссылка на карту",
+  "advanced-template-editor.placeholder.addressLink": "Напр., https://maps.google.com/...",
+  "advanced-template-editor.label.contactInfo": "Контактная информация",
+  "advanced-template-editor.placeholder.contactInfo": "Напр., Мария Смирнова (555-1234)",
+  "advanced-template-editor.label.message": "Текст приглашения",
+  "advanced-template-editor.placeholder.message": "Напр., Приглашаем вас на праздник!",
+  "advanced-template-editor.label.image": "Загрузить изображение",
+  "advanced-template-editor.placeholder.image": "Выберите изображение",
+  "advanced-template-editor.label.themeOrMessage": "Тема или краткое сообщение",
+  "advanced-template-editor.placeholder.themeOrMessage": "Напр., Тропический рай",
+  "advanced-template-editor.label.dressCode": "Дресс-код",
+  "advanced-template-editor.placeholder.dressCode": "Напр., Повседневный, Вечерний",
+  "advanced-template-editor.label.giftInfo": "Информация о подарках",
+  "advanced-template-editor.placeholder.giftInfo": "Напр., Ссылка на реестр или 'Подарки не нужны'",
+  "advanced-template-editor.label.rsvpDeadline": "Ответить до",
+  "advanced-template-editor.placeholder.rsvpDeadline": "",
 		"birthday.defaultName": "Гость",
-  "birthday.youAreInvited": "Приглашаем Вас",
-  "birthday.dateTBC": "Дата Уточняется",
-  "birthday.timeTBC": "Время Уточняется",
-  "birthday.defaultLocation": "Место Уточняется",
-  "birthday.defaultThemeMessage": "Присоединяйтесь к празднованию!",
-  "birthday.defaultDressCode": "Дресс-код: Повседневный или как Вам удобно!",
-  "birthday.defaultGiftInfo": "Ваше присутствие - лучший подарок!",
-  "birthday.defaultRSVPDeadline": "Как можно скорее",
-  "birthday.defaultContactInfo": "Если есть вопросы, обращайтесь.",
-  "birthday.yearsOld": "лет", // Note: Russian uses год/года/лет depending on number; "лет" is a common simplification but may not be perfectly grammatical for all ages.
-  "birthday.birthdayParty": "Вечеринка в честь Дня Рождения",
-  "birthday.viewMapDirections": "Посмотреть карту / Маршрут",
-  "birthday.attire": "Дресс-код",
-  "birthday.gifts": "Подарки",
-  "birthday.willYouCelebrateWithUs": "Отпразднуете с нами?",
-  "birthday.yourNamePlaceholder": "Ваше Имя и Фамилия", // Placeholder for the guest name input
-  "birthday.attendanceYes": "Да, я буду!",
-  "birthday.attendanceNo": "К сожалению, не смогу.",
-  "birthday.sendRSVP": "Отправить ответ",
-  "birthday.sendRSVPLoading": "Отправляется",
-  "birthday.pleaseRSVPBy": "Пожалуйста, ответьте до:",
-  "birthday.questionsContact": "Вопросы? Обращайтесь:",
-  "birthday.footerMessage": "Приглашение на {age}-летие {name}.", // Assumes {name} is provided in the Genitive case or system handles it.
-  "birthday.missingInviteID": "Ошибка: Отсутствует ID приглашения. Невозможно отправить ответ.",
-  "birthday.rsvpSubmissionFailed": "Ой! Что-то пошло не так при отправке ответа. Пожалуйста, попробуйте еще раз или свяжитесь с организатором.",
-  "birthday.rsvpSubmissionSuccess": "Принято, {name}! Ваш ответ записан. Спасибо!",
-  "birthday.rsvpFormIncomplete": "Пожалуйста, введите Ваше имя и выберите, придете ли Вы."
+		"birthday.youAreInvited": "Приглашаем Вас",
+		"birthday.dateTBC": "Дата Уточняется",
+		"birthday.timeTBC": "Время Уточняется",
+		"birthday.defaultLocation": "Место Уточняется",
+		"birthday.defaultThemeMessage": "Присоединяйтесь к празднованию!",
+		"birthday.defaultDressCode": "Дресс-код: Повседневный или как Вам удобно!",
+		"birthday.defaultGiftInfo": "Ваше присутствие - лучший подарок!",
+		"birthday.defaultRSVPDeadline": "Как можно скорее",
+		"birthday.defaultContactInfo": "Если есть вопросы, обращайтесь.",
+		"birthday.yearsOld": "лет", // Note: Russian uses год/года/лет depending on number; "лет" is a common simplification but may not be perfectly grammatical for all ages.
+		"birthday.birthdayParty": "Вечеринка в честь Дня Рождения",
+		"birthday.viewMapDirections": "Посмотреть карту / Маршрут",
+		"birthday.attire": "Дресс-код",
+		"birthday.gifts": "Подарки",
+		"birthday.willYouCelebrateWithUs": "Отпразднуете с нами?",
+		"birthday.yourNamePlaceholder": "Ваше Имя и Фамилия", // Placeholder for the guest name input
+		"birthday.attendanceYes": "Да, я буду!",
+		"birthday.attendanceNo": "К сожалению, не смогу.",
+		"birthday.sendRSVP": "Отправить ответ",
+		"birthday.sendRSVPLoading": "Отправляется",
+		"birthday.pleaseRSVPBy": "Пожалуйста, ответьте до:",
+		"birthday.questionsContact": "Вопросы? Обращайтесь:",
+		"birthday.footerMessage": "Приглашение на {age}-летие {name}.", // Assumes {name} is provided in the Genitive case or system handles it.
+		"birthday.missingInviteID":
+			"Ошибка: Отсутствует ID приглашения. Невозможно отправить ответ.",
+		"birthday.rsvpSubmissionFailed":
+			"Ой! Что-то пошло не так при отправке ответа. Пожалуйста, попробуйте еще раз или свяжитесь с организатором.",
+		"birthday.rsvpSubmissionSuccess":
+			"Принято, {name}! Ваш ответ записан. Спасибо!",
+		"birthday.rsvpFormIncomplete":
+			"Пожалуйста, введите Ваше имя и выберите, придете ли Вы.",
 	},
 };

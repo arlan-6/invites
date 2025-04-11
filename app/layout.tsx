@@ -33,7 +33,7 @@ export default function RootLayout({
 					<ThemeProvider attribute="class" defaultTheme="system">
 						<Navigation/>
 						{children}
-						<Toaster className="z-[99999999] " />
+						<Toaster className="z-[99999999]  " visibleToasts={7} closeButton expand position="bottom-center" />
 					</ThemeProvider>
 				</LanguageProvider>
 			</body>

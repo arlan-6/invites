@@ -140,7 +140,7 @@ export const ShareDialogButton: FC<ShareDialogButtonProps> = ({
 					<DialogTitle>Publish Invite</DialogTitle>
 					<DialogDescription>
 						<div>
-							{creating && <div>Creating and Publishing invite...</div>}
+							{creating && <div className="animate-pulse">Creating and Publishing invite...</div>}
 						</div>
 						<div>
 							{createdInvite && (
@@ -153,8 +153,7 @@ export const ShareDialogButton: FC<ShareDialogButtonProps> = ({
 										href={`/invite/${createdInvite.path}/${createdInvite.id}`}
 										target="_blank"
 										onClick={() => {
-											redirect('/dashboard');
-											setOpen(false);
+											redirect("/dashboard");
 										}}
 										className="text-blue-500"
 									>
