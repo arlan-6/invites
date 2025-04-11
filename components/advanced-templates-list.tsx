@@ -43,6 +43,7 @@ export const AdvancedTemplatesList: FC<TemplatesListProps> = ({
 				)
 				.map((template, i) => (
 					<AdvancedTemplateCard
+					i={i}
                         key={template.id}
                         className="w-1/4"
                         template={template}/>

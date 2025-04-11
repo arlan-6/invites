@@ -14,7 +14,7 @@ const TemplatesPage: React.FC = async () => {
 			<div className="xl:w-8/12 lg:w-10/12 md:w-full">
 				<TemplateSearchBar />
 
-				<Accordion title="Simple templates">
+				<Accordion title="Card inivte templates">
 					<TemplatesList
 						templates={
 							templates as {

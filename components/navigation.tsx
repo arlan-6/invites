@@ -128,7 +128,7 @@ export default function Navigation() {
 					</Link>
 				</div>
 
-				<ul className="hidden md:flex items-center space-x-6 mx-auto absolute left-1/2 transform -translate-x-1/2">
+				<ul className="hidden lg:flex items-center space-x-6 mx-auto absolute left-1/2 transform -translate-x-1/2">
 					{navItems.map((item) => (
 						<li key={item.href}>
 							<NavLink href={item.href} onClick={closeMenu} pathname={pathname}>
@@ -138,7 +138,7 @@ export default function Navigation() {
 					))}
 				</ul>
 
-				<div className="hidden md:flex items-center space-x-3">
+				<div className="hidden lg:flex items-center space-x-3">
 					<ThemeToggleButton />
 					<LanguageToggle />
 					{data?.session ? (
@@ -161,7 +161,7 @@ export default function Navigation() {
 					)}
 				</div>
 
-				<div className="md:hidden flex items-center space-x-2">
+				<div className="lg:hidden flex items-center space-x-2">
 					<ThemeToggleButton />
 					<LanguageToggle />
 					<Button
@@ -191,7 +191,7 @@ export default function Navigation() {
 						animate="visible"
 						exit="hidden"
 						style={{ transformOrigin: "top" }}
-						className="md:hidden bg-background dark:bg-background border-t border-border/40 shadow-md"
+						className="lg:hidden bg-background dark:bg-background border-t border-border/40 shadow-md"
 					>
 						<ul className="px-4 pt-2 pb-4 space-y-1">
 							{navItems.map((item) => (
