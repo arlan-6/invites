@@ -375,11 +375,11 @@ export const Birthday: FC<birthdayProps> = ({ className, inviteData, id }) => {
 							onChange={(e) =>
 								setRsvpForm({ ...rsvpForm, name: e.target.value })
 							}
-							className={`text-base sm:text-lg p-3 border-2 border-accent/40 bg-accent-foreground/80 text-accent w-full placeholder-gray-400 rounded focus:outline-none focus:border-yellow-400 focus:ring-1 focus:ring-yellow-400 transition-all duration-200`}
+							className={`required:border-amber-600  required:bg-amber-200 text-base sm:text-lg p-3 border-2 border-accent bg-accent-foreground/80 text-accent w-full placeholder-gray-400 rounded focus:outline-none focus:border-yellow-400 focus:ring-1 focus:ring-yellow-400 transition-all duration-200`}
 						/>
 						{/* --- Attendance Radios --- */}
 						<div className="flex gap-3 sm:gap-4 items-start flex-col justify-start w-full text-left">
-							<label className="text-lg sm:text-xl flex items-center gap-3 cursor-pointer p-2 rounded hover:bg-accent/10 w-full transition-colors duration-200">
+							<label className="has-checked:border-amber-500 has-checked:border-2 has-checked:bg-accent/10 text-xl sm:text-2xl flex items-center gap-3 cursor-pointer p-2 rounded hover:bg-accent/10 w-full transition-colors duration-200">
 								<input
 									type="radio"
 									name="attendance"
@@ -392,11 +392,11 @@ export const Birthday: FC<birthdayProps> = ({ className, inviteData, id }) => {
 											attendance: e.target.value as "going",
 										})
 									}
-									className={`w-4 h-4 sm:w-5 sm:h-5 accent-blue-400`}
+									className={`w-4 h-4 sm:w-5 sm:h-5 accent-amber-400`}
 								/>
 								{t("birthday.attendanceYes")}
 							</label>
-							<label className="text-lg sm:text-xl flex items-center gap-3 cursor-pointer p-2 rounded hover:bg-accent/10 w-full transition-colors duration-200">
+							<label className="has-checked:border-amber-500 has-checked:border-2 has-checked:bg-accent/10 text-xl sm:text-2xl flex items-center gap-3 cursor-pointer p-2 rounded hover:bg-accent/10 w-full transition-colors duration-200">
 								<input
 									type="radio"
 									name="attendance"
@@ -409,7 +409,7 @@ export const Birthday: FC<birthdayProps> = ({ className, inviteData, id }) => {
 											attendance: e.target.value as "notGoing",
 										})
 									}
-									className={`w-4 h-4 sm:w-5 sm:h-5 accent-blue-400`}
+									className={`w-4 h-4 sm:w-5 sm:h-5 accent-amber-400`}
 								/>
 								{t("birthday.attendanceNo")}
 							</label>
@@ -418,9 +418,9 @@ export const Birthday: FC<birthdayProps> = ({ className, inviteData, id }) => {
 						<button
 							type="submit"
 							disabled={
-								!id || !rsvpForm.name || !rsvpForm.attendance || rsvpSending
+								!id ||  rsvpSending
 							} // Disable if no id or incomplete form
-							className={`disabled:cursor-not-allowed disabled:opacity-60 text-lg sm:text-xl font-bold border-2 border-yellow-400 ${accentYellow} py-3 px-6 sm:px-8 hover:bg-yellow-400 hover:text-accent-foreground transition-all duration-300 ease-in-out cursor-pointer rounded-md shadow-sm hover:shadow-md active:scale-95 w-full sm:w-auto flex items-center justify-center gap-2 mt-2`} // Full width on mobile, auto on larger
+							className={`disabled:cursor-not-allowed disabled:opacity-60 text-lg sm:text-xl font-bold border-2 border-yellow-400 hover:${accentYellow} py-3 px-6 sm:px-8 hover:bg-accent-foreground bg-yellow-400 hover:text-yellow-400 text-accent-foreground transition-all duration-300 ease-in-out cursor-pointer rounded-md shadow-sm hover:shadow-md active:scale-95 w-full sm:w-auto flex items-center justify-center gap-2 mt-2`} // Full width on mobile, auto on larger
 						>
 							{rsvpSending ? (
 								<span className="flex gap-3 items-center"><LoaderIcon className="animate-spin"/> {t("birthday.sendRSVPLoading")}</span> // Loading spinner or text
