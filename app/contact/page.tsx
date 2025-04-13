@@ -4,9 +4,10 @@ import React from 'react';
 const Page: React.FC = () => {
     return (
         <div>
-            Contact
+            Arlan cool
         </div>
     );
 };
 
 export default Page;
+
