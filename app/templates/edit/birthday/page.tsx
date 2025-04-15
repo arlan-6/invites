@@ -7,8 +7,7 @@ import useAdvancedInviteStore from "@/store/advancedInviteEdit";
 import { Birthday } from "@/components/advanced-templates/birthday";
 import { useRouter } from "next/navigation";
 
-interface pageProps {
-}
+interface pageProps {}
 
 const Template: AdvancedTemplateType = {
 	id: "1",
@@ -31,38 +30,41 @@ const Template: AdvancedTemplateType = {
 		},
 	},
 	inputs: [
+		"description",
 		"name",
 		"age",
 		"dateTime",
 		"location",
 		"address",
 		"addressLink",
-    "contactInfo",
-    "themeOrMessage",
-    "dressCode",
-    "giftInfo",
-    "rsvpDeadline",
+		"contactInfo",
+		"themeOrMessage",
+		"dressCode",
+		"giftInfo",
+		"rsvpDeadline",
 	],
 };
 
-const Page: FC<pageProps> = ({  }) => {
-	const router  = useRouter()
+const Page: FC<pageProps> = ({}) => {
+	const router = useRouter();
 	useEffect(() => {
-		router.refresh()}, [router])
+		router.refresh();
+	}, [router]);
 	const setInputs = useTemplateStore.getState().setInputs;
-  const setId = useTemplateStore.getState().setId;
-  const setPath = useTemplateStore.getState().setPath;
+	const setId = useTemplateStore.getState().setId;
+	const setPath = useTemplateStore.getState().setPath;
 	useEffect(() => {
 		setInputs(Template.inputs);
-    setId(Template.id);
-    setPath(Template.path);
+		setId(Template.id);
+		setPath(Template.path);
 	}, [setInputs, setId, setPath]);
 
 	const advancedInviteData = useAdvancedInviteStore().inviteData;
-  
-	return <div className={cn("")}>
 
-<Birthday inviteData={advancedInviteData}/>
-  </div>;
+	return (
+		<div className={cn("")}>
+			<Birthday inviteData={advancedInviteData} />
+		</div>
+	);
 };
 export default Page;

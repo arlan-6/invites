@@ -25,7 +25,7 @@ import { PostRsvpTrackById } from "@/lib/advancedInvitesUtils"; // Assuming this
 import { TextRoll } from "../motion-primitives/text-roll"; // Assuming this exists
 import NumberTicker from "@/fancy/components/text/basic-number-ticker"; // Assuming this exists
 import BreathingText from "@/fancy/components/text/breathing-text"; // Assuming this exists
-import { useLanguage } from "../language-provider"; // Assuming this exists
+import { useLanguage } from "../language-provider";
 
 // Helper function for formatting (ensure path is correct)
 // import { formatDate } from "@/lib/formatDateUtils"; // Or keep it inline if preferred

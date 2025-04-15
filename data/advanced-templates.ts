@@ -16,6 +16,7 @@ export type AdvancedTemplateTranslationsType = {
 	};
 };
 export type AdvancedTemplateInputsType = (
+	| "description"
 	| "name"
 	| "age"
 	| "dateTime"
@@ -35,16 +36,6 @@ export type AdvancedTemplateType = {
 	id: string;
 	path: string;
 	translations: AdvancedTemplateTranslationsType;
-	// input: {
-	//     name: string;
-	//     age: number;
-	//     dateTime: Date | string;
-	//     location?: string;
-	//     address: string;
-	//     addressLink: string[] | string;
-	//     message?: string;
-	//     image?: string;
-	// };
 	inputs: AdvancedTemplateInputsType;
 };
 

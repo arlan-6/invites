@@ -15,6 +15,7 @@ import { ScrollArea } from "../ui/scroll-area";
 import { ShareDialogButton } from "./share-dialog-button"; // Assume this handles its own localization internally or pass `t`
 import { Label } from "../ui/label";
 import { useLanguage } from "../language-provider";
+import { describe } from "node:test";
 
 // Import your localization hook
 
@@ -32,6 +33,7 @@ const inputBaseConfig: Record<
         // Note: Label and Placeholder are now handled via translation keys
 	}
 > = {
+	description: { type: "text", required: true },
 	name: { type: "text", required: true },
 	age: { type: "number", required: true },
 	dateTime: { type: "datetime-local", required: true },

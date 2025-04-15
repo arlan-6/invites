@@ -1,12 +1,16 @@
 "use client";
 
-import React, { useEffect, useState } from "react";
-import { Invite } from "@prisma/client";
+import React from "react";
+import { Invite, Template } from "@prisma/client";
 import { Button } from "@/components/ui/button";
-import Loader from "../ui/loader";
-import { getUserInvites, deleteInvite } from "@/lib/inviteUtils";
 import Link from "next/link";
-import { Copy, MapPin, SquareArrowOutUpRight, Trash2 } from "lucide-react";
+import {
+	CircleOff,
+	Copy,
+	Share2,
+	SquareArrowOutUpRight,
+	Trash2,
+} from "lucide-react";
 import {
 	Table,
 	TableBody,
@@ -18,116 +22,106 @@ import {
 } from "@/components/ui/table";
 import WhatsAppButton from "../whatsapp-button";
 import { toast } from "sonner";
+import { useLanguage } from "../language-provider";
 
 interface UserInvitesListProps {
 	userId: string;
+	invites: InviteType[];
+	deleteInviteHandler: (inviteId: string) => void;
 }
+type InviteType = {
+	template: Template;
+} & Omit<Invite, "template">;
 
-const UserInvitesList: React.FC<UserInvitesListProps> = ({ userId }) => {
-	const [invites, setInvites] = useState<Invite[] | null>(null);
-	const [loading, setLoading] = useState<boolean>(true);
-	const [error, setError] = useState<string | null>(null);
+const UserInvitesList: React.FC<UserInvitesListProps> = ({
+	userId,
+	invites,
+	deleteInviteHandler,
+}) => {
+	const { language } = useLanguage();
 
-	useEffect(() => {
-		const fetchInvites = async () => {
-			try {
-				setLoading(true);
-				const invites = await getUserInvites(userId);
-				setInvites(invites);
-			} catch (err) {
-				console.error("Error fetching invites:", err);
-				setError("Failed to load invites. Please try again later.");
-			} finally {
-				setLoading(false);
-			}
-		};
-
-		fetchInvites();
-	}, [userId]);
-
-	const copyHandler = (invite_id:string)=>{
-		navigator.clipboard.writeText(`${window.location.origin}/invite/${invite_id}`)
-	}
-
-	const handleDeleteInvite = async (inviteId: string) => {
-		try {
-			await deleteInvite(inviteId);
-			toast.success("Invite deleted successfully!");
-			// Update the state to remove the deleted invite
-			setInvites(
-				(prevInvites) =>
-					prevInvites?.filter((invite) => invite.id !== inviteId) || null,
-			);
-		} catch (err) {
-			console.error("Error deleting invite:", err);
-			toast.error("Failed to delete invite. Please try again.");
-		}
+	const copyHandler = (invite_id: string) => {
+		navigator.clipboard.writeText(
+			`${window.location.origin}/invite/${invite_id}`,
+		);
+		toast.success("Invite link copied to clipboard!");
 	};
-	if (loading) {
-		return (
-			<div className="flex justify-center items-center h-40">
-				<Loader />
-			</div>
-		);
-	}
-
-	if (error) {
-		return (
-			<div className="flex justify-center items-center h-40">
-				<p className="text-red-500">{error}</p>
-			</div>
-		);
-	}
-
-	if (!invites || invites.length === 0) {
-		return (
-			<div className="flex justify-center items-center h-40">
-				<p className="text-gray-500">No invites found.</p>
-			</div>
-		);
-	}
 
 	return (
-		<div className="max-w-4xl mx-auto bg-background shadow-lg rounded-lg p-6">
-			<Table>
-				<TableCaption>List of simple invites</TableCaption>
-				<TableHeader>
-					<TableRow>
-						<TableHead className="w-[100px]">Title</TableHead>
-						<TableHead>Date & Time</TableHead>
-						<TableHead className="flex items-center gap-3">
-							<MapPin size={16} strokeWidth={1} />
-							Location
+		<div className="my-6">
+			<Table className="border">
+				<TableHeader className="bg-accent/50">
+					<TableRow className="group">
+						<TableHead className="w-[50px] text-right">#</TableHead>
+						<TableHead className="w-[100px] flex gap-2 items-center">
+							To invite <SquareArrowOutUpRight strokeWidth={2} size={18} />
 						</TableHead>
-						<TableHead className="text-center">Links</TableHead>
-						<TableHead className="text-right">Delete</TableHead>
+						<TableHead className="w-[100px]">Title</TableHead>
+						<TableHead>Template</TableHead>
+						<TableHead className="">
+							<div className="flex gap-2 items-center">
+								{" "}
+								Share <Share2 strokeWidth={2} size={18} />
+							</div>
+						</TableHead>
+						<TableHead className="">
+							<div className="flex gap-2 items-center">
+								{" "}
+								Delete <CircleOff strokeWidth={2} size={18} />
+							</div>
+						</TableHead>
 					</TableRow>
 				</TableHeader>
 				<TableBody>
-					{invites.map((invite) => (
-						<TableRow key={invite.id}>
-							<TableCell>{invite.title}</TableCell>
-							<TableCell>
-								{new Date(invite.date).toLocaleDateString()}{" "}
-								{new Date(invite.date).toLocaleTimeString()}
-							</TableCell>
-							<TableCell>{invite.location}</TableCell>
-							<TableCell className="text-center flex items-center gap-3 justify-center">
-								<Link href={`invite/${invite.id}`} target="_blank" title="Go to invite">
-									<Button variant="outline" size="sm" className="text-blue-600">
-										<SquareArrowOutUpRight />
+					{invites.map((invite, i) => (
+						<TableRow key={invite.id} className="group">
+							<TableCell className="font-semibold text-right">{i + 1}</TableCell>
+							<TableCell className="font-semibold">
+								<Link
+									href={`invite/${invite.id}`}
+									target="_blank"
+									title="Go to invite"
+								>
+									<Button variant="link" size="sm">
+										Invite
 									</Button>
 								</Link>
-
+								<Button
+									title="Copy link"
+									size={"sm"}
+									variant={"outline"}
+									onClick={() => copyHandler(invite.id)}
+									className="lg:opacity-0 group-hover:opacity-100"
+								>
+									<Copy size={10} strokeWidth={1.25} />
+								</Button>
+							</TableCell>
+							<TableCell className="font-semibold">{invite.title}</TableCell>
+							<TableCell className="text-gray-500">
+								{/* {invite.templateId} */}
+								<Link href={"/templates/" + invite.templateId}>
+									<Button variant={"link"}>
+										{invite.template.translations &&
+											(
+												invite.template.translations as Record<
+													string,
+													{ name: string }
+												>
+											)[language]?.name}
+									</Button>
+								</Link>
+							</TableCell>
+							<TableCell>
 								<WhatsAppButton
-								
 									text={`${window.location.origin}/invite/${invite.id}`}
 								/>
-								<Button title="Copy link" onClick={()=>copyHandler(invite.id)}><Copy/></Button>
 							</TableCell>
-							<TableCell className="text-right">
+							<TableCell
+							// className="lg:opacity-0 group-hover:opacity-100 transition-opacity duration-200 "
+							>
 								<Button
-									onClick={() => handleDeleteInvite(invite.id)}
+									onClick={() => deleteInviteHandler(invite.id)}
+									title="Delete invite"
 									variant={"outline"}
 									className=""
 								>

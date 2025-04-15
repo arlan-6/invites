@@ -119,25 +119,26 @@ model AdvancedInviteTemplate {
 }
 
 model AdvancedInvite {
-  id                     String                 @id @default(cuid()) @map("_id") // Unique identifier
-  name                   String // Title of the invite
-  age                    String // Age of the person being invited
-  dateTime               DateTime // Date and time of the event
-  location               String // Location of the event and links to map apps
-  address                String // Optional address for the event
-  addressLink            String[] // Optional links to map apps
-  themeOrMessage         String? // Optional theme or message for the invite
-  dressCode              String? // Optional dress code information
-  giftInfo               String? // Optional gift information
-  rsvpDeadline           DateTime? // Optional RSVP deadline
-  contactInfo            String? // Optional contact information
-  path                   String // Path for the template
-  rsvpTrack              Json[]
-  userId                 String // Relation to the User model
-  user                   User                   @relation(fields: [userId], references: [id], onDelete: Cascade)
-  templateId             String // Relation to the Template model
-  AdvancedInviteTemplate AdvancedInviteTemplate @relation(fields: [templateId], references: [id], onDelete: Cascade)
-  expiresAt              DateTime // Expiration date and time for the invite
-  createdAt              DateTime               @default(now()) // Timestamp for creation
-  updatedAt              DateTime               @updatedAt // Timestamp for last update
+  id             String                 @id @default(cuid()) @map("_id") // Unique identifier
+  description    String // Optional description for the invite
+  name           String // Title of the invite
+  age            String // Age of the person being invited
+  dateTime       DateTime // Date and time of the event
+  location       String // Location of the event and links to map apps
+  address        String // Optional address for the event
+  addressLink    String[] // Optional links to map apps
+  themeOrMessage String? // Optional theme or message for the invite
+  dressCode      String? // Optional dress code information
+  giftInfo       String? // Optional gift information
+  rsvpDeadline   DateTime? // Optional RSVP deadline
+  contactInfo    String? // Optional contact information
+  path           String // Path for the template
+  rsvpTrack      Json[]
+  userId         String // Relation to the User model
+  user           User                   @relation(fields: [userId], references: [id], onDelete: Cascade)
+  templateId     String // Relation to the Template model
+  template       AdvancedInviteTemplate @relation(fields: [templateId], references: [id], onDelete: Cascade)
+  expiresAt      DateTime // Expiration date and time for the invite
+  createdAt      DateTime               @default(now()) // Timestamp for creation
+  updatedAt      DateTime               @updatedAt // Timestamp for last update
 }

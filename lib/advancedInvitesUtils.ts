@@ -1,7 +1,9 @@
 "use server";
+import { toast } from "sonner";
 import prisma from "./prisma";
 const CreateAdvancedInvite = async (
 	inviteData: {
+		description: string;
 		name: string;
 		age: string;
 		dateTime: string;
@@ -16,9 +18,38 @@ const CreateAdvancedInvite = async (
 	},
 	path: string,
 	userId: string,
-	templateId: string,
+	templateId: string, // Set the maximum number of invites allowed
 ) => {
+	const maxInvites = 1;
 	try {
+		// Check if the user is an admin or tester
+		const user = await prisma.user.findUnique({
+			where: {
+				id: userId,
+			},
+			select: {
+				role: true,
+			},
+		});
+
+		// If the user is not an admin or tester, enforce the invite limit
+		if (user?.role !== "admin" && user?.role !== "tester") {
+			const existingInvitesCount = await prisma.advancedInvite.count({
+				where: {
+					userId: userId,
+				},
+			});
+
+			if (existingInvitesCount >= maxInvites) {
+				toast.error(
+					`You have reached the maximum limit of ${maxInvites} invites.`,
+				);
+				throw new Error(
+					`You have reached the maximum limit of ${maxInvites} invites.`,
+				);
+			}
+		}
+
 		const invite = await prisma.advancedInvite.create({
 			data: {
 				...inviteData,
@@ -28,7 +59,7 @@ const CreateAdvancedInvite = async (
 				path: path,
 				userId: userId, // Replace with actual user ID
 				templateId: templateId, // Replace with actual template ID,
-				expiresAt: new Date(Date.now() + 30 * 24 * 60 * 60 * 1000), // Set expiration date to 7 days from now
+				expiresAt: new Date(Date.now() + 30 * 24 * 60 * 60 * 1000), // Set expiration date to 30 days from now
 			},
 		});
 		return invite;
@@ -88,15 +119,18 @@ const GetAdvancedInviteByUserId = async (userId: string) => {
 	try {
 		const invites = await prisma.advancedInvite.findMany({
 			where: {
-				userId: userId,
+				userId,
 			},
+            // include: {
+            //     template: true,
+            // },
 		});
 		return invites;
 	} catch (error) {
 		console.error("Error fetching advanced invites by user ID:", error);
-		throw new Error(
-			"Failed to fetch advanced invites by user ID. Please try again later.",
-		);
+		// throw new Error(
+		// 	"Failed to fetch advanced invites by user ID. Please try again later.",
+		// );
 	}
 };
 
@@ -127,8 +161,7 @@ const GetAdvancedInviteRsvpTrackById = async (id: string) => {
 			},
 		});
 		return invite?.rsvpTrack || null;
-	}
-	catch (error) {
+	} catch (error) {
 		console.error("Error fetching RSVP track:", error);
 		throw new Error("Failed to fetch RSVP track. Please try again later.");
 	}

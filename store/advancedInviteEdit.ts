@@ -4,7 +4,7 @@ import { devtools } from "zustand/middleware";
 
 type AdvancedInviteData = {
 
-
+	description: string;
 	name: string;
 	age: string;
 	dateTime: string;

@@ -6,6 +6,7 @@ import Banned from "@/components/dashboard/banned";
 import UserInfo from "@/components/dashboard/user-info";
 import UserInvitesList from "@/components/dashboard/user-invites-list";
 import UseradvancedINivtesLIst from "@/components/dashboard/user-advanced-invites-list";
+import { Invites } from "@/components/dashboard/invites";
 
 const DashboardPage: React.FC = async () => {
     const session = await auth.api.getSession({
@@ -34,9 +35,10 @@ const DashboardPage: React.FC = async () => {
         <div className="min-h-screen bg-secondary p-6">
             <UserInfo user={user} />
             <br />
-            <UserInvitesList userId={user.id}/>
-            <br />
-            <UseradvancedINivtesLIst userId={user.id}/>
+            <div className="max-w-4xl mx-auto bg-background shadow-lg rounded-lg p-6 ">
+                <Invites userId={user.id}/>
+            </div>
+            
         </div>
     );
 };
