@@ -20,11 +20,9 @@ import { Separator } from "@/components/ui/separator";
 // import { Button } from "@/components/ui/button";
 
 interface PageProps {
-	// Renamed interface for clarity
-	className?: string;
 }
 
-const SignUpPage: FC<PageProps> = ({ className }) => {
+const SignUpPage: FC<PageProps> = ({  }) => {
 	// Renamed component for clarity
 	const [pendingGoogle, setPendingGoogle] = useState(false);
 
@@ -78,7 +76,7 @@ const SignUpPage: FC<PageProps> = ({ className }) => {
 		<div
 			className={cn(
 				"flex min-h-screen items-center justify-center bg-gray-50 dark:bg-gray-950 p-4",
-				className,
+				
 			)}
 		>
 			<Card className="w-full max-w-md shadow-lg">
