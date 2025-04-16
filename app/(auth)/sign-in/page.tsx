@@ -89,7 +89,7 @@ export default function SignIn() {
 	};
 
 	return (
-		<div className="grow flex items-center justify-center p-4">
+		<div className="grow flex items-center justify-center p-4  h-screen">
 			<Card className="w-full max-w-md">
 				<CardHeader>
 					<CardTitle className="text-3xl font-bold text-center text-gray-800">

@@ -7,6 +7,7 @@ import UserInfo from "@/components/dashboard/user-info";
 import UserInvitesList from "@/components/dashboard/user-invites-list";
 import UseradvancedINivtesLIst from "@/components/dashboard/user-advanced-invites-list";
 import { Invites } from "@/components/dashboard/invites";
+import { redirect } from "next/navigation";
 
 const DashboardPage: React.FC = async () => {
     const session = await auth.api.getSession({
@@ -14,9 +15,7 @@ const DashboardPage: React.FC = async () => {
     });
 
     if (!session) {
-        return (
-            <NotLoggedIn/>
-        );
+        redirect('sign-up')
     }
 
     const user = {

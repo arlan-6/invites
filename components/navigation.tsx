@@ -85,7 +85,12 @@ export default function Navigation() {
 	const router = useRouter();
 	const pathname = usePathname();
 	
-	if(pathname.includes("/invite")) return null; // Hide navigation on dashboard pages
+	if (
+		pathname.includes("/invite") || 
+		pathname.includes("/sign-up") || 
+		pathname.includes("/sign-in") || 
+		pathname.includes("/log-in-google")
+	) return null; // Hide navigation on specific pages
 	
 	const toggleMenu = () => setMenuOpen((prev) => !prev);
 	const closeMenu = () => setMenuOpen(false);
@@ -156,7 +161,7 @@ export default function Navigation() {
 						</>
 					) : (
 						<Button asChild variant="outline" size="sm">
-							<Link href="/sign-up">{t("navigation.signup")}</Link>
+							<Link href="/log-in-google">{t("navigation.signup")}</Link>
 						</Button>
 					)}
 				</div>
@@ -244,7 +249,7 @@ export default function Navigation() {
 										className="w-full mt-2"
 										onClick={closeMenu}
 									>
-										<Link href="/sign-up">{t("navigation.signup")}</Link>
+										<Link href="/log-in-google">{t("navigation.signup")}</Link>
 									</Button>
 								</li>
 							)}

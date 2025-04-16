@@ -86,7 +86,7 @@ const UseradvancedINivtesLIst: React.FC<UseradvancedINivtesLIstProps> = ({
 							<TableCell className="text-right">{i + 1}</TableCell>
 							<TableCell className="font-semibold">
 								<Link
-									href={`invite/${invite.id}`}
+									href={`invite/${invite.path}/${invite.id}`}
 									target="_blank"
 									title="Go to invite"
 								>
@@ -118,9 +118,9 @@ const UseradvancedINivtesLIst: React.FC<UseradvancedINivtesLIstProps> = ({
 									</Button>
 								</Link></TableCell>
 							<TableCell className="">
-								<Link href={`/dashboard/${invite.id}`}>
+								<Link href={`/dashboard/${invite.id}`} title={`View rsvp ${invite.rsvpTrack.length > 0 && `(${invite.rsvpTrack.length}) `}`} >
 									<Button variant="link" >
-										rsvp
+										rsvp {invite.rsvpTrack.length > 0 && `(${invite.rsvpTrack.length})`}
 										<SquareArrowOutUpRight className="lg:opacity-0 group-hover:opacity-100"/>
 									</Button>
 								</Link>

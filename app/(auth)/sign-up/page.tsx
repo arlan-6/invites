@@ -26,7 +26,6 @@ import { ErrorContext } from "better-auth/react";
 import { useRouter } from "next/navigation";
 
 export default function SignUp() {
-	const router = useRouter();
 	const [pending, setPending] = useState(false);
 	const [pendingGoogle, setPendingGoogle] = useState(false);
 
@@ -92,7 +91,7 @@ export default function SignUp() {
 	};
 
 	return (
-		<div className="grow flex items-center justify-center p-4">
+		<div className="grow flex items-center justify-center p-4  h-screen">
 			<Card className="w-full max-w-md">
 				<CardHeader>
 					<CardTitle className="text-3xl font-bold text-center text-gray-800">
@@ -144,8 +143,8 @@ export default function SignUp() {
 							pending={pendingGoogle}
 							onClick={handleSignInWithGithub}
 							
-						>
-							<FcGoogle className="w-4 h-4 mr-2" />
+						>	<div className="bg-white p-0.5 rounded-full">
+							<FcGoogle className="w-8 h-8" /></div>
 							Sign up with Google
 						</LoadingButton>
 					</div>
