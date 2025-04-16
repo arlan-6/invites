@@ -140,7 +140,7 @@ export const ShareDialogButton: FC<ShareDialogButtonProps> = ({
 					<DialogTitle>Publish Invite</DialogTitle>
 					<DialogDescription>
 						<div>
-							{creating && <div className="animate-pulse">Creating and Publishing invite...</div>}
+							{creating && <span className="animate-pulse">Creating and Publishing invite...</span>}
 						</div>
 						<div>
 							{createdInvite && (
