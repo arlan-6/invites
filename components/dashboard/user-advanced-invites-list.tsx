@@ -30,6 +30,7 @@ import {
 import { AdvancedInvite } from "@prisma/client";
 import { useLanguage } from "../language-provider";
 import { AdvancedTemplateType } from "@/data/advanced-templates";
+import { DeleteConfirm } from "./delete-comfirm";
 
 interface UseradvancedINivtesLIstProps {
 	userId: string;
@@ -134,12 +135,18 @@ const UseradvancedINivtesLIst: React.FC<UseradvancedINivtesLIstProps> = ({
 								
 							</TableCell>
 							<TableCell className="">
+								<DeleteConfirm 
+								deleteHandler={deleteInviteHandler}
+								id={invite.id}
+								>
+									
 								<Button
-									onClick={() => deleteInviteHandler(invite.id)}
+									// onClick={() => deleteInviteHandler(invite.id)}
 									variant={"outline"}
 								>
 									<Trash2 />
 								</Button>
+								</DeleteConfirm>
 							</TableCell>
 						</TableRow>
 					))}

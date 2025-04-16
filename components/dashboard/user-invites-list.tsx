@@ -23,6 +23,7 @@ import {
 import WhatsAppButton from "../whatsapp-button";
 import { toast } from "sonner";
 import { useLanguage } from "../language-provider";
+import { DeleteConfirm } from "./delete-comfirm";
 
 interface UserInvitesListProps {
 	userId: string;
@@ -75,7 +76,9 @@ const UserInvitesList: React.FC<UserInvitesListProps> = ({
 				<TableBody>
 					{invites.map((invite, i) => (
 						<TableRow key={invite.id} className="group">
-							<TableCell className="font-semibold text-right">{i + 1}</TableCell>
+							<TableCell className="font-semibold text-right">
+								{i + 1}
+							</TableCell>
 							<TableCell className="font-semibold">
 								<Link
 									href={`invite/${invite.id}`}
@@ -119,14 +122,19 @@ const UserInvitesList: React.FC<UserInvitesListProps> = ({
 							<TableCell
 							// className="lg:opacity-0 group-hover:opacity-100 transition-opacity duration-200 "
 							>
-								<Button
-									onClick={() => deleteInviteHandler(invite.id)}
-									title="Delete invite"
-									variant={"outline"}
-									className=""
+								<DeleteConfirm
+									deleteHandler={deleteInviteHandler}
+									id={invite.id}
 								>
-									<Trash2 />
-								</Button>
+									<Button
+										// onClick={() => deleteInviteHandler(invite.id)}
+										title="Delete invite"
+										variant={"outline"}
+										className=""
+									>
+										<Trash2 />
+									</Button>
+								</DeleteConfirm>
 							</TableCell>
 						</TableRow>
 					))}
