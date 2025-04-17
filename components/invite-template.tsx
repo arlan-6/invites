@@ -163,7 +163,7 @@ export const InviteTemplate: FC<InviteTemplateProps> = ({
 			animate="visible"
 			className={cn(
 				"relative rounded-xl shadow-2xl",
-				"w-full  sm:min-w-[400px] sm:max-w-[900px]",
+				"w-full sm:min-w-[400px] sm:max-w-[430px]",
 				"text-white overflow-hidden",
 				"p-6 pt-10 sm:p-8 sm:pt-14",
                 "min-h-[480px] sm:min-h-[500px]",
