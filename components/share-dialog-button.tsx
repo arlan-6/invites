@@ -159,7 +159,7 @@ export const ShareDialogButton: FC<ShareDialogButtonProps> = ({
 					<div className="mb-2">🚫 {t("inviteEditor.needSignUp")} ✨</div>
 					<div className="flex items-center justify-center">
 						<ArrowRight className="text-primary motion-preset-wobble motion-duration-1000 motion-delay-500 mr-1" />
-						<Link href="/sign-up">
+						<Link href="/log-in-google">
 							<Button variant="default">{t("navigation.signup")}</Button>
 						</Link>
 						<ArrowLeft className="text-primary motion-preset-wobble motion-duration-1000" />

@@ -12,6 +12,7 @@ import { useLanguage } from "./language-provider";
 import { Logo } from "./logo";
 import { authClient } from "@/auth-client";
 import { useRouter, usePathname } from "next/navigation";
+import { ConfirmAlert } from "./confirm-alert";
 
 const NavLink = ({
 	href,
@@ -84,14 +85,15 @@ export default function Navigation() {
 	const { t } = useLanguage();
 	const router = useRouter();
 	const pathname = usePathname();
-	
+
 	if (
-		pathname.includes("/invite") || 
-		pathname.includes("/sign-up") || 
-		pathname.includes("/sign-in") || 
+		pathname.includes("/invite") ||
+		pathname.includes("/sign-up") ||
+		pathname.includes("/sign-in") ||
 		pathname.includes("/log-in-google")
-	) return null; // Hide navigation on specific pages
-	
+	)
+		return null; // Hide navigation on specific pages
+
 	const toggleMenu = () => setMenuOpen((prev) => !prev);
 	const closeMenu = () => setMenuOpen(false);
 
@@ -154,10 +156,20 @@ export default function Navigation() {
 									{t("navigation.dashboard")}
 								</Link>
 							</Button>
-							<Button variant="secondary" size="sm" onClick={logOutHandler}>
-								<LogOut size={16} className="mr-1.5" />
-								{t("navigation.logout")}
-							</Button>
+							<ConfirmAlert
+							title="Logout"
+							description="Are you sure you want to log out?"
+							cancelLabel="Cancel"
+							confirmLabel="Logout"
+							onConfirm={logOutHandler}
+							>
+								<Button variant="secondary" size="sm" 
+								// onClick={logOutHandler}
+								>
+									<LogOut size={16} className="mr-1.5" />
+									{t("navigation.logout")}
+								</Button>
+							</ConfirmAlert>
 						</>
 					) : (
 						<Button asChild variant="outline" size="sm">
@@ -231,14 +243,22 @@ export default function Navigation() {
 										</Button>
 									</li>
 									<li>
+										<ConfirmAlert
+										title="Logout"
+										description="Are you sure you want to log out?"
+										cancelLabel="Cancel"
+										confirmLabel="Logout"
+										onConfirm={logOutHandler}
+										>
 										<Button
 											variant="ghost"
 											className="w-full justify-start text-red-600 dark:text-red-500 hover:text-red-700 hover:bg-red-100/50 dark:hover:text-red-400 dark:hover:bg-red-900/20"
-											onClick={logOutHandler}
+											// onClick={logOutHandler}
 										>
 											<LogOut size={16} className="mr-2" />
 											{t("navigation.logout")}
 										</Button>
+										</ConfirmAlert>
 									</li>
 								</>
 							) : (

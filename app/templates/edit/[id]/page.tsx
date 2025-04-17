@@ -17,7 +17,7 @@ const Page: FC<pageProps> = async ({ params}) => {
 			headers: await headers(),
 		});
 	if (!session) {
-		redirect("/sign-up");
+		redirect("/log-in-google");
 	}
 	if (!id) {
 		redirect("/templates");

@@ -5,6 +5,7 @@ import { authClient } from "@/auth-client";
 import { redirect } from "next/navigation";
 import { Button } from "../ui/button";
 import { LogOut } from "lucide-react";
+import { ConfirmAlert } from "../confirm-alert";
 
 interface User {
 	id: string;
@@ -66,15 +67,21 @@ const UserInfo: React.FC<UserInfoProps> = ({ user }) => {
 							{new Date(user.createdAt).toLocaleDateString("en-GB")}</span>
 						</p></div>
 					</div>
-				</div>
+				</div><ConfirmAlert
+														title="Logout"
+														description="Are you sure you want to log out?"
+														cancelLabel="Cancel"
+														confirmLabel="Logout"
+														onConfirm={logOutHandler}
+														>
 				<Button
-					onClick={logOutHandler}
+					// onClick={logOutHandler}
 					variant="outline"
 					className="text-red-500 dark:text-red-400 group"
 				>
 					{t("dashboard.logout")}{" "}
 					<LogOut className="group-hover:translate-x-1 transition-transform" />
-				</Button>
+				</Button></ConfirmAlert>
 			</div>
 		</div>
 	);
