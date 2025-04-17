@@ -7,13 +7,14 @@ import { Input } from "./ui/input";
 import { Button } from "./ui/button";
 import { ShareDialogButton } from "./share-dialog-button";
 import { useLanguage } from "./language-provider";
-import { ArrowUp, Paintbrush } from "lucide-react";
+import { ArrowLeft, ArrowUp, Paintbrush } from "lucide-react";
 import { InviteTemplate } from "./invite-template";
 import { motion } from "framer-motion";
 import { inviteSchema } from "@/lib/zod";
 import useInviteStore from "@/store/inviteEdit";
 import { getTemplateById } from "@/lib/templateUtils";
 import { TemplateTranslationsType } from "@/data/templates";
+import Link from "next/link";
 
 interface InviteEditorProps {
 	className?: string;
@@ -118,6 +119,7 @@ export const InviteEditor: FC<InviteEditorProps> = ({
 			)}
 		>
 			<div>
+				<div className="group"><Link href={'/templates'}><Button variant={'link'} className="text-xl"> <ArrowLeft size={32} className="group-hover:-translate-x-1.5 duration-100"/> Templates</Button></Link></div>
 				<div className="flex justify-around items-center mb-8">
 					<div>
 						<h1 className="text-2xl font-semibold">
