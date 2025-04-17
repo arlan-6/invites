@@ -131,7 +131,7 @@ const UserAdvancedInvitesList: React.FC<UserAdvancedInvitesListProps> = ({
 								<TableCell>
 									<Tooltip>
 										<TooltipTrigger asChild>
-                                            <Link href={`/dashboard/rsvp/${invite.id}`}
+                                            <Link href={`/dashboard/${invite.id}`}
                                                   className="hover:underline"
                                                   title={`View ${invite.rsvpTrack.length} RSVP(s)`}>
 												<Button variant="link" size="sm" className="p-0 h-auto">
