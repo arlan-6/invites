@@ -90,7 +90,7 @@ export const ShareDialogButton: FC<ShareDialogButtonProps> = ({
 				message: inviteData.message || "",
 				userId: session?.user?.id || "",
 				templateId,
-				expiresAt: new Date(inviteData.date as string),
+				expiresAt: new Date(new Date(`${inviteData.date}T${inviteData.time}`).getTime() + 7 * 24 * 60 * 60 * 1000), // Add 1 week to the expiration date
 				role: session?.user?.role || "user", // Assuming "user" as the default role
 			};
 

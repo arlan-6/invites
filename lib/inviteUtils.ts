@@ -1,5 +1,5 @@
 'use server';
-import prisma from "./prisma";
+import prisma, { ensureTTLIndex } from "./prisma";
 
 async function createInvite(data: {
     title: string;
@@ -11,6 +11,8 @@ async function createInvite(data: {
     expiresAt: Date;
     role: string; // Assuming role is passed in the data
 }) {
+
+    await ensureTTLIndex();
     try {
         // Validate required fields
         if (!data.title || !data.date || !data.location || !data.userId || !data.templateId || !data.expiresAt) {
@@ -143,3 +145,5 @@ export {
     updateInvite,
     deleteInvite,
 };
+
+

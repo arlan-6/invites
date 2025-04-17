@@ -124,6 +124,9 @@ export const Invites: FC<InvitesProps> = ({ className, userId }) => {
 			<section>
                 {/* Section Header */}
 				<h2 className="text-lg font-semibold mb-1">Simple Invites</h2>
+				<p className="text-sm text-muted-foreground italic">
+					*Invites will automatically expire one week after the event date.
+				</p>
                 {!simpleError && (
                     <p className="text-muted-foreground text-sm mb-4">
                         {getInviteCountText(invites?.length)}

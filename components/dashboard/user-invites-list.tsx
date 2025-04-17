@@ -90,6 +90,8 @@ const UserInvitesList: React.FC<UserInvitesListProps> = ({
 							{/* Use Title as primary link */}
 							<TableHead>Title / View Invite</TableHead>
 							<TableHead>Template</TableHead>
+							<TableHead className="text-center">Expire date</TableHead>
+
                             {/* Consistent Action Headers */}
 							<TableHead className="text-center">
                                 <div className="flex items-center justify-center gap-1.5">
@@ -155,7 +157,20 @@ const UserInvitesList: React.FC<UserInvitesListProps> = ({
 										</TooltipContent>
 									</Tooltip>
 								</TableCell>
-
+								<TableCell className="text-center">
+								<Tooltip>
+										<TooltipTrigger asChild>
+											<div className="">
+                                            {invite.expiresAt.toISOString().split("T")[0]} | {' '}
+                                            {invite.expiresAt.toISOString().split("T")[1].split(".")[0].slice(0, 5)} 
+											</div>
+										</TooltipTrigger>
+										<TooltipContent>
+                                            {/* Tooltip provides more context */}
+											<p>Expiration Date: {invite.expiresAt.toLocaleString()}</p>
+										</TooltipContent>
+									</Tooltip>
+									</TableCell>
                                 {/* Share Actions Cell */}
 								<TableCell className="text-center">
                                     {/* Group Copy and WhatsApp */}
