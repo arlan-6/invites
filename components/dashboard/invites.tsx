@@ -2,7 +2,7 @@
 import React, { FC, useEffect, useState } from "react";
 import { cn } from "@/lib/utils";
 import UserInvitesList from "./user-invites-list";
-import UseradvancedINivtesLIst from "./user-advanced-invites-list";
+import UserAdvancedInvitesList from "./user-advanced-invites-list";
 import { AdvancedInvite, Invite, Template } from "@prisma/client";
 import { deleteInvite, getUserInvites } from "@/lib/inviteUtils";
 import Loader from "../ui/loader";
@@ -119,7 +119,6 @@ export const Invites: FC<invitesProps> = ({ className, userId }) => {
 							{invites.length === 1 ? "1 inivte" : `${invites.length} invites`}
 						</div>
 						<UserInvitesList
-							userId={userId}
 							invites={invites}
 							deleteInviteHandler={deleteInviteHandler}
 						/>
@@ -143,8 +142,7 @@ export const Invites: FC<invitesProps> = ({ className, userId }) => {
                             ? "1 inivte"
                             : `${advancedInvites.length} invites`}
                     </div>
-					<UseradvancedINivtesLIst
-						userId={userId}
+					<UserAdvancedInvitesList
 						invites={advancedInvites}
 						deleteInviteHandler={deleteAdvancedInviteHandler}
 					/>

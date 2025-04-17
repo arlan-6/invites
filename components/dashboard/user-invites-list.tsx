@@ -5,142 +5,221 @@ import { Invite, Template } from "@prisma/client";
 import { Button } from "@/components/ui/button";
 import Link from "next/link";
 import {
-	CircleOff,
+	// CircleOff, // Replace with Trash2 in header
 	Copy,
+    ExternalLink, // For external navigation links
 	Share2,
-	SquareArrowOutUpRight,
-	Trash2,
+	// SquareArrowOutUpRight, // Replace with ExternalLink where appropriate
+	Trash2, // Use consistently for delete
 } from "lucide-react";
 import {
 	Table,
 	TableBody,
-	TableCaption,
+	// TableCaption, // Can be omitted if description is outside
 	TableCell,
 	TableHead,
 	TableHeader,
 	TableRow,
 } from "@/components/ui/table";
-import WhatsAppButton from "../whatsapp-button";
+import WhatsAppButton from "../whatsapp-button"; // Assuming path is correct
 import { toast } from "sonner";
-import { useLanguage } from "../language-provider";
-import { DeleteConfirm } from "./delete-comfirm";
+import { useLanguage } from "../language-provider"; // Keep if used for translations
+import { DeleteConfirm } from "./delete-comfirm"; // Assuming path is correct
+import { Tooltip, TooltipContent, TooltipProvider, TooltipTrigger } from "../ui/tooltip"; // Assuming path is correct
 
 interface UserInvitesListProps {
-	userId: string;
+	// userId: string; // Mark as potentially unused if only for fetching data
 	invites: InviteType[];
 	deleteInviteHandler: (inviteId: string) => void;
 }
+
+// Define InviteType more explicitly if possible for clarity
 type InviteType = {
-	template: Template;
-} & Omit<Invite, "template">;
+	template: Template | null; // Allow template to be null if possible relation
+} & Omit<Invite, "templateId" | "createdAt" | "updatedAt"> & { // Omit fields not used or handled manually
+    id: string;
+    title: string | null;
+    templateId: string | null; // Include if needed for fallback link
+};
 
 const UserInvitesList: React.FC<UserInvitesListProps> = ({
-	userId,
+	// userId, // Comment out if not used in rendering
 	invites,
 	deleteInviteHandler,
 }) => {
-	const { language } = useLanguage();
+	const { language } = useLanguage(); // Keep if translations are used
 
 	const copyHandler = (invite_id: string) => {
-		navigator.clipboard.writeText(
-			`${window.location.origin}/invite/${invite_id}`,
-		);
-		toast.success("Invite link copied to clipboard!");
+        // Ensure this URL structure is correct for simple invites
+		const url = `${window.location.origin}/invite/${invite_id}`;
+		navigator.clipboard.writeText(url)
+        .then(() => {
+            toast.success("Invite link copied!");
+        })
+        .catch(err => {
+            toast.error("Failed to copy link.");
+            console.error("Copy failed:", err);
+        });
+	};
+
+	// Helper function for safe translation access
+	const getTemplateName = (template: Template | null): string => {
+		if (!template) return "N/A"; // Handle null template case
+		try {
+			// Added optional chaining for robustness
+			const name = (template.translations as Record<string, { name: string }>)
+				?.[language]?.name;
+			return name || template.id || "Unnamed Template"; // Fallback name
+		} catch (error) {
+			console.error("Error accessing template translation:", error);
+			return template.id || "Error"; // Fallback in case of error
+		}
 	};
 
 	return (
-		<div className="my-6">
-			<Table className="border">
-				<TableHeader className="bg-accent/50">
-					<TableRow className="group">
-						<TableHead className="w-[50px] text-right">#</TableHead>
-						<TableHead className="w-[100px] flex gap-2 items-center">
-							To invite <SquareArrowOutUpRight strokeWidth={2} size={18} />
-						</TableHead>
-						<TableHead className="w-[100px]">Title</TableHead>
-						<TableHead>Template</TableHead>
-						<TableHead className="">
-							<div className="flex gap-2 items-center">
-								{" "}
-								Share <Share2 strokeWidth={2} size={18} />
-							</div>
-						</TableHead>
-						<TableHead className="">
-							<div className="flex gap-2 items-center">
-								{" "}
-								Delete <CircleOff strokeWidth={2} size={18} />
-							</div>
-						</TableHead>
-					</TableRow>
-				</TableHeader>
-				<TableBody>
-					{invites.map((invite, i) => (
-						<TableRow key={invite.id} className="group">
-							<TableCell className="font-semibold text-right">
-								{i + 1}
-							</TableCell>
-							<TableCell className="font-semibold">
-								<Link
-									href={`invite/${invite.id}`}
-									target="_blank"
-									title="Go to invite"
-								>
-									<Button variant="link" size="sm">
-										Invite
-									</Button>
-								</Link>
-								<Button
-									title="Copy link"
-									size={"sm"}
-									variant={"outline"}
-									onClick={() => copyHandler(invite.id)}
-									className="lg:opacity-0 group-hover:opacity-100"
-								>
-									<Copy size={10} strokeWidth={1.25} />
-								</Button>
-							</TableCell>
-							<TableCell className="font-semibold">{invite.title}</TableCell>
-							<TableCell className="text-gray-500">
-								{/* {invite.templateId} */}
-								<Link href={"/templates/" + invite.templateId}>
-									<Button variant={"link"}>
-										{invite.template.translations &&
-											(
-												invite.template.translations as Record<
-													string,
-													{ name: string }
-												>
-											)[language]?.name}
-									</Button>
-								</Link>
-							</TableCell>
-							<TableCell>
-								<WhatsAppButton
-									text={`${window.location.origin}/invite/${invite.id}`}
-								/>
-							</TableCell>
-							<TableCell
-							// className="lg:opacity-0 group-hover:opacity-100 transition-opacity duration-200 "
-							>
-								<DeleteConfirm
-									deleteHandler={deleteInviteHandler}
-									id={invite.id}
-								>
-									<Button
-										// onClick={() => deleteInviteHandler(invite.id)}
-										title="Delete invite"
-										variant={"outline"}
-										className=""
-									>
-										<Trash2 />
-									</Button>
-								</DeleteConfirm>
-							</TableCell>
+		// Wrap with TooltipProvider
+		<TooltipProvider delayDuration={100}>
+            {/* Consistent container styling */}
+			<div className="my-6 border rounded-md overflow-hidden">
+				<Table>
+					{/* <TableCaption>A list of your simple invites.</TableCaption> */}
+                    {/* Consistent Header Styling */}
+					<TableHeader className="bg-muted/50">
+						<TableRow>
+							<TableHead className="w-[50px] text-center">#</TableHead>
+							{/* Use Title as primary link */}
+							<TableHead>Title / View Invite</TableHead>
+							<TableHead>Template</TableHead>
+                            {/* Consistent Action Headers */}
+							<TableHead className="text-center">
+                                <div className="flex items-center justify-center gap-1.5">
+								    <Share2 strokeWidth={1.5} size={16} /> Share
+                                </div>
+							</TableHead>
+							<TableHead className="text-center w-[100px]">
+                                <div className="flex items-center justify-center gap-1.5">
+								    <Trash2 strokeWidth={1.5} size={16} /> Delete
+                                </div>
+							</TableHead>
 						</TableRow>
-					))}
-				</TableBody>
-			</Table>
-		</div>
+					</TableHeader>
+					<TableBody>
+                        {/* Empty State */}
+						{invites.length === 0 && (
+							<TableRow>
+								<TableCell colSpan={5} className="text-center text-muted-foreground h-24">
+									You haven't created any simple invites yet.
+								</TableCell>
+							</TableRow>
+						)}
+                        {/* Invite Rows */}
+						{invites.map((invite, i) => (
+							<TableRow key={invite.id} className="group">
+                                {/* Index */}
+								<TableCell className="text-center font-medium">
+									{i + 1}
+								</TableCell>
+
+                                {/* Title as Primary Link */}
+								<TableCell className="font-medium">
+									<Link
+										href={`/invite/${invite.id}`} // Link to view the invite
+										target="_blank"
+										className="hover:underline inline-flex items-center gap-1 group/link"
+										title={`View invite: ${invite.title || invite.id}`}
+									>
+										{invite.title || `Invite (${invite.id})`} {/* Fallback */}
+                                        {/* External link icon */}
+										<ExternalLink size={14} strokeWidth={1.5} className="opacity-50 group-hover/link:opacity-100 transition-opacity" />
+									</Link>
+								</TableCell>
+
+                                {/* Template Link */}
+								<TableCell>
+									<Tooltip>
+										<TooltipTrigger asChild>
+                                            {/* Link to template view/edit page */}
+											<Link
+												href={`/templates/${invite.templateId}`} // Assuming this structure
+												target="_blank"
+												className="hover:underline"
+											>
+												<Button variant="link" size="sm" className="p-0 h-auto">
+													{getTemplateName(invite.template)}
+												</Button>
+											</Link>
+										</TooltipTrigger>
+										<TooltipContent>
+                                            {/* Tooltip provides more context */}
+											<p>View/Edit Template: {getTemplateName(invite.template)}</p>
+										</TooltipContent>
+									</Tooltip>
+								</TableCell>
+
+                                {/* Share Actions Cell */}
+								<TableCell className="text-center">
+                                    {/* Group Copy and WhatsApp */}
+									<div className="flex items-center justify-center gap-1">
+										<Tooltip>
+											<TooltipTrigger asChild>
+                                                {/* Consistent Copy Button */}
+												<Button
+													size={"sm"}
+													variant={"outline"}
+													onClick={() => copyHandler(invite.id)}
+												>
+													<Copy size={16} strokeWidth={1.5} />
+													<span className="sr-only">Copy Invite Link</span>
+												</Button>
+											</TooltipTrigger>
+											<TooltipContent>
+												<p>Copy Invite Link</p>
+											</TooltipContent>
+										</Tooltip>
+                                        {/* Consistent WhatsApp Button */}
+										<WhatsAppButton
+                                            // variant="outline" // Optional: if styling allows
+											text={`${window.location.origin}/invite/${invite.id}`}
+										/>
+									</div>
+								</TableCell>
+
+                                {/* Delete Action Cell */}
+								<TableCell className="text-center">
+									<DeleteConfirm
+										id={invite.id}
+										onConfirm={deleteInviteHandler} // Use consistent prop name
+										// ** Provide specific, contextual text **
+                                        title={`Delete "${invite.title || invite.id}"?`}
+                                        description="Are you sure you want to permanently delete this simple invite? This action cannot be undone."
+                                        confirmLabel="Yes, Delete" // Use consistent prop name
+                                        cancelLabel="Cancel"   // Use consistent prop name
+									>
+                                        {/* Consistent Delete Trigger */}
+                                        <Tooltip>
+                                            <TooltipTrigger asChild>
+                                                <Button
+                                                    variant={"outline"}
+                                                    size={"sm"}
+                                                    // Consistent hover style
+                                                    className="hover:text-destructive hover:bg-destructive/10"
+                                                >
+                                                    <Trash2 size={16} strokeWidth={1.5} />
+                                                    <span className="sr-only">Delete Invite</span>
+                                                </Button>
+                                            </TooltipTrigger>
+                                            <TooltipContent>
+                                                <p>Delete Invite</p>
+                                            </TooltipContent>
+                                        </Tooltip>
+									</DeleteConfirm>
+								</TableCell>
+							</TableRow>
+						))}
+					</TableBody>
+				</Table>
+			</div>
+		</TooltipProvider>
 	);
 };
 

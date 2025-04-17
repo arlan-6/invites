@@ -16,15 +16,23 @@ import { cn } from "@/lib/utils";
 interface deleteComfirmProps {
 	className?: string;
 	children: React.ReactNode;
-	deleteHandler: (id: string) => void;
+	onConfirm: (id: string) => void;
 	id: string;
+    title?:string;
+    description?:string;
+    cancelLabel?:string;
+    confirmLabel?:string;
 }
 
 export const DeleteConfirm: FC<deleteComfirmProps> = ({
 	className,
 	children,
-	deleteHandler,
+	onConfirm,
 	id,
+    title,
+    description,
+    cancelLabel,
+    confirmLabel,
 }) => {
 	return (
 		<div className={cn("", className)}>
@@ -32,20 +40,19 @@ export const DeleteConfirm: FC<deleteComfirmProps> = ({
                 <AlertDialogTrigger>{children}</AlertDialogTrigger>
                 <AlertDialogContent>
                     <AlertDialogHeader>
-                        <AlertDialogTitle>Confirm Deletion</AlertDialogTitle>
+                        <AlertDialogTitle>{title || 'Confirm Deletion'}</AlertDialogTitle>
                         <AlertDialogDescription>
-                            Are you sure you want to delete this item? This action is
-                            irreversible and all associated data will be permanently removed.
+                            {description || 'Are you sure you want to delete this item? This action cannot be undone.'}
                         </AlertDialogDescription>
                     </AlertDialogHeader>
                     <AlertDialogFooter>
-                        <AlertDialogCancel aria-label="Cancel deletion">Cancel</AlertDialogCancel>
+                        <AlertDialogCancel aria-label="Cancel deletion">{cancelLabel || 'Cancel'}</AlertDialogCancel>
                         <AlertDialogAction 
-                            onClick={() => deleteHandler(id)} 
+                            onClick={() => onConfirm(id)} 
                             aria-label="Confirm deletion"
                             className="bg-red-700 text-destructive-foreground hover:bg-red-700/90 focus-visible:ring-ring focus-visible:ring-offset-2 focus-visible:ring-offset-background data-[state=open]:bg-destructive/90"
                         >
-                            Delete
+                            {confirmLabel || 'Delete'}
                         </AlertDialogAction>
                     </AlertDialogFooter>
                 </AlertDialogContent>

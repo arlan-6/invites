@@ -66,8 +66,8 @@ export const AdvancedTemplateCard: FC<AdvancedTemplateCardProps> = ({
                     <div>
                         <h3
                             className={cn(
-                                "font-semibold text-white pr-6 sm:pr-8",
-                                "text-base sm:text-lg leading-tight sm:leading-normal"
+                                "font-bold text-white pr-6 sm:pr-8",
+                                "text-base sm:text-xl leading-tight sm:leading-normal"
                             )}
                         >
                             {name}

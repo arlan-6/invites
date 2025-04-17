@@ -119,7 +119,7 @@ export const InviteEditor: FC<InviteEditorProps> = ({
 			)}
 		>
 			<div>
-				<div className="group"><Link href={'/templates'}><Button variant={'link'} className="text-xl"> <ArrowLeft size={32} className="group-hover:-translate-x-1.5 duration-100"/> Templates</Button></Link></div>
+				<div><Link href={'/templates'} className="group"><Button variant={'link'} className="text-xl"> <ArrowLeft size={32} className="group-hover:-translate-x-1.5 duration-100"/> Templates</Button></Link></div>
 				<div className="flex justify-around items-center mb-8">
 					<div>
 						<h1 className="text-2xl font-semibold">
