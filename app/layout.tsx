@@ -7,7 +7,7 @@ import { LanguageProvider } from "@/components/language-provider";
 import Navigation from "@/components/navigation";
 
 export const metadata: Metadata = {
-	title: "Shaqr | beta",
+	title: "Shaqr | beta" + (process.env.NODE_ENV === "development" ? " (dev)" : ""),
 	description: "Invites",
 };
 

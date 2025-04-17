@@ -212,7 +212,7 @@ export const InviteTemplate: FC<InviteTemplateProps> = ({
 							label={middleTextContent}
 							fromFontVariationSettings="'wght' 200, 'slnt' -5"
 							toFontVariationSettings="'wght' 800, 'slnt' 0"
-							staggerDuration={0.6}
+							// staggerDuration={0.6}
 						/>
 					</motion.div>
 				)}

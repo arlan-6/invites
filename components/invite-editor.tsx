@@ -119,7 +119,18 @@ export const InviteEditor: FC<InviteEditorProps> = ({
 			)}
 		>
 			<div>
-				<div><Link href={'/templates'} className="group"><Button variant={'link'} className="text-xl"> <ArrowLeft size={32} className="group-hover:-translate-x-1.5 duration-100"/> Templates</Button></Link></div>
+				<div>
+					<Link href={"/templates"} className="group">
+						<Button variant={"link"} className="text-xl">
+							{" "}
+							<ArrowLeft
+								size={32}
+								className="group-hover:-translate-x-1.5 duration-100"
+							/>{" "}
+							Templates
+						</Button>
+					</Link>
+				</div>
 				<div className="flex justify-around items-center mb-8">
 					<div>
 						<h1 className="text-2xl font-semibold">
@@ -166,6 +177,22 @@ export const InviteEditor: FC<InviteEditorProps> = ({
 												? "time"
 												: "text"
 										}
+										min={
+											key.includes("Date")
+												? new Date().toISOString().split("T")[0]
+												: undefined
+										}
+										max={
+											key.includes("Date")
+												? new Date(
+														new Date().setFullYear(
+															new Date().getFullYear() + 1,
+														),
+												  )
+														.toISOString()
+														.split("T")[0]
+												: undefined
+										}
 										placeholder={t(`inviteEditor.${key}-placeholder`)}
 										value={inviteData[key as keyof typeof inviteData] || ""}
 										onChange={(e) =>
@@ -192,16 +219,16 @@ export const InviteEditor: FC<InviteEditorProps> = ({
 									<Paintbrush size={16} strokeWidth={1.5} />
 								</Button>
 								<ShareDialogButton
-							templateId={params.id}
-							inviteData={{
-								title: inviteData.title,
-								time: inviteData.eventTime,
-								date: inviteData.eventDate,
-								location: inviteData.eventLocation,
-								message: inviteData.eventMessage,
-							}}
-							shareText={t("inviteEditor.share")}
-						/>
+									templateId={params.id}
+									inviteData={{
+										title: inviteData.title,
+										time: inviteData.eventTime,
+										date: inviteData.eventDate,
+										location: inviteData.eventLocation,
+										message: inviteData.eventMessage,
+									}}
+									shareText={t("inviteEditor.share")}
+								/>
 							</div>
 						</motion.div>
 
