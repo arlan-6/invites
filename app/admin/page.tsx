@@ -1,6 +1,7 @@
 
 import { auth } from "@/auth";
-import TemplatesTable from "@/components/admin/templates-table";
+import TemplatesTable from "@/components/admin/manage-templates/TemplatesTable";
+// import TemplatesTable from "@/components/admin/templates-table";
 import UsersTable from "@/components/admin/user-table";
 import { Card, CardContent, CardHeader, CardTitle } from "@/components/ui/card";
 import { headers } from "next/headers";
@@ -21,14 +22,14 @@ export default async function AdminDashboard() {
 					</p>
 				</div>
 
-				<Card>
+				{/* <Card>
 					<CardHeader>
 						<CardTitle>Users</CardTitle>
 					</CardHeader>
 					<CardContent>
 						<UsersTable />
 					</CardContent>
-				</Card>
+				</Card> */}
 
                 <Card>
 					<CardHeader>
