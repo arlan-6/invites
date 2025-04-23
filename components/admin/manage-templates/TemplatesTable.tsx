@@ -210,6 +210,7 @@ export default function TemplatesTable({ userRole }: TemplatesTableProps) {
 				// Check if delete was successful (API returns deleted object or null)
 				// Success toast handled by server action assumed
 				// ** Close dialog and clear state BEFORE refetching **
+				toast.info('Template deleted!')
 				handleCloseDeleteDialog(false); // This also clears selectedTemplateForDelete
 				fetchTemplates(false); // Refetch data; this will reset isActionLoading
 			} else {
