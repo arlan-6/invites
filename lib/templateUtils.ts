@@ -1,3 +1,4 @@
+'use server'
 import { Template } from "@prisma/client";
 import prisma from "./prisma";
 

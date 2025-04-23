@@ -16,20 +16,20 @@ const TemplatesPage: React.FC = async () => {
 
 				<Accordion title="Card inivte templates">
 					<TemplatesList
-						templates={
-							templates as {
-								id: string;
-								color: string;
-								imageCorner: string | null;
-								cornerRitarion: boolean | null;
-								image: string | null;
-								occasions: string[];
-								tags: string[];
-								translations: TemplateTranslationsType;
-								createdAt: Date;
-								updatedAt: Date;
-							}[]
-						}
+						// templates={
+						// 	templates as {
+						// 		id: string;
+						// 		color: string;
+						// 		imageCorner: string | null;
+						// 		cornerRitarion: boolean | null;
+						// 		image: string | null;
+						// 		occasions: string[];
+						// 		tags: string[];
+						// 		translations: TemplateTranslationsType;
+						// 		createdAt: Date;
+						// 		updatedAt: Date;
+						// 	}[]
+						// }
 					/>
 				</Accordion>
 
