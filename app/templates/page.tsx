@@ -5,7 +5,10 @@ import { TemplateTranslationsType } from "@/data/templates";
 import { getAllTemplates } from "@/lib/templateUtils";
 import React from "react";
 import { AdvancedTemplatesList } from "@/components/advanced-templates-list";
-import { advancedTemplates, AdvancedTemplateType } from "@/data/advanced-templates";
+import {
+	advancedTemplates,
+	AdvancedTemplateType,
+} from "@/data/advanced-templates";
 
 const TemplatesPage: React.FC = async () => {
 	const templates = await getAllTemplates();
@@ -14,27 +17,14 @@ const TemplatesPage: React.FC = async () => {
 			<div className="xl:w-8/12 lg:w-10/12 md:w-full">
 				<TemplateSearchBar />
 
-				<Accordion title="Card inivte templates">
-					<TemplatesList
-						// templates={
-						// 	templates as {
-						// 		id: string;
-						// 		color: string;
-						// 		imageCorner: string | null;
-						// 		cornerRitarion: boolean | null;
-						// 		image: string | null;
-						// 		occasions: string[];
-						// 		tags: string[];
-						// 		translations: TemplateTranslationsType;
-						// 		createdAt: Date;
-						// 		updatedAt: Date;
-						// 	}[]
-						// }
-					/>
-				</Accordion>
+				{/* <Accordion title="Card inivte templates"> */}
+					<TemplatesList />
+				{/* </Accordion> */}
 
 				<Accordion title="Advanced templates">
-					<AdvancedTemplatesList templates={advancedTemplates as AdvancedTemplateType[]} />
+					<AdvancedTemplatesList
+						templates={advancedTemplates as AdvancedTemplateType[]}
+					/>
 				</Accordion>
 			</div>
 		</div>
