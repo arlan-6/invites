@@ -19,7 +19,7 @@ export default function BottomNavigation() {
 	if (!mounted) {
 		return null;
 	}
-	console.log('navigation bottom');
+	// console.log('navigation bottom');
 	
 	return (
 		<footer className="bottom-0 left-0 w-full bg-background/50">

@@ -51,7 +51,7 @@ export default function EditTemplateDialog({
 	// Initialize form
 	useEffect(() => {
 		if (!template) return;
-		console.log("EditDialog useEffect triggered for template:", template.id); // Debug log
+		// console.log("EditDialog useEffect triggered for template:", template.id); // Debug log
 
 		try {
 			let loadedTranslations: Partial<TemplateTranslationsType> = {};
@@ -164,10 +164,10 @@ export default function EditTemplateDialog({
 		}
 
 		setIsSubmitting(true);
-		console.log(
-			`Submitting update for ${template.id} with prepared data:`,
-			dataToSend,
-		);
+		// console.log(
+		// 	`Submitting update for ${template.id} with prepared data:`,
+		// 	dataToSend,
+		// );
 
 		try {
 			const result = await updateTemplate(template.id, dataToSend, userRole); // Call server function

@@ -12,6 +12,7 @@ import {
 	GetAdvancedInviteByUserId,
 } from "@/lib/advancedInvitesUtils";
 import { AdvancedTemplateType } from "@/data/advanced-templates";
+import { CreditCount } from "../credit-count";
 
 interface InvitesProps {
 	className?: string;
@@ -122,6 +123,7 @@ export const Invites: FC<InvitesProps> = ({ className, userId }) => {
 
 			{/* === Simple Invites Section === */}
 			<section>
+				<CreditCount/>
                 {/* Section Header */}
 				<h2 className="text-lg font-semibold mb-1">Simple Invites</h2>
 				<p className="text-sm text-muted-foreground italic">

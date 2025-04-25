@@ -39,7 +39,7 @@ export const TemplateCard: FC<templateCardProps> = ({ template, i }) => {
 	};
 
 	const translation = translations?.[language];
-console.log(typeof template.color);
+// console.log(typeof template.color);
 
 	return (
 		<motion.div

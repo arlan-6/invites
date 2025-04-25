@@ -33,7 +33,7 @@ export const AnimatedTime: FC<AnimatedTimeProps> = ({
 
     useEffect(() => {
         const [hours, minutes] = timeString.split(":").map(Number);
-        console.log(hours, minutes);
+        // console.log(hours, minutes);
         
         setTime([hours || 0, minutes || 0]);
     }, [timeString]);

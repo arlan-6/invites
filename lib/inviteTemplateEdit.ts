@@ -39,7 +39,7 @@ export const getAllTemplates = async (role: Role) => {
                 createdAt: 'desc'
             }
         });
-        console.log(`[getAllTemplates] Found ${templates.length} templates for role: ${role}`);
+        // console.log(`[getAllTemplates] Found ${templates.length} templates for role: ${role}`);
         return templates;
     } catch (error) {
         console.error("[getAllTemplates] Error:", error);
@@ -68,7 +68,7 @@ export const getTemplateById = async (id: string, role: Role) => {
             toast.warning(`Template with ID ${id} not found.`);
             return null;
         }
-        console.log(`[getTemplateById] Found template ${id} for role: ${role}`);
+        // console.log(`[getTemplateById] Found template ${id} for role: ${role}`);
         return template;
 
     } catch (error) {
@@ -114,7 +114,7 @@ export const createTemplate = async (data: CreateTemplateData, role: Role) => {
                 translations: data.translations,
             }
         });
-        console.log(`[createTemplate] Template created with ID ${newTemplate.id} by role: ${role}`);
+        // console.log(`[createTemplate] Template created with ID ${newTemplate.id} by role: ${role}`);
         // //toast.success('Template created successfully!');
         return newTemplate;
 
@@ -158,7 +158,7 @@ export const updateTemplate = async (id: string, data: UpdateTemplateData, role:
                 updatedAt: new Date() // Explicitly set updatedAt if needed (Prisma @updatedAt handles this automatically)
             }
         });
-        console.log(`[updateTemplate] Template ${id} updated by role: ${role}`);
+        // console.log(`[updateTemplate] Template ${id} updated by role: ${role}`);
         //toast.success('Template updated successfully!');
         return updatedTemplate;
 
@@ -201,7 +201,7 @@ export const deleteTemplate = async (id: string, role: Role) => {
         const deletedTemplate = await prisma.template.delete({
             where: { id }
         });
-        console.log(`[deleteTemplate] Template ${id} deleted by role: ${role}`);
+        // console.log(`[deleteTemplate] Template ${id} deleted by role: ${role}`);
         //toast.success('Template deleted successfully!');
         // Return the deleted object or a simple success indicator
         return deletedTemplate; // or return { success: true };

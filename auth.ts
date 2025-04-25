@@ -1,5 +1,5 @@
 import { betterAuth, BetterAuthOptions } from "better-auth";
-import { prismaAdapter } from "better-auth/adapters/prisma";
+import { prismaAdapter } from "better-auth/adapters/prisma";import { inferAdditionalFields } from "better-auth/client/plugins";
 import prisma from "@/lib/prisma";
 // import { sendEmail } from "@/actions/email";
 import { openAPI } from "better-auth/plugins";
@@ -18,14 +18,17 @@ export const auth = betterAuth({
 			enabled: true,
 			maxAge: 5 * 60, // Cache duration in seconds
 		},
+		
 	},
 	user: {
-		// additionalFields: {
-		//   premium: {
-		//     type: "boolean",
-		//     required: false,
-		//   },
-		// },
+		additionalFields: {
+		  credits: {
+		    type: "number",
+		    required: true,
+			defaultValue:5,
+			input:false
+		  },
+		},
 		// changeEmail: {
 		//   enabled: true,
 		//   // sendChangeEmailVerification: async ({ newEmail, url }) => {
@@ -41,9 +44,10 @@ export const auth = betterAuth({
 		google: {
 			clientId: process.env.GOOGLE_CLIENT_ID as string,
 			clientSecret: process.env.GOOGLE_CLIENT_SECRET as string,
+
 		},
 	},
-	plugins: [openAPI(), admin()], // api/auth/reference
+	plugins: [openAPI(), admin(),inferAdditionalFields()], // api/auth/reference
 	// emailAndPassword: {
 	//   enabled: true,
 	//   requireEmailVerification: true,

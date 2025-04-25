@@ -14,11 +14,11 @@ const layout: FC<layoutProps> = async ({ children,  }) => {
         });
     if (!session) {
         redirect('/')}
-    console.log(session.user.role);
+    // console.log(session.user.role);
     
     if (session.user.role !== 'admin' && session.user.role !== 'moderator') {
         // redirect('/')
-        console.log('aaa');
+        // console.log('aaa');
         
     }
     

@@ -38,7 +38,7 @@ export const TemplatesList: FC<TemplatesListProps> = ({ className }) => {
 		const loadTemplates = async () => {
 			setLoading(true);
 			setError(null);
-			console.log("Fetching templates...");
+			// console.log("Fetching templates...");
 
 			try {
 				const fetchedData = await fetchAllTemplatesServer();
@@ -52,7 +52,7 @@ export const TemplatesList: FC<TemplatesListProps> = ({ className }) => {
 					);
 					setTemplates([]);
 				} else if (Array.isArray(fetchedData)) {
-					console.log(`Fetched ${fetchedData.length} templates.`);
+					// console.log(`Fetched ${fetchedData.length} templates.`);
 
 					setTemplates(fetchedData as unknown as Template[]);
 				} else {

@@ -15,6 +15,7 @@ import useInviteStore from "@/store/inviteEdit";
 import { getTemplateById } from "@/lib/templateUtils";
 import { TemplateTranslationsType } from "@/data/templates";
 import Link from "next/link";
+import { CreditCount } from "./credit-count";
 
 interface InviteEditorProps {
 	className?: string;
@@ -140,7 +141,8 @@ export const InviteEditor: FC<InviteEditorProps> = ({
 							{template.translations[language].description}
 						</p>
 					</div>
-					<div className="ml-3 flex gap-2 flex-wrap">
+					<div className="ml-3 flex gap-4 flex-wrap items-center">
+						<CreditCount/>
 						<ShareDialogButton
 							templateId={params.id}
 							inviteData={{

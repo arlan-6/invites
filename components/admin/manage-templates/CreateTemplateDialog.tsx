@@ -76,7 +76,7 @@ export default function CreateTemplateDialog({
     }
 
     setIsSubmitting(true);
-    console.log("Submitting creation with prepared data:", dataToSend);
+    // console.log("Submitting creation with prepared data:", dataToSend);
 
     try {
         const result = await createTemplate(dataToSend, userRole); // Call server function

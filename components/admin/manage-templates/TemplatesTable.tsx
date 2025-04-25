@@ -62,7 +62,7 @@ export default function TemplatesTable({ userRole }: TemplatesTableProps) {
 	// --- Data Fetching ---
 	const fetchTemplates = useCallback(
 		async (showLoadingSpinner = true) => {
-			console.log("Fetching templates..."); // Debug log
+			// console.log("Fetching templates..."); // Debug log
 			if (showLoadingSpinner) setIsLoading(true);
 			else setIsActionLoading(true); // Show subtle loading for refetches
 			setError(null);
@@ -90,9 +90,9 @@ export default function TemplatesTable({ userRole }: TemplatesTableProps) {
 						setCurrentPage(1); // Go to page 1 if no results
 					}
 					// Otherwise, currentPage remains valid
-					console.log(
-						`Fetch successful, ${fetchedTemplates.length} templates loaded.`,
-					); // Debug log
+					// console.log(
+					// 	`Fetch successful, ${fetchedTemplates.length} templates loaded.`,
+					// ); // Debug log
 				}
 			} catch (err: any) {
 				// Catch unexpected errors during the fetch call itself

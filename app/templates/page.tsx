@@ -9,12 +9,15 @@ import {
 	advancedTemplates,
 	AdvancedTemplateType,
 } from "@/data/advanced-templates";
+import { CreditCount } from "@/components/credit-count";
 
 const TemplatesPage: React.FC = async () => {
-	const templates = await getAllTemplates();
+	// const templates = await getAllTemplates();
+
 	return (
 		<div className="w-full flex justify-center">
 			<div className="xl:w-8/12 lg:w-10/12 md:w-full">
+				<CreditCount/>
 				<TemplateSearchBar />
 
 				{/* <Accordion title="Card inivte templates"> */}

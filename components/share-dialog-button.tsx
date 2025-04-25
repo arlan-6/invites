@@ -57,7 +57,7 @@ export const ShareDialogButton: FC<ShareDialogButtonProps> = ({
 	const [directShareLink, setDirectShareLink] = useState<string | null>(null);
 	const [loading, setLoading] = useState<boolean>(false);
 	const [isFailed, setIsFailed] = useState<boolean>(false);
-	const { data: session, isPending } = authClient.useSession();
+	const { data: session, isPending, refetch } = authClient.useSession();
 	const { t } = useLanguage();
 	const { updateInviteData } = useInviteStore();
 
@@ -78,6 +78,10 @@ export const ShareDialogButton: FC<ShareDialogButtonProps> = ({
 			toast.error("Invalid invite data. Please fill in all required fields.");
 			return;
 		}
+		if (!session || !session.user) {
+			toast.error("Sign in first!");
+			return;
+		}
 
 		try {
 			setLoading(true);
@@ -90,7 +94,10 @@ export const ShareDialogButton: FC<ShareDialogButtonProps> = ({
 				message: inviteData.message || "",
 				userId: session?.user?.id || "",
 				templateId,
-				expiresAt: new Date(new Date(`${inviteData.date}T${inviteData.time}`).getTime() + 7 * 24 * 60 * 60 * 1000), // Add 1 week to the expiration date
+				expiresAt: new Date(
+					new Date(`${inviteData.date}T${inviteData.time}`).getTime() +
+						7 * 24 * 60 * 60 * 1000,
+				), // Add 1 week to the expiration date
 				role: session?.user?.role || "user", // Assuming "user" as the default role
 			};
 
@@ -98,12 +105,20 @@ export const ShareDialogButton: FC<ShareDialogButtonProps> = ({
 			const newInvite = await createInvite(invitePayload);
 
 			// Generate share links
-			const compressedData = LZString.compressToEncodedURIComponent(
-				JSON.stringify({ templateId, inviteData }),
-			);
+			// const compressedData = LZString.compressToEncodedURIComponent(
+			// 	JSON.stringify({ templateId, inviteData }),
+			// );
 
-			setShareLink(`${window.location.origin}/invite/${compressedData}`);
+			// setShareLink(`${window.location.origin}/invite/${compressedData}`);
 			setDirectShareLink(`${window.location.origin}/invite/${newInvite.id}`);
+			// refetch();
+			// console.log(session.user.credits);
+			// const c = session.user.credits-1
+			// await authClient.updateUser({
+			// 	credits: c,
+			// });
+			// refetch();
+
 			toast.success("Invite created successfully!");
 		} catch (err: any) {
 			console.error("Error generating share links:", err);
