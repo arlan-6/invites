@@ -15,7 +15,7 @@ import {
 	DialogTitle,
 	DialogTrigger,
 } from "@/components/ui/dialog";
-import getUserCredits from "@/lib/userUtils"; // Assuming this returns { credits: number | null, error: string | null }
+import { getUserCredits } from "@/lib/userUtils";
 
 interface CreditCountProps {
 	className?: string;
