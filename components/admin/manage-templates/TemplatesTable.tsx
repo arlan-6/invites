@@ -38,14 +38,19 @@ import TemplatesPagination from "./TemplatesPagination";
 import CreateTemplateDialog from "./CreateTemplateDialog";
 import EditTemplateDialog from "./EditTemplateDialog";
 import { cn } from "@/lib/utils";
+import { useLanguage } from "@/components/language-provider";
+import { Invite } from "@prisma/client";
+import { TemplateTranslationsType } from "@/data/templates";
 
 interface TemplatesTableProps {
 	userRole: Role;
 }
-
+type TemplateType = Template & {
+	translations: TemplateTranslationsType;
+};
 export default function TemplatesTable({ userRole }: TemplatesTableProps) {
 	// --- State Variables ---
-	const [allTemplates, setAllTemplates] = useState<Template[]>([]);
+	const [allTemplates, setAllTemplates] = useState<TemplateType[]>([]);
 	const [isLoading, setIsLoading] = useState(true);
 	const [isActionLoading, setIsActionLoading] = useState(false); // Global flag for Create/Update/Delete ops
 	const [error, setError] = useState<string | null>(null);
@@ -58,7 +63,7 @@ export default function TemplatesTable({ userRole }: TemplatesTableProps) {
 		useState<Template | null>(null);
 	const [selectedTemplateForDelete, setSelectedTemplateForDelete] =
 		useState<Template | null>(null); // Which template is targeted
-
+	const {language} = useLanguage()
 	// --- Data Fetching ---
 	const fetchTemplates = useCallback(
 		async (showLoadingSpinner = true) => {
@@ -77,7 +82,7 @@ export default function TemplatesTable({ userRole }: TemplatesTableProps) {
 					setCurrentPage(1);
 					// Assuming API function handles specific toasts (like permission denied)
 				} else {
-					setAllTemplates(fetchedTemplates);
+					setAllTemplates(fetchedTemplates as TemplateType[]);
 					const newTotalPages = Math.max(
 						1,
 						Math.ceil(fetchedTemplates.length / pageSize),
@@ -370,11 +375,12 @@ export default function TemplatesTable({ userRole }: TemplatesTableProps) {
 				<Table>
 					<TableHeader>
 						<TableRow>
-							<TableHead className="w-[80px]">Color</TableHead>
-							<TableHead>Occasions</TableHead>
+							<TableHead className="w-[80px]">Style</TableHead>
+							<TableHead className="w-[80px]">Name [{language}]</TableHead>
+							<TableHead>Occasions [{language}]</TableHead>
 							<TableHead>Tags</TableHead>
 							<TableHead className="w-[120px]">Images</TableHead>
-							<TableHead>Translations</TableHead>
+							{/* <TableHead>Translations</TableHead> */}
 							<TableHead className="w-[120px]">Created</TableHead>
 							{/* Actions Header */}
 							<TableHead className="text-right min-w-[120px] pr-4">
@@ -439,13 +445,18 @@ export default function TemplatesTable({ userRole }: TemplatesTableProps) {
 											</span>
 										</div>
 									</TableCell>
+									<TableCell>
+										<div className="" title={template.translations[language].name}>
+											{template.translations[language].name}
+										</div>
+									</TableCell>
 									{/* Occasions Cell */}
 									<TableCell
 										className="max-w-[150px] truncate text-sm"
-										title={template.occasions?.join(", ") ?? ""}
+										title={template.translations[language].occasions?.join(", ") ?? ""}
 									>
-										{template.occasions?.length ? (
-											template.occasions.join(", ")
+										{template.translations[language].occasions?.length ? (
+											template.translations[language].occasions.join(", ")
 										) : (
 											<span className="text-muted-foreground italic">None</span>
 										)}
@@ -481,7 +492,7 @@ export default function TemplatesTable({ userRole }: TemplatesTableProps) {
 										</div>
 									</TableCell>
 									{/* Translations Cell */}
-									<TableCell
+									{/* <TableCell
 										className="text-xs max-w-[100px] truncate"
 										title={
 											template.translations &&
@@ -503,7 +514,7 @@ export default function TemplatesTable({ userRole }: TemplatesTableProps) {
 										) : (
 											<span className="text-muted-foreground italic">N/A</span>
 										)}
-									</TableCell>
+									</TableCell> */}
 									{/* Created At Cell */}
 									<TableCell className="text-sm whitespace-nowrap">
 										{new Date(template.createdAt).toLocaleDateString("en-CA")}

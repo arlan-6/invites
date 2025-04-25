@@ -72,7 +72,7 @@ export function TemplateFormFields({
 					<div>
 						<Label htmlFor="color" className="mb-1.5 block text-sm font-medium">
 							{" "}
-							Color<span className="text-red-500 ml-1">*</span>{" "}
+							Style<span className="text-red-500 ml-1">*</span>{" "}
 						</Label>
 						<Input
 							id="color"
