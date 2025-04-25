@@ -93,7 +93,7 @@ type CreateTemplateData = {
 // Allows Admin and Editor access
 export const createTemplate = async (data: CreateTemplateData, role: Role) => {
     try {
-        if (!hasPermission(['admin', 'editor'], role)) {
+        if (!hasPermission(['admin', 'editor','moderator'], role)) {
             return null;
         }
 
@@ -137,7 +137,7 @@ type UpdateTemplateData = Partial<Omit<CreateTemplateData, ''>>; // Omit fields 
 // Allows Admin and Editor access
 export const updateTemplate = async (id: string, data: UpdateTemplateData, role: Role) => {
      try {
-        if (!hasPermission(['admin', 'editor'], role)) {
+        if (!hasPermission(['admin', 'editor','moderator'], role)) {
             return null;
         }
         if (!id) {
@@ -183,7 +183,7 @@ export const updateTemplate = async (id: string, data: UpdateTemplateData, role:
 export const deleteTemplate = async (id: string, role: Role) => {
     try {
         // Stricter permission for delete
-        if (!hasPermission(['admin'], role)) {
+        if (!hasPermission(['admin','moderator'], role)) {
             return null;
         }
          if (!id) {
