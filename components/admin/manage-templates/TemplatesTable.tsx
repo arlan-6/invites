@@ -119,7 +119,7 @@ export default function TemplatesTable({ userRole }: TemplatesTableProps) {
 
 	// --- Dialog Open/Close Handlers ---
 	const handleOpenCreateDialog = () => {
-		if (userRole !== "admin" && userRole !== "editor") {
+		if (userRole !== "admin" && userRole !== "editor"&& userRole !== "moderator") {
 			toast.error("Access Denied: Cannot create templates.");
 			return;
 		}
@@ -133,7 +133,7 @@ export default function TemplatesTable({ userRole }: TemplatesTableProps) {
 	};
 
 	const handleOpenEditDialog = (template: Template) => {
-		if (userRole !== "admin" && userRole !== "editor") {
+		if (userRole !== "admin" && userRole !== "editor"&& userRole !== "moderator") {
 			toast.error("Access Denied: Cannot edit templates.");
 			return;
 		}
@@ -148,7 +148,7 @@ export default function TemplatesTable({ userRole }: TemplatesTableProps) {
 
 	// Sets state to trigger the confirmation dialog for a specific template
 	const handleOpenDeleteDialog = (template: Template) => {
-		if (userRole !== "admin") {
+		if (userRole !== "admin" && userRole !== "moderator") {
 			toast.error("Access Denied: Only Admins can delete.");
 			return;
 		}
@@ -196,7 +196,7 @@ export default function TemplatesTable({ userRole }: TemplatesTableProps) {
 
 	// --- Delete Confirmation Handler ---
 	const handleDeleteConfirm = async () => {
-		if (!selectedTemplateForDelete || userRole !== "admin") return;
+		if (!selectedTemplateForDelete || (userRole !== "admin" && userRole !== "moderator")) return;
 
 		// Set loading specifically for the delete action
 		setIsActionLoading(true);
@@ -319,7 +319,7 @@ export default function TemplatesTable({ userRole }: TemplatesTableProps) {
 					Manage Invite Templates
 				</h2>
 				{/* Create Button and Dialog */}
-				{(userRole === "admin" || userRole === "editor") && (
+				{(userRole === "admin" || userRole === "editor"|| userRole === "moderator") && (
 					<Dialog
 						open={isCreateDialogOpen}
 						onOpenChange={(open) => {
@@ -394,7 +394,7 @@ export default function TemplatesTable({ userRole }: TemplatesTableProps) {
 										? "No templates found."
 										: "No templates on this page."}
 									{totalTemplates === 0 &&
-										(userRole === "admin" || userRole === "editor") && (
+										(userRole === "admin" || userRole === "editor" || userRole === "moderator") && (
 											<Button
 												variant="link"
 												onClick={handleOpenCreateDialog}
@@ -410,8 +410,8 @@ export default function TemplatesTable({ userRole }: TemplatesTableProps) {
 						{/* Template Rows */}
 						{currentTemplatesOnPage.map((template) => {
 							// Determine permissions for this row
-							const canEdit = userRole === "admin" || userRole === "editor";
-							const canDelete = userRole === "admin";
+							const canEdit = userRole === "admin" || userRole === "editor"|| userRole === "moderator";
+							const canDelete = userRole === "admin"|| userRole === "moderator";
 
 							// Determine if the delete confirmation for *this specific row* should be open
 							const isThisTemplateDeleteDialogOpen =
