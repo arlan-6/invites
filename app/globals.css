@@ -1,5 +1,5 @@
+@import url('https://fonts.googleapis.com/css2?family=Fugaz+One&family=Rubik+80s+Fade&display=swap');
 @import "tailwindcss";
-
 @plugin "tailwindcss-animate";
 @plugin 'tailwindcss-motion';
 
@@ -133,6 +133,13 @@
 		transform: translateY(-100%);
 	}
 }
+
+.fugaz-one-regular {
+	font-family: "Fugaz One", sans-serif;
+	font-weight: 400;
+	font-style: normal;
+  }
+  
 
 .nauryz{
 	background: linear-gradient(-45deg, #16a34a, #a3e635);
