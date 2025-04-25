@@ -22,7 +22,7 @@ export const Main: FC<mainProps> = ({ className, role }) => {
 					</p>
 				</div>
 				<div className="">
-					<Tabs defaultValue="account" className="">
+					<Tabs defaultValue="templates" className="">
 						<TabsList className="text-2xl m-4">
 						{role === 'admin' && <TabsTrigger defaultChecked value="Users">Users</TabsTrigger>}	
 							
