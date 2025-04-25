@@ -45,6 +45,7 @@ export default function SignUp() {
 				email: values.email,
 				password: values.password,
 				name: values.name,
+				credits:5
 			},
 			{
 				onRequest: () => {
