@@ -5,16 +5,12 @@ export const config = {
   runtime: "edge",
 };
 
-// same helper from your first snippet
 async function loadGoogleFont(fontName: string, text: string) {
   const url = `https://fonts.googleapis.com/css2?family=${encodeURIComponent(
     fontName
   )}&text=${encodeURIComponent(text)}`;
   const css = await (await fetch(url)).text();
-  // pull out the first font-file URL
-  const match = css.match(
-    /src: url\((.+?)\) format\('(opentype|truetype)'\)/
-  );
+  const match = css.match(/src: url\((.+?)\) format\('(opentype|truetype)'\)/);
   if (match) {
     const fontResp = await fetch(match[1]);
     if (fontResp.ok) {
@@ -24,37 +20,31 @@ async function loadGoogleFont(fontName: string, text: string) {
   throw new Error(`Failed to load font ${fontName}`);
 }
 
-export async function GET(
-  _request: Request,
-) {
-  // you can await your inviteId here if you plan to render it into the image
+export async function GET(_request: Request) {
+  const text = "Shqr";
 
-
-  // the actual text you want to render
-  const text = "Sh"; // or derive from inviteId / other logic
-
-  // load the font data at runtime
   const fugazData = await loadGoogleFont("Fugaz One", text);
 
-  // build your OG markup
   const ogMarkup = (
     <div
-      className={cn("fugaz-one-regular")}
       style={{
-        fontSize: "12rem",
         display: "flex",
+        flexDirection: "column",
         justifyContent: "center",
         alignItems: "center",
         width: "100%",
         height: "100%",
-        background: "linear-gradient(135deg, hsl(221, 83.2%, 53.3%), hsl(252, 64%, 68%))",
+        background: "linear-gradient(135deg, hsl(221, 83%, 53%), hsl(252, 64%, 68%))",
         color: "#fff",
         borderRadius: "56px",
-        padding: "15px",
         fontFamily: "Fugaz One, sans-serif",
+        padding: "20px",
+        textAlign: "center",
+        lineHeight: ".7",
       }}
     >
-      {text}
+      <div style={{ fontSize: "11rem", marginBottom: "-10px" }}>Sh</div>
+      <div style={{ fontSize: "12rem", marginTop: "-10px" }}>qr</div>
     </div>
   );
 
