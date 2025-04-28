@@ -95,7 +95,7 @@ export const InviteEditor: FC<InviteEditorProps> = ({
 
 	const handleClear = useCallback(() => {
 		updateInviteData({
-			title: "",
+			eventTitle: "",
 			eventDate: "",
 			eventTime: "",
 			eventLocation: "",
@@ -146,7 +146,7 @@ export const InviteEditor: FC<InviteEditorProps> = ({
 						<ShareDialogButton
 							templateId={params.id}
 							inviteData={{
-								title: inviteData.title,
+								title: inviteData.eventTitle,
 								time: inviteData.eventTime,
 								date: inviteData.eventDate,
 								location: inviteData.eventLocation,
@@ -223,7 +223,7 @@ export const InviteEditor: FC<InviteEditorProps> = ({
 								<ShareDialogButton
 									templateId={params.id}
 									inviteData={{
-										title: inviteData.title,
+										title: inviteData.eventTitle,
 										time: inviteData.eventTime,
 										date: inviteData.eventDate,
 										location: inviteData.eventLocation,
@@ -245,7 +245,7 @@ export const InviteEditor: FC<InviteEditorProps> = ({
 						<InviteTemplate
 							template={template}
 							formData={{
-								title: inviteData.title,
+								title: inviteData.eventTitle,
 								time: inviteData.eventTime,
 								date: inviteData.eventDate,
 								location: inviteData.eventLocation,

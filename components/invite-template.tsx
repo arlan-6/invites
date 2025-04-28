@@ -51,11 +51,11 @@ export const InviteTemplate: FC<InviteTemplateProps> = ({
 
 	const derivedFormData = useMemo(() => {
 		return {
-			title: formData?.title || t("inviteEditor.event-title-placeholder"),
-			date: formData?.date || t("inviteEditor.event-date-placeholder"),
-			time: formData?.time || t("inviteEditor.event-time-placeholder"),
+			title: formData?.title || t("inviteEditor.eventTitle-placeholder"),
+			date: formData?.date || t("inviteEditor.eventDate-placeholder"),
+			time: formData?.time || t("inviteEditor.eventTime-placeholder"),
 			location:
-				formData?.location || t("inviteEditor.event-location-placeholder"),
+				formData?.location || t("inviteEditor.eventLocation-placeholder"),
 			message: formData?.message || "",
 		};
 	}, [formData, t]);

@@ -15,6 +15,7 @@ import {
 	ArrowLeft,
 	ArrowRight,
 	Copy,
+	CopyCheck,
 	Phone,
 	Share2,
 	SquareArrowOutUpRight,
@@ -34,6 +35,7 @@ import { createInvite } from "@/lib/inviteUtils";
 import { redirect } from "next/navigation";
 import WhatsAppButton from "./whatsapp-button";
 import useInviteStore from "@/store/inviteEdit";
+import { cn } from "@/lib/utils";
 
 interface ShareDialogButtonProps {
 	className?: string;
@@ -53,6 +55,7 @@ export const ShareDialogButton: FC<ShareDialogButtonProps> = ({
 	inviteData,
 	shareText,
 }) => {
+	const [dialogOpen, setDialogopen] = useState<boolean>(false);
 	const [shareLink, setShareLink] = useState<string | null>(null);
 	const [directShareLink, setDirectShareLink] = useState<string | null>(null);
 	const [loading, setLoading] = useState<boolean>(false);
@@ -60,6 +63,7 @@ export const ShareDialogButton: FC<ShareDialogButtonProps> = ({
 	const { data: session, isPending, refetch } = authClient.useSession();
 	const { t } = useLanguage();
 	const { updateInviteData } = useInviteStore();
+	const [copied, setCopied] = useState<boolean>(false);
 
 	const isInviteDataValid = useMemo(() => {
 		return (
@@ -129,7 +133,7 @@ export const ShareDialogButton: FC<ShareDialogButtonProps> = ({
 		} finally {
 			setLoading(false);
 			updateInviteData({
-				title: "",
+				eventTitle: "",
 				eventDate: "",
 				eventTime: "",
 				eventLocation: "",
@@ -142,12 +146,18 @@ export const ShareDialogButton: FC<ShareDialogButtonProps> = ({
 		if (!link) return;
 		navigator.clipboard.writeText(link);
 		toast.success("Link copied to clipboard!");
+		setCopied(true); // Set the ID of the copied invite
+		setTimeout(() => {
+			setCopied(false); // Reset after 2 seconds
+		}, 2000);
 	}, []);
 
 	return (
 		<Dialog
+			open={dialogOpen}
 			onOpenChange={(isOpen) => {
 				if (isOpen) {
+					setDialogopen(true);
 					handleDialogOpen();
 				} else if (!isFailed) {
 					redirect("/dashboard");
@@ -190,6 +200,7 @@ export const ShareDialogButton: FC<ShareDialogButtonProps> = ({
 					<DialogDescription className="text-zinc-600 dark:text-zinc-400">
 						<span>{t("inviteEditor.dialogCloseText")} </span>
 						<br />
+						<br />
 						<span>{t("inviteEditor.dialogLinkText")}</span>
 					</DialogDescription>
 				</DialogHeader>
@@ -213,12 +224,39 @@ export const ShareDialogButton: FC<ShareDialogButtonProps> = ({
 
 						{directShareLink && (
 							<div className="flex items-center gap-2">
-								<Input value={directShareLink} readOnly />
+								<Input
+									value={directShareLink}
+									readOnly
+									onClick={(e) => {
+										(e.target as HTMLInputElement).select();
+									}}
+								/>
 								<Button
 									variant="outline"
 									onClick={() => copyHandler(directShareLink)}
+									disabled={copied}
+									className="relative flex items-center justify-center px-5"
 								>
-									<Copy strokeWidth={1} />
+									<span
+										className={cn(
+											"absolute transition-transform duration-300 ease-in-out",
+											copied
+												? "opacity-0 scale-0" // Shrink and fade out
+												: "opacity-100 scale-100", // Normal state
+										)}
+									>
+										<Copy size={16} strokeWidth={1.5} />
+									</span>
+									<span
+										className={cn(
+											"absolute transition-transform duration-300 ease-in-out",
+											copied
+												? "opacity-100 scale-130 text-green-400" // Success state
+												: "opacity-0 scale-0", // Shrink and fade out
+										)}
+									>
+										<CopyCheck size={16} strokeWidth={1.5} />
+									</span>
 								</Button>
 								<WhatsAppButton text={directShareLink} />
 								<Link
@@ -235,12 +273,12 @@ export const ShareDialogButton: FC<ShareDialogButtonProps> = ({
 					</>
 				)}
 
-				{!shareLink && !loading && (
+				{!directShareLink && !loading && (
 					<div className="text-center text-red-500">No data to share!</div>
 				)}
 				<br />
 				<Link href={"/dashboard"}>
-					<Button variant={"outline"}>Go to dashboard</Button>
+					<Button variant={"link"}>{t('inviteEditor.goToDashboard')}</Button>
 				</Link>
 				<DialogClose />
 			</DialogContent>
