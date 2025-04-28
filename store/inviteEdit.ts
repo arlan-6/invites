@@ -1,7 +1,7 @@
 import { create } from "zustand";
 
 type InviteData = {
-	title?: string;
+	eventTitle?: string;
 	eventDate?: string;
 	eventTime?: string;
 	eventLocation?: string;
@@ -16,7 +16,7 @@ type InviteStoreType = {
 
 const useInviteStore = create<InviteStoreType>((set) => ({
   inviteData: {
-    title: "",
+    eventTitle: "",
     eventDate: "",
     eventTime: "",
     eventLocation: "",
