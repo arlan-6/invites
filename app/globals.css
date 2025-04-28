@@ -152,25 +152,69 @@
     box-shadow: 0px 5px 15px rgba(0, 0, 0, 0.3);
 }
 
-.nauryz{
-	background: linear-gradient(-45deg, #16a34a, #a3e635);
+/* Original Styles (with .almaty updated) */
+.nauryz {
+    background: linear-gradient(-45deg, #16a34a, #a3e635); /* Green to Lime */
 }
-.zord{
-	background: linear-gradient(-45deg, #b91c1c, #0f172a);
-}
-.aurora{
-	background: linear-gradient(-45deg, #ec4899, #f59e0b);
-}
-.mayday{
-	background: linear-gradient(-45deg, #f472b6, #8b5cf6);
-}
-.spring{
-	background: linear-gradient(-45deg, #facc15, #4ade80);
-}
-.simple{
-	background: linear-gradient(-45deg, #06b6d4, #4f46e5);
-}
-.almaty{
-	background: linear-gradient(-45deg, #06b6d4, #4f46e5);
 
+.zord {
+    background: linear-gradient(-45deg, #b91c1c, #0f172a); /* Red to Dark Blue/Slate */
+}
+
+.aurora {
+    background: linear-gradient(-45deg, #ec4899, #f59e0b); /* Pink to Amber */
+}
+
+.mayday {
+    background: linear-gradient(-45deg, #f472b6, #8b5cf6); /* Rose to Violet */
+}
+
+.spring {
+    background: linear-gradient(-45deg, #facc15, #4ade80); /* Yellow to Green */
+}
+
+.simple {
+    background: linear-gradient(-45deg, #06b6d4, #4f46e5); /* Cyan to Indigo */
+}
+
+.almaty {
+    /* Changed from the duplicate cyan/indigo */
+    background: linear-gradient(-45deg, #f97316, #7e22ce); /* Orange to Purple */
+}
+
+/* New Unique Styles */
+.oceanic {
+    background: linear-gradient(-45deg, #075985, #2dd4bf); /* Dark Sky Blue to Teal */
+}
+
+.sunset {
+    background: linear-gradient(-45deg, #f59e0b, #be123c); /* Amber to Rose Red */
+}
+
+.forest {
+    background: linear-gradient(-45deg, #14532d, #ca8a04); /* Dark Green to Dark Yellow */
+}
+
+.nebula {
+    background: linear-gradient(-45deg, #312e81, #db2777); /* Dark Indigo to Pink */
+}
+
+.minty {
+    background: linear-gradient(-45deg, #6ee7b7, #67e8f9); /* Emerald Green to Light Cyan */
+}
+
+.royal {
+    background: linear-gradient(-45deg, #d97706, #4338ca); /* Amber/Gold to Indigo */
+}
+
+.fiery {
+    background: linear-gradient(-45deg, #dc2626, #f59e0b); /* Red to Amber/Orange */
+}
+
+.frost {
+    background: linear-gradient(-45deg, #bfdbfe, #60a5fa); /* Light Blue to Medium Blue */
+}
+
+.earthy {
+     background: linear-gradient(-45deg, #a16207, #57534e); /* Dark Yellow/Brown to Stone Gray */
 }

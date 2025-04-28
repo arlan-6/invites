@@ -5,12 +5,21 @@ import { Input } from "@/components/ui/input";
 import { Label } from "@/components/ui/label";
 import { Textarea } from "@/components/ui/textarea";
 import { Checkbox } from "@/components/ui/checkbox";
+import {
+	Select,
+	SelectContent,
+	SelectItem,
+	SelectTrigger,
+	SelectValue,
+} from "@/components/ui/select";
+
 // Updated import path for types
 import type {
 	TemplateFormData,
 	// DbTemplateTranslations,
 } from "./template-types";
 import type { CheckedState } from "@radix-ui/react-checkbox";
+import { styles } from "@/data/templates";
 
 interface TemplateFormFieldsProps {
 	formData: TemplateFormData;
@@ -34,11 +43,14 @@ export function TemplateFormFields({
 }: TemplateFormFieldsProps) {
 	const handleInputChange = (
 		e: React.ChangeEvent<HTMLInputElement | HTMLTextAreaElement>,
+		
 	) => {
 		const { name, value } = e.target;
 		onFormDataChange(name as keyof TemplateFormData, value);
 	};
-
+	const handleStyleSelect = (value:string)=>{
+		onFormDataChange('color',value)
+	}
 	const handleCheckboxChange = (checked: CheckedState) => {
 		onFormDataChange(
 			"cornerRotation", // Form state field name
@@ -74,7 +86,7 @@ export function TemplateFormFields({
 							{" "}
 							Style<span className="text-red-500 ml-1">*</span>{" "}
 						</Label>
-						<Input
+						{/* <Input
 							id="color"
 							name="color"
 							value={formData.color}
@@ -83,7 +95,24 @@ export function TemplateFormFields({
 							disabled={isSubmitting}
 							aria-required="true"
 							placeholder="#FF5733, primary, bg-blue-500, etc."
-						/>
+						/> */}
+						<Select defaultValue={formData.color} value={formData.color} onValueChange={handleStyleSelect}>
+							<SelectTrigger className="w-[180px]">
+								<SelectValue placeholder="Theme" />
+							</SelectTrigger>
+							<SelectContent>
+								{styles.map((templateStyle) => {
+									return (
+										<SelectItem value={templateStyle} key={templateStyle}>
+											<span className={"h-4 w-4 " + templateStyle}></span> {templateStyle}
+										</SelectItem>
+									);
+								})}
+								{/* <SelectItem value="light">Light</SelectItem>
+								<SelectItem value="dark">Dark</SelectItem>
+								<SelectItem value="system">System</SelectItem> */}
+							</SelectContent>
+						</Select>
 					</div>
 					{/* Occasions (Top Level - Optional) */}
 					<div>

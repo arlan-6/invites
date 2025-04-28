@@ -1,34 +1,51 @@
-export type TemplateTranslationsType ={
-  kk: {
-    name: string;
-    description: string;
-    middleText?:string;
-    occasions:string[];
-  };
-  ru: {
-    name: string;
-    description: string;
-    middleText?:string;
-    occasions:string[];
-  };
-  en: {
-    name: string;
-    description: string;
-    middleText?:string;
-    occasions:string[];
-  };
+export type TemplateTranslationsType = {
+	kk: {
+		name: string;
+		description: string;
+		middleText?: string;
+		occasions: string[];
+	};
+	ru: {
+		name: string;
+		description: string;
+		middleText?: string;
+		occasions: string[];
+	};
+	en: {
+		name: string;
+		description: string;
+		middleText?: string;
+		occasions: string[];
+	};
 };
 export type TemplateType = {
-  id: string;
-  color: string;
-  imageCorner?: string;
-  cornerRitarion?:boolean;
-  image?: string;
-  occasions: string[];
-  tags?:('timer'|'middleText'|'cornerIMage')[];
-  translations: TemplateTranslationsType
+	id: string;
+	color: string;
+	imageCorner?: string;
+	cornerRitarion?: boolean;
+	image?: string;
+	occasions: string[];
+	tags?: ("timer" | "middleText" | "cornerIMage")[];
+	translations: TemplateTranslationsType;
 };
-
+export const styles = [
+	"nauryz",
+	"zord",
+	"aurora",
+	"mayday",
+	"spring",
+	"simple",
+	"almaty",
+	"oceanic",
+	"sunset",
+	"forest",
+	"nebula",
+	"minty",
+	"royal",
+	"fiery",
+	"frost",
+	"earthy",
+];
 // export const templates: TemplateType[] = [
 //   {
 //     id: "1",
