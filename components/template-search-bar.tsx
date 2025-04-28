@@ -6,6 +6,7 @@ import { Input } from "./ui/input";
 import usesTemaplteFilterstore from "@/store/templateFilters";
 import { Button } from "./ui/button";
 import { Paintbrush } from "lucide-react";
+import { useLanguage } from "./language-provider";
 
 interface TemplateSearchBarProps {
 	className?: string;
@@ -14,6 +15,7 @@ interface TemplateSearchBarProps {
 export const TemplateSearchBar: FC<TemplateSearchBarProps> = ({
 	className,
 }) => {
+	const {t} = useLanguage()
 	const { search, setSearch } = usesTemaplteFilterstore();
 	const handleChange = (e: React.ChangeEvent<HTMLInputElement>) => {
 		setSearch(e.target.value.toLowerCase());
@@ -23,11 +25,11 @@ export const TemplateSearchBar: FC<TemplateSearchBarProps> = ({
     }
 	return (
 		<div className={cn(" p-6", className)}>
-			<label className="">Search templates </label>
+			<label className="">{t('templates.searchTemplates')}</label>
 			<div className="mt-4 w-full gap-4 flex justify-around">
 				<Input value={search} onChange={handleChange} />
 				<Button onClick={handleClear} disabled={!search} variant={!!search?'default':'destructive'} className="transition-colors">
-					Cleat filter
+					{t('templates.clearFilters')}
 					<Paintbrush size={16} strokeWidth={1.5} />
 				</Button>
 			</div>

@@ -20,7 +20,7 @@
 	--muted-foreground: hsl(215.4, 16.3%, 46.9%);
 	--accent: hsl(210, 40%, 96.1%);
 	--accent-foreground: hsl(222.2, 47.4%, 11.2%);
-	--destructive: rgb(250, 118, 118);
+	--destructive: rgb(177, 0, 0);
 	--destructive-foreground: hsl(210, 40%, 98%);
 	--border: hsl(214.3, 31.8%, 91.4%);
 	--input: hsl(214.3, 31.8%, 91.4%);
@@ -140,6 +140,17 @@
 	font-style: normal;
   }
   
+  /* In your global stylesheet or a dedicated CSS file */
+.templateCard {
+    transition: background-color 0.3s ease-in-out, transform 0.2s ease-out, box-shadow 0.3s ease;
+    box-shadow: 0px 1px 3px rgba(0, 0, 0, 0.12);
+}
+
+.templateCard:hover {
+    background-color: rgba(0, 0, 0, 0.05); /* Example subtle background change */
+    transform: translateY(-2px);
+    box-shadow: 0px 5px 15px rgba(0, 0, 0, 0.3);
+}
 
 .nauryz{
 	background: linear-gradient(-45deg, #16a34a, #a3e635);

@@ -1,11 +1,13 @@
+"use client";
 import React, { FC } from "react";
 import { cn } from "@/lib/utils";
 import { motion } from "framer-motion";
-import { Badge } from "./ui/badge";
 import Link from "next/link";
 import { TemplateType } from "@/data/templates";
 import { useLanguage } from "./language-provider";
 import { Template } from "@prisma/client";
+import { Text, Timer } from "lucide-react";
+import { MdTimer } from "react-icons/md";
 
 interface templateCardProps {
 	className?: string;
@@ -16,41 +18,39 @@ interface templateCardProps {
 export const TemplateCard: FC<templateCardProps> = ({ template, i }) => {
 	const { t, language } = useLanguage();
 
-	// Ensure translations exist and have the expected structure
 	const translations = template.translations as {
 		kk: {
 			name: string;
 			description: string;
 			middleText?: string;
-			occasions?: string[];
+			occasions?: string;
 		};
 		ru: {
 			name: string;
 			description: string;
 			middleText?: string;
-			occasions?: string[];
+			occasions?: string;
 		};
 		en: {
 			name: string;
 			description: string;
 			middleText?: string;
-			occasions?: string[];
+			occasions?: string;
 		};
 	};
 
 	const translation = translations?.[language];
-// console.log(typeof template.color);
 
 	return (
 		<motion.div
 			initial={{ opacity: 0, y: 20 }}
 			animate={{ opacity: 1, y: 0 }}
-			transition={{ duration: 0.5, delay: 0.05 * i }}
+			transition={{ duration: 0.2, delay: 0.04 * i }}
 			key={template.id}
 			className={cn(
-				"container p-4 px-4 rounded-lg shadow-2xl bg-gradient-to-tl min-w-64 flex-1 select-none",
+				"container p-4 px-4 rounded-lg bg-gradient-to-tl min-w-64 max-w-96 flex-1 select-none transition-all templateCard",
 				template.color,
-				''
+				"",
 			)}
 		>
 			<Link
@@ -58,40 +58,43 @@ export const TemplateCard: FC<templateCardProps> = ({ template, i }) => {
 				className="cursor-pointer group h-full w-full "
 			>
 				<div className="flex justify-between">
-					<div>
-						<h3 className="text-xl tracking-wide font-bold text-gray-100 group-hover:underline">
-							{translation?.name || "No Name"}
+					<div className="flex-grow mr-4">
+						<h3 className="text-xl tracking-wide font-bold text-gray-100 group-hover:underline transition-all flex items-center">
+							{translation?.name || t("templates.templateCardNoName")}
+
+							<span className="flex items-center gap-2 ml-2">
+								{template.tags?.includes("middleText") && (
+									<span
+										title="Includes centered text feature"
+										className="text-gray-200 group-hover:text-white group-hover:scale-125 transition-[color,transform] duration-200 ease-in-out"
+									>
+										<Text size={14} aria-label="Centered text feature" />
+									</span>
+								)}
+								{template.tags?.includes("timer") && (
+									<span
+										title="Includes a timer"
+										className="text-gray-200 group-hover:text-white group-hover:scale-125 transition-[color,transform] duration-200 ease-in-out delay-100"
+									>
+										<Timer size={14} aria-label="Timer feature" />
+									</span>
+								)}
+							</span>
 						</h3>
-						<p className="group-hover:underline group-hover:text-gray-50 transition-colors text-gray-200">
-							{translation?.description || "No Description"}
+						<p className="max-w-full group-hover:underline group-hover:underline-offset-4 group-hover:text-gray-50 text-gray-200 flex items-center gap-4 transition-colors duration-200">
+							<p className="max-w-42 truncate ">
+								{translation?.description ||
+									t("templates.templateCardNoDescription")}
+							</p>
 						</p>
 					</div>
+
 					{template.imageCorner && (
-						<div className="w-9 h-9 group-hover:scale-110 transition-transform duration-200 ease-in-out">
+						<div className="w-9 h-9 group-hover:scale-110 transition-transform duration-200 ease-in-out flex-shrink-0">
 							<img className="" src={template.imageCorner} alt="Corner" />
 						</div>
 					)}
 				</div>
-
-				<div className="">
-					{/* {translation?.occasions && (<><h4 className="text-gray-100">{t("templates.occasions")}</h4>
-					<ul className="mt-2 flex flex-wrap gap-2 bg-background/50 text-foreground p-2 rounded-sm">
-						{translation?.occasions?.map((occasion) => (
-							<div key={occasion} className={cn("flex gap-1 items-center")}>
-								<span>•</span>
-								<li key={occasion} className="text-sm">
-									{occasion}
-								</li>
-							</div>
-						))}
-					</ul></>)} */}
-					
-				</div>
-				{/* <div className="flex gap-2 mt-2">
-					{template.tags?.map((tag, i) => (
-						<Badge key={i}>{tag}</Badge>
-					))}
-				</div> */}
 			</Link>
 		</motion.div>
 	);

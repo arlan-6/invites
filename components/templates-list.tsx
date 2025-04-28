@@ -33,7 +33,7 @@ export const TemplatesList: FC<TemplatesListProps> = ({ className }) => {
 	const [templates, setTemplates] = useState<Template[]>([]);
 	const [loading, setLoading] = useState<boolean>(true);
 	const [error, setError] = useState<string | null>(null);
-
+	const { t } = useLanguage();
 	useEffect(() => {
 		const loadTemplates = async () => {
 			setLoading(true);
@@ -109,7 +109,7 @@ export const TemplatesList: FC<TemplatesListProps> = ({ className }) => {
 	}, [templates, search, language]);
 
 	return (
-		<Accordion title="Card inivte templates">
+		<Accordion title={t("templates.cardInivteTempltes")}>
 			<div className={cn("flex gap-4 flex-wrap p-4 md:p-6", className)}>
 				{loading && (
 					<div
@@ -120,7 +120,10 @@ export const TemplatesList: FC<TemplatesListProps> = ({ className }) => {
 					>
 						<Loader />
 						<br />
-						<p className="text-gray-500 animate-pulse">Loading templates...</p>
+						<p className="text-gray-500 animate-pulse">
+							{" "}
+							{t("templates.loadingTemplates")}
+						</p>
 					</div>
 				)}
 				{error && !loading && (
@@ -131,7 +134,7 @@ export const TemplatesList: FC<TemplatesListProps> = ({ className }) => {
 						)}
 					>
 						<p className="text-red-600 font-semibold">
-							Error loading templates:
+							{t("templates.errorLoadingTemplates")}
 						</p>
 						<p className="text-red-500 text-sm mt-1">{error}</p>
 					</div>
@@ -142,14 +145,15 @@ export const TemplatesList: FC<TemplatesListProps> = ({ className }) => {
 						(filteredTemplates.length === 0 && (
 							<div
 								className={cn(
-									"w-full flex justify-center items-center h-40",
+									"container p-4 px-4 rounded-lg bg-gradient-to-tl min-w-64 max-w-full flex-1 select-none transition-all ",
 									className,
 								)}
 							>
-								<p className="text-gray-500">
+								<p className="text-gray-500"><span className="text-lg m-1">
+									Ooops!</span>
 									{search
-										? `No templates found matching "${search}".`
-										: "No templates available."}
+										? t("templates.noTemplatesFound", { search })
+										: t("templates.noTemplatesAvailable")}
 								</p>
 							</div>
 						)))}
