@@ -20,6 +20,7 @@ import type {
 } from "./template-types";
 import type { CheckedState } from "@radix-ui/react-checkbox";
 import { styles } from "@/data/templates";
+import { cn } from "@/lib/utils";
 
 interface TemplateFormFieldsProps {
 	formData: TemplateFormData;
@@ -43,14 +44,13 @@ export function TemplateFormFields({
 }: TemplateFormFieldsProps) {
 	const handleInputChange = (
 		e: React.ChangeEvent<HTMLInputElement | HTMLTextAreaElement>,
-		
 	) => {
 		const { name, value } = e.target;
 		onFormDataChange(name as keyof TemplateFormData, value);
 	};
-	const handleStyleSelect = (value:string)=>{
-		onFormDataChange('color',value)
-	}
+	const handleStyleSelect = (value: string) => {
+		onFormDataChange("color", value);
+	};
 	const handleCheckboxChange = (checked: CheckedState) => {
 		onFormDataChange(
 			"cornerRotation", // Form state field name
@@ -96,15 +96,33 @@ export function TemplateFormFields({
 							aria-required="true"
 							placeholder="#FF5733, primary, bg-blue-500, etc."
 						/> */}
-						<Select defaultValue={formData.color} value={formData.color} onValueChange={handleStyleSelect}>
-							<SelectTrigger className="w-[180px]">
+						<Select
+							defaultValue={formData.color}
+							value={formData.color}
+							onValueChange={handleStyleSelect}
+						>
+							<SelectTrigger className="w-[180px] pl-1 cursor-pointer">
 								<SelectValue placeholder="Theme" />
 							</SelectTrigger>
 							<SelectContent>
 								{styles.map((templateStyle) => {
+									const isSelected = formData.color === templateStyle;
 									return (
-										<SelectItem value={templateStyle} key={templateStyle}>
-											<span className={"h-4 w-4 " + templateStyle}></span> {templateStyle}
+										<SelectItem
+											value={templateStyle}
+											key={templateStyle}
+											className={cn("cursor-pointer group hover:pl-0 transition-all max-w-96 flex items-center my-0.5",
+												isSelected && 'pl-0'
+											)}
+										>
+											<span
+												className={cn(
+													"h-7 w-7 rounded-full absolute group-hover:w-full transition-all z-10",
+													templateStyle,
+													isSelected &&' w-36'
+												)}
+											></span>{" "}
+											<span className={cn("ml-9 pb-1 z-20 group-hover:font-medium transition-all",isSelected && 'font-mediu7 text-lg')}>{templateStyle}</span>
 										</SelectItem>
 									);
 								})}
