@@ -48,7 +48,7 @@ export const TemplateCard: FC<templateCardProps> = ({ template, i }) => {
 			transition={{ duration: 0.2, delay: 0.04 * i }}
 			key={template.id}
 			className={cn(
-				"container p-4 px-4 rounded-lg bg-gradient-to-tl min-w-64 max-w-96 flex-1 select-none transition-all templateCard",
+				"container p-4 px-4 rounded-lg bg-gradient-to-tl min-w-64 md:max-w-96 flex-1 select-none transition-all templateCard",
 				template.color,
 				"",
 			)}

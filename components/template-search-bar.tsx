@@ -26,7 +26,7 @@ export const TemplateSearchBar: FC<TemplateSearchBarProps> = ({
 	return (
 		<div className={cn(" p-6", className)}>
 			<label className="">{t('templates.searchTemplates')}</label>
-			<div className="mt-4 w-full gap-4 flex justify-around">
+			<div className="mt-4 max-w-screen lg:w-full lg:max-w-full gap-4 flex justify-around">
 				<Input value={search} onChange={handleChange} />
 				<Button onClick={handleClear} disabled={!search} variant={!!search?'default':'destructive'} className="transition-colors">
 					{t('templates.clearFilters')}

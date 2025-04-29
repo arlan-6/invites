@@ -109,8 +109,8 @@ export const TemplatesList: FC<TemplatesListProps> = ({ className }) => {
 	}, [templates, search, language]);
 
 	return (
-		<Accordion title={t("templates.cardInivteTempltes")}>
-			<div className={cn("flex gap-4 flex-wrap p-4 md:p-6", className)}>
+		<Accordion titleClassName="text-ellipsis" title={t("templates.cardInivteTempltes")}>
+			<div className={cn("flex gap-4 flex-wrap p-6 md:p-6 ", className)}>
 				{loading && (
 					<div
 						className={cn(

@@ -31,7 +31,7 @@ export const Accordion: FC<SimpleTemplatesProps> = ({
     return (
         <div className={cn("", className)}>
             <div className="w-full flex justify-between items-center"  onClick={handleshow}>
-                <h1 className={"text-2xl p-4 whitespace-nowrap " + titleClassName}>{title}</h1>
+                <h1 className={"text-lg lg:text-2xl p-4 whitespace-nowrap " + titleClassName}>{title}</h1>
                 <div className="w-full p-6 cursor-pointer" onClick={handleshow}>
                 <div
                 
