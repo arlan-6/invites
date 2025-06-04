@@ -43,21 +43,29 @@ export const TemplateCard: FC<templateCardProps> = ({ template, i }) => {
 
 	return (
 		<motion.div
-			initial={{ opacity: 0, y: 20 }}
-			animate={{ opacity: 1, y: 0 }}
-			transition={{ duration: 0.2, delay: 0.04 * i }}
+			initial="initial"
+			animate="animate"
+			whileHover="hover"
+			variants={{
+				initial: { opacity: 0, y: 20 },
+				animate: { opacity: 1, y: 0, transition: { duration: 0.2, delay: 0.04 * i } },
+				hover: { 
+					y: -6, 
+					boxShadow: "0 24px 48px 0 rgba(0,0,0,0.32), 0 4px 16px 0 rgba(0,0,0,0.18)", 
+					transition: { duration: 0.12 } 
+				},
+			}}
 			key={template.id}
 			className={cn(
-				"container p-4 px-4 rounded-lg bg-gradient-to-tl min-w-64 md:max-w-96 flex-1 select-none transition-all templateCard",
+				"rounded-lg min-w-64 md:max-w-96 flex-1 select-none transition-all templateCard shadow-lg hover:shadow-2xl hover:shadow-accent/50",
 				template.color,
-				"",
 			)}
 		>
 			<Link
 				href={`/templates/${template.id}`}
 				className="cursor-pointer group h-full w-full "
 			>
-				<div className="flex justify-between">
+				<div className="flex justify-between p-4 px-4 ">
 					<div className="flex-grow mr-4">
 						<h3 className="text-xl tracking-wide font-bold text-gray-100 group-hover:underline transition-all flex items-center">
 							{translation?.name || t("templates.templateCardNoName")}
@@ -66,23 +74,23 @@ export const TemplateCard: FC<templateCardProps> = ({ template, i }) => {
 								{template.tags?.includes("middleText") && (
 									<span
 										title="Includes centered text feature"
-										className="text-gray-200 group-hover:text-white group-hover:scale-125 transition-[color,transform] duration-200 ease-in-out"
+										className="text-gray-200 group-hover:text-white group-hover:scale-125  duration-150 ease-in-out"
 									>
-										<Text size={14} aria-label="Centered text feature" />
+										<Text size={16} aria-label="Centered text feature" />
 									</span>
 								)}
 								{template.tags?.includes("timer") && (
 									<span
 										title="Includes a timer"
-										className="text-gray-200 group-hover:text-white group-hover:scale-125 transition-[color,transform] duration-200 ease-in-out delay-100"
+										className="text-gray-200 group-hover:text-white group-hover:scale-125  duration-150 ease-in-out delay-50"
 									>
-										<Timer size={14} aria-label="Timer feature" />
+										<Timer size={16} aria-label="Timer feature" />
 									</span>
 								)}
 							</span>
 						</h3>
 						<p className="max-w-full group-hover:underline group-hover:underline-offset-4 group-hover:text-gray-50 text-gray-200 flex items-center gap-4 transition-colors duration-200">
-							<p className="max-w-42 truncate ">
+							<p className="max-w-42 truncate text-sm">
 								{translation?.description ||
 									t("templates.templateCardNoDescription")}
 							</p>
